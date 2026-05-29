@@ -1,0 +1,199 @@
+<?php
+require_once __DIR__ . "/../includes/config.php";
+$currentKey = "case-studies";
+$pageTitle  = "CrewPal Operations Platform — Case Study";
+$pageDesc   = "How I redesigned the operational app for 8,000+ IndiGo cabin crew, reducing scheduling errors by 18% and boosting crew satisfaction by 25%.";
+$meta = [
+  ["label" => "Role",     "value" => "Sr. Manager UI/UX"],
+  ["label" => "Company",  "value" => "IndiGo Airlines"],
+  ["label" => "Duration", "value" => "9 months"],
+  ["label" => "Year",     "value" => "2022 – 2023"],
+];
+$nav = [
+  ["id" => "overview",  "label" => "Overview"],
+  ["id" => "problem",   "label" => "Problem"],
+  ["id" => "research",  "label" => "Research"],
+  ["id" => "process",   "label" => "Process"],
+  ["id" => "solution",  "label" => "Solution"],
+  ["id" => "outcomes",  "label" => "Outcomes"],
+  ["id" => "learnings", "label" => "Learnings"],
+];
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>"/>
+  <title><?= htmlspecialchars($pageTitle) ?></title>
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
+  <link rel="icon" type="image/svg+xml"    href="/assets/icons/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32"  href="/assets/icons/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16"  href="/assets/icons/favicon-16x16.png"/>
+  <link rel="apple-touch-icon" sizes="180x180"     href="/assets/icons/favicon-180x180.png"/>
+  <meta name="theme-color" content="#0f0f0f"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/preloader.css"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/reset.css"/>
+  <link rel="stylesheet" href="../assets/css/main.css"/>
+  <link rel="stylesheet" href="../assets/css/navigation.css"/>
+  <link rel="stylesheet" href="../assets/css/background.css"/>
+  <link rel="stylesheet" href="../assets/css/footer.css"/>
+  <link rel="stylesheet" href="../assets/css/case-study.css"/>
+</head>
+<body>
+  <div class="cs-progress-bar" id="cs-progress"></div>
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__grid"></div>
+    <div class="preloader__inner">
+      <div class="preloader__mark">RM</div>
+      <div class="preloader__name">
+        <span class="preloader__name-text">CrewPal</span>
+        <span class="preloader__name-role">Case Study · Enterprise App</span>
+      </div>
+      <div class="preloader__bar-wrap"><div class="preloader__bar" id="preloader-bar"></div></div>
+      <span class="preloader__counter" id="preloader-counter">0%</span>
+    </div>
+  </div>
+  <div class="bg-canvas" aria-hidden="true"><div class="bg-grid"></div><div class="bg-orb-1"></div><div class="bg-orb-2"></div></div>
+  <div class="page-wrapper">
+    <?php require_once __DIR__ . "/../partials/header.php"; ?>
+    <main id="main-content">
+      <div class="cs-detail-hero fade-in">
+        <img class="cs-detail-hero__img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2400&auto=format&fit=crop" alt="Aircraft representing crew operations" loading="eager"/>
+        <div class="cs-detail-hero__overlay"></div>
+        <div class="cs-detail-hero__content">
+          <p class="cs-detail-hero__category">CREW OPERATIONS SYSTEM</p>
+          <h1 class="cs-detail-hero__title">CrewPal Operations<br>Platform</h1>
+          <p class="cs-detail-hero__tagline">Simplifying high-stakes operations for 8,000+ IndiGo cabin crew.</p>
+        </div>
+      </div>
+      <div class="cs-meta-bar">
+        <?php foreach ($meta as $m): ?>
+          <div class="cs-meta-item">
+            <span class="cs-meta-item__label"><?= htmlspecialchars($m['label']) ?></span>
+            <span class="cs-meta-item__value"><?= htmlspecialchars($m['value']) ?></span>
+          </div>
+        <?php endforeach; ?>
+      </div>
+      <div class="cs-content">
+        <nav class="cs-nav" aria-label="Case study sections">
+          <?php foreach ($nav as $n): ?>
+            <a href="#<?= $n['id'] ?>" class="cs-nav__item" data-nav="<?= $n['id'] ?>"><?= htmlspecialchars($n['label']) ?></a>
+          <?php endforeach; ?>
+        </nav>
+        <article class="cs-article">
+
+          <section class="cs-section" id="overview">
+            <span class="cs-section__label">01 — Overview</span>
+            <h2 class="cs-section__title">8,000 crew members. One broken app.</h2>
+            <div class="cs-section__body">
+              <p>CrewPal is IndiGo's operational app used by all 8,000+ cabin crew members for shift management, duty tracking, and fatigue monitoring. When I inherited the project, it had 14 screens, constant complaints about usability, and a scheduling error rate that was costing the airline real money.</p>
+              <p>Operational UX is high-stakes design. A crew member checking duty assignments at 4am in an airport lounge needs information instantly, with zero ambiguity. Failure means flights delayed, compliance breached.</p>
+            </div>
+            <div class="cs-metrics-row">
+              <div class="cs-metric-card"><div class="cs-metric-card__value">25%</div><div class="cs-metric-card__label">Crew satisfaction increase</div></div>
+              <div class="cs-metric-card"><div class="cs-metric-card__value">18%</div><div class="cs-metric-card__label">Scheduling errors reduced</div></div>
+              <div class="cs-metric-card"><div class="cs-metric-card__value">14→4</div><div class="cs-metric-card__label">Screens restructured to core views</div></div>
+              <div class="cs-metric-card"><div class="cs-metric-card__value">8K+</div><div class="cs-metric-card__label">Crew members using the redesign</div></div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="problem">
+            <span class="cs-section__label">02 — Problem</span>
+            <h2 class="cs-section__title">The app that crew dreaded opening</h2>
+            <div class="cs-section__body">
+              <p>Shadow research revealed the real problem: crew members were screenshotting their schedules and sharing them on WhatsApp because the app was too slow and confusing to use at 4am. A mission-critical operational tool had been abandoned for a workaround.</p>
+              <p><strong>Root causes:</strong> 14 separate screens for information that should be on one. No proactive alerts for fatigue threshold breaches. No offline capability for airport dead zones. Compliance requirements buried under layers of navigation.</p>
+            </div>
+          </section>
+
+          <section class="cs-section" id="research">
+            <span class="cs-section__label">03 — Research</span>
+            <h2 class="cs-section__title">Shadow research at 4am in terminal lounges</h2>
+            <div class="cs-section__body">
+              <p>I spent 3 nights conducting shadow research — observing crew members using the app in their actual work environment. The results were more damning than any survey would have revealed.</p>
+              <p>Key insight: <strong>the most critical information (next duty, fatigue status, schedule changes) was on screen 7 of 14.</strong> Crew were navigating 6 screens every time they needed the one thing they checked 8x per day.</p>
+            </div>
+            <blockquote class="cs-callout">"I know my roster by heart because the app takes too long. I only use it for sign-off." — Cabin crew member, 6 years at IndiGo</blockquote>
+          </section>
+
+          <section class="cs-section" id="process">
+            <span class="cs-section__label">04 — Process</span>
+            <h2 class="cs-section__title">Restructure, then redesign</h2>
+            <div class="cs-section__body">
+              <p>The first decision was architectural, not visual. I restructured the 14 screens into 4 core views based on frequency of use: Today's Duty, My Schedule, Notifications, and Profile/Compliance. Everything else became secondary navigation.</p>
+              <p>Prototyped with 40 crew members across 3 months. Each round of testing happened in context — airport lounges, hotel rooms, on mobile with fatigue-level lighting conditions. By round 3, task completion time for the primary action (checking next duty) dropped from 47 seconds to 8 seconds.</p>
+            </div>
+          </section>
+
+          <section class="cs-section" id="solution">
+            <span class="cs-section__label">05 — Solution</span>
+            <h2 class="cs-section__title">One screen. Everything you need.</h2>
+            <div class="cs-section__body">
+              <p><strong>Today view as the home screen.</strong> Next duty, departure time, aircraft number, and fatigue status — all above the fold. No navigation required for the daily check-in.</p>
+              <p><strong>Proactive fatigue alerts.</strong> Rather than requiring crew to check their fatigue status, the app surfaces alerts when thresholds are approaching. Compliance became passive rather than active.</p>
+              <p><strong>Offline-first architecture.</strong> Worked with engineering to cache duty data for 72 hours. The app works fully offline — critical for airport dead zones.</p>
+            </div>
+          </section>
+
+          <section class="cs-section" id="outcomes">
+            <span class="cs-section__label">06 — Outcomes</span>
+            <h2 class="cs-section__title">The WhatsApp workaround disappeared</h2>
+            <div class="cs-section__body">
+              <p>Three months post-launch, the informal WhatsApp schedule-sharing groups had reduced by 80%. Crew were using the app because it was faster than the workaround. That's the real measure of success.</p>
+            </div>
+            <div class="cs-metrics-row">
+              <div class="cs-metric-card"><div class="cs-metric-card__value">47s→8s</div><div class="cs-metric-card__label">Task completion time for primary action</div></div>
+              <div class="cs-metric-card"><div class="cs-metric-card__value">80%</div><div class="cs-metric-card__label">Reduction in WhatsApp workaround usage</div></div>
+              <div class="cs-metric-card"><div class="cs-metric-card__value">25%</div><div class="cs-metric-card__label">Crew satisfaction in post-launch survey</div></div>
+              <div class="cs-metric-card"><div class="cs-metric-card__value">18%</div><div class="cs-metric-card__label">Scheduling errors in first quarter</div></div>
+            </div>
+          </section>
+
+          <section class="cs-section" id="learnings">
+            <span class="cs-section__label">07 — Learnings</span>
+            <h2 class="cs-section__title">What I'd do differently</h2>
+            <div class="cs-section__body">
+              <p><strong>Shadow research is non-negotiable for operational tools.</strong> No survey or interview would have revealed the 4am lounge behaviour. Physical context changes everything.</p>
+              <p><strong>Architecture before aesthetics.</strong> The biggest impact came from restructuring information hierarchy — not from visual polish. Always solve the structure first.</p>
+            </div>
+          </section>
+
+        </article>
+      </div>
+      <div class="cs-next">
+        <div>
+          <p class="cs-next__label">Previous Case Study</p>
+          <a href="indigo-booking.php" class="cs-next__link">
+            <p class="cs-next__title">IndiGo Booking<br>Ecosystem</p>
+            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">22% revenue growth. 50M users.</p>
+            <span class="cs-next__arrow">↗</span>
+          </a>
+        </div>
+        <div>
+          <p class="cs-next__label">Next Case Study</p>
+          <a href="design-system.php" class="cs-next__link">
+            <p class="cs-next__title">Enterprise<br>Design System</p>
+            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">One system. Ten products. 40% faster delivery.</p>
+            <span class="cs-next__arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </main>
+    <?php require_once __DIR__ . "/../partials/footer.php"; ?>
+  </div>
+  <script src="../assets/js/preloader.js"></script>
+  <script src="../assets/js/background.js" defer></script>
+  <script src="../assets/js/animations.js" defer></script>
+  <script src="../assets/js/app.js" defer></script>
+  <script>
+  (function(){const bar=document.getElementById("cs-progress"),main=document.getElementById("main-content");if(!bar||!main)return;window.addEventListener("scroll",function(){bar.style.width=Math.min(100,(window.scrollY/(main.scrollHeight-window.innerHeight))*100)+"%";},{passive:true});})();
+  (function(){const items=document.querySelectorAll(".cs-nav__item[data-nav]"),secs=document.querySelectorAll(".cs-section[id]");if(!items.length)return;const obs=new IntersectionObserver(function(e){e.forEach(function(s){if(s.isIntersecting){items.forEach(function(n){n.classList.remove("is-active");});const a=document.querySelector('.cs-nav__item[data-nav="'+s.target.id+'"]');if(a)a.classList.add("is-active");}});},{rootMargin:"-20% 0px -70% 0px"});secs.forEach(function(s){obs.observe(s);});})();
+  </script>
+</body>
+</html>

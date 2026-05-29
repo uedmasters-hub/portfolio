@@ -1,0 +1,353 @@
+/* =========================================
+   NAVIGATION — navigation.css
+   ========================================= */
+
+/* ── HEADER ─────────────────────────────── */
+
+.site-header {
+  position:        fixed;
+  top:             0;
+  left:            0;
+  right:           0;
+  z-index:         100;
+  height:          72px;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         0 48px;
+  background:      rgba(245,245,243,0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom:   1px solid transparent;
+
+  /* scroll states */
+  transform:       translateY(0);
+  transition:
+    transform      0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color   0.3s ease,
+    background     0.3s ease,
+    box-shadow     0.3s ease;
+  will-change: transform;
+}
+
+/* scrolled — show border + shadow */
+.site-header.is-scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: 0 1px 24px rgba(0,0,0,0.06);
+}
+
+/* hidden — slide up out of view */
+.site-header.is-hidden {
+  transform:  translateY(-100%);
+  box-shadow: none;
+}
+
+/* revealed — spring back in */
+.site-header.is-revealed {
+  transform: translateY(0);
+}
+
+/* at top — fully transparent, no border */
+.site-header.is-top {
+  background:        rgba(245,245,243,0.0);
+  backdrop-filter:   blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+/* elevated — scrolled away from top */
+.site-header.is-elevated {
+  background: rgba(245,245,243,0.97);
+  box-shadow: 0 1px 0 var(--border), 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* push page down since header is now fixed */
+.page-wrapper {
+  padding-top: 72px;
+}
+
+/* ── LOGO GROUP ──────────────────────────── */
+
+.site-logo {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+  flex-shrink: 0;
+}
+
+.site-logo__mark {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           36px;
+  height:          36px;
+  background:      var(--text-primary);
+  border-radius:   6px;
+  color:           var(--bg);
+  font-size:       13px;
+  font-weight:     700;
+  letter-spacing:  0.02em;
+  flex-shrink:     0;
+}
+
+.site-logo__text {
+  font-size:      15px;
+  font-weight:    700;
+  letter-spacing: 0.04em;
+  color:          var(--text-primary);
+  text-transform: uppercase;
+  line-height:    1;
+}
+
+/* ── NAV + CTA WRAPPER ───────────────────── */
+
+.site-header__cta {
+  display:     flex;
+  align-items: center;
+  gap:         40px;
+}
+
+/* ── NAV ─────────────────────────────────── */
+
+.site-nav {
+  display:     flex;
+  align-items: center;
+  gap:         28px;
+}
+
+.site-nav__link {
+  position:       relative;
+  font-size:      14px;
+  font-weight:    400;
+  color:          var(--text-secondary);
+  line-height:    1;
+  padding-bottom: 2px;
+  transition:     color var(--t-fast) ease;
+}
+
+/* hover — blue accent, no underline */
+.site-nav__link:hover {
+  color: var(--blue);
+}
+
+/* active — blue with sliding underline */
+.site-nav__link.is-active {
+  color: var(--blue);
+}
+
+.site-nav__link.is-active::after {
+  content:       "";
+  position:      absolute;
+  left:          0;
+  bottom:        -4px;
+  width:         100%;
+  height:        1.5px;
+  background:    var(--blue);
+  border-radius: 2px;
+}
+
+/* ── CONNECT BUTTON ──────────────────────── */
+
+.btn-connect {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         10px 22px;
+  font-size:       13px;
+  font-weight:     600;
+  letter-spacing:  0.06em;
+  text-transform:  uppercase;
+  color:           var(--text-primary);
+  border:          1.5px solid rgba(0,0,0,0.18);
+  border-radius:   var(--radius-pill);
+  background:      transparent;
+  transition:
+    background   var(--t-fast) ease,
+    border-color var(--t-fast) ease,
+    color        var(--t-fast) ease;
+}
+
+.btn-connect:hover {
+  background:   var(--blue);
+  border-color: var(--blue);
+  color:        #ffffff;
+}
+
+/* ── HAMBURGER ───────────────────────────── */
+
+.nav-hamburger {
+  display:         none;
+  flex-direction:  column;
+  justify-content: center;
+  gap:             5px;
+  width:           36px;
+  height:          36px;
+  cursor:          pointer;
+  background:      transparent;
+  border:          none;
+  padding:         4px;
+}
+
+.nav-hamburger__line {
+  display:       block;
+  width:         22px;
+  height:        1.5px;
+  background:    var(--text-primary);
+  border-radius: 2px;
+  transition:    transform var(--t-base) ease, opacity var(--t-base) ease;
+}
+
+/* ── MOBILE DRAWER ───────────────────────── */
+
+.nav-drawer {
+  position:   fixed;
+  top:        0;
+  left:       0;
+  right:      0;
+  bottom:     0;
+  z-index:    200;
+  background: rgba(245,245,243,0.98);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transform:  translateX(100%);
+  visibility: hidden;
+  transition:
+    transform  0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.4s;
+  /* no flex — use absolute for guaranteed layout */
+}
+
+.nav-drawer.is-open {
+  transform:  translateX(0);
+  visibility: visible;
+}
+
+/* Header — absolute top */
+.nav-drawer__header {
+  position:        absolute;
+  top:             0;
+  left:            0;
+  right:           0;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         20px 24px;
+  z-index:         2;
+}
+
+.nav-drawer__close {
+  width:       36px;
+  height:      36px;
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+  font-size:   22px;
+  color:       var(--text-primary);
+  cursor:      pointer;
+  background:  transparent;
+  border:      none;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* CTA — absolute bottom, always visible */
+.nav-drawer__cta {
+  position:   absolute;
+  bottom:     0;
+  left:       0;
+  right:      0;
+  padding:    16px 24px;
+  padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
+  background: rgba(245,245,243,0.98);
+  z-index:    2;
+}
+
+.nav-drawer__cta .btn-connect {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           100%;
+  padding:         16px 24px;
+  font-size:       15px;
+  font-weight:     600;
+  letter-spacing:  0.04em;
+  border-radius:   999px;
+  background:      var(--blue);
+  color:           #ffffff;
+  border:          none;
+  text-decoration: none;
+  font-family:     var(--font-primary);
+  -webkit-tap-highlight-color: transparent;
+  transition:      background 0.15s ease;
+}
+
+.nav-drawer__cta .btn-connect:hover,
+.nav-drawer__cta .btn-connect:active {
+  background: #1339a8;
+}
+
+/* Links — scrollable area between header and CTA */
+.nav-drawer__links {
+  position:   absolute;
+  top:        80px;   /* below header */
+  left:       0;
+  right:      0;
+  bottom:     90px;   /* above CTA */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding:    8px 24px 16px;
+}
+
+.nav-drawer__link {
+  display:        block;
+  font-size:      2.2rem;
+  font-weight:    300;
+  letter-spacing: -0.04em;
+  color:          var(--text-primary);
+  padding:        14px 0;
+  border-bottom:  1px solid var(--border);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:     color 0.15s ease;
+}
+
+.nav-drawer__link:last-child { border-bottom: none; }
+.nav-drawer__link:hover,
+.nav-drawer__link:active { color: var(--blue); }
+
+/* ── HAMBURGER ACTIVE STATE ──────────────── */
+
+.nav-hamburger.is-active .nav-hamburger__line:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.nav-hamburger.is-active .nav-hamburger__line:nth-child(2) {
+  opacity: 0;
+}
+.nav-hamburger.is-active .nav-hamburger__line:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── RESPONSIVE — 768px ──────────────────── */
+
+@media (max-width: 768px) {
+
+  .site-header {
+    height:  64px;
+    padding: 0 20px;
+  }
+
+  /* hide desktop nav + connect */
+  .site-nav,
+  .btn-connect {
+    display: none;
+  }
+
+  /* show hamburger */
+  .nav-hamburger {
+    display: flex;
+  }
+
+  /* drawer is always flex — visibility controls show/hide */
+
+}
