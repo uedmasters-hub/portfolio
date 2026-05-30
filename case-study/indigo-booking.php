@@ -67,6 +67,16 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
+
+  <!-- JSON-LD STRUCTURED DATA -->
+  <?php
+    require_once __DIR__ . '/../includes/schema.php';
+    $_thisStudy = null;
+    foreach ($caseStudies as $_s) { if ($_s['slug'] === 'indigo-booking') { $_thisStudy = $_s; break; } }
+    if ($_thisStudy) {
+      echo schema_case_study($_thisStudy);
+    }
+  ?>
 </head>
 <body>
 
