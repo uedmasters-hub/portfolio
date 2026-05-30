@@ -508,7 +508,7 @@ $nav = [
       <!-- CROSS-CONTENT INTERNAL LINKS -->
       <?php
         require_once __DIR__ . "/../partials/related-content.php";
-        echo render_related_content(["current_type" => "audit", "current_slug" => "swiggy-onboarding"]);
+        render_related_content("audit", "swiggy-onboarding");
       ?>
     </main>
 

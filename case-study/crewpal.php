@@ -206,7 +206,7 @@ $nav = [
       <!-- CROSS-CONTENT INTERNAL LINKS -->
       <?php
         require_once __DIR__ . "/../partials/related-content.php";
-        echo render_related_content(["current_type" => "case-study", "current_slug" => "crewpal"]);
+        render_related_content("case-study", "crewpal");
       ?>
     </main>
 

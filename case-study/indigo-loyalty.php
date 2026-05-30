@@ -393,7 +393,7 @@ $nav = [
       <!-- CROSS-CONTENT INTERNAL LINKS -->
       <?php
         require_once __DIR__ . "/../partials/related-content.php";
-        echo render_related_content(["current_type" => "case-study", "current_slug" => "indigo-loyalty"]);
+        render_related_content("case-study", "indigo-loyalty");
       ?>
     </main>
 

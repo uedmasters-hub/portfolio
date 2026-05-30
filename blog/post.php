@@ -289,11 +289,7 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
       <!-- CROSS-CONTENT INTERNAL LINKS -->
       <?php
         require_once __DIR__ . "/../partials/related-content.php";
-        echo render_related_content([
-          'current_type' => 'blog',
-          'current_slug' => $post['slug'],
-          'current_tags' => [$post['category']],
-        ]);
+        render_related_content('blog', $post['slug']);
       ?>
 
     </main>
