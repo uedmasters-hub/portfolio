@@ -67,7 +67,6 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
-  <link rel="stylesheet" href="../assets/css/related-content.css"/>
 
   <!-- JSON-LD STRUCTURED DATA -->
   <?php
@@ -398,12 +397,13 @@ $nav = [
       </div>
 
 
-      <!-- CROSS-CONTENT INTERNAL LINKS -->
-      <?php
-        require_once __DIR__ . "/../partials/related-content.php";
-        render_related_content("case-study", "indigo-booking");
-      ?>
     </main>
+
+    <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
+    <?php
+      require_once __DIR__ . "/../partials/related-content.php";
+      render_related_content("case-study", "indigo-booking");
+    ?>
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
 

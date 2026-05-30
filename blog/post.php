@@ -107,7 +107,6 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/post.css"/>
-  <link rel="stylesheet" href="../assets/css/related-content.css"/>
 
   <!-- JSON-LD STRUCTURED DATA -->
   <?php
@@ -244,7 +243,7 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
 
         </article>
 
-      </div>
+      </div><!-- /.post-body -->
 
       <!-- RELATED POSTS (same category) -->
       <?php if (!empty($related)): ?>
@@ -286,13 +285,13 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
         <?php endif; ?>
       </nav>
 
-      <!-- CROSS-CONTENT INTERNAL LINKS -->
-      <?php
-        require_once __DIR__ . "/../partials/related-content.php";
-        render_related_content('blog', $post['slug']);
-      ?>
-
     </main>
+
+    <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
+    <?php
+      require_once __DIR__ . "/../partials/related-content.php";
+      render_related_content('blog', $post['slug']);
+    ?>
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
 
