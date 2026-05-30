@@ -16,7 +16,6 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>" />
-  <meta name="keywords" content="Ramesh Mandal, UX Leader, Product Strategist, Design Systems, AI Workflows, Enterprise UX, Aviation UX, SaaS UX, User Experience Design, UX Strategy, UX Portfolio"/>
 
   <title><?= htmlspecialchars($pageTitle) ?></title>
   <!-- OG / TWITTER META -->
@@ -35,7 +34,15 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <meta name="twitter:description" content="17+ years designing enterprise products at scale. UX Strategy, Design Systems, AI workflows for 50M+ users."/>
   <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
   <link rel="canonical"            href="https://6epixels.com/"/>
-  
+
+  <!-- JSON-LD STRUCTURED DATA -->
+  <?php
+    require_once __DIR__ . "/includes/schema.php";
+    echo schema_person();
+    echo schema_website();
+    echo schema_breadcrumb([['Home', 'https://6epixels.com/']]);
+  ?>
+
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
   <link rel="icon" type="image/svg+xml"    href="/assets/icons/favicon.svg"/>
