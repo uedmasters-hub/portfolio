@@ -194,6 +194,7 @@ function showLogin($error = null) { ?>
     <a href="?view=list" class="btn btn-ghost">← All Posts</a>
     <a href="?view=new"  class="btn btn-primary">+ New Post</a>
     <a href="case-studies.php" class="btn btn-ghost">Case Studies</a>
+    <a href="audits.php" class="btn btn-ghost">UX Audits</a>
     <a href="?logout=1"  class="btn btn-ghost">Log out</a>
   </nav>
 </header>

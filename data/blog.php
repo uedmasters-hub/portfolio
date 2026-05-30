@@ -275,12 +275,12 @@ $posts = [
     "takeaway" => "Ask 'why' in interviews as a starting point, not an ending point. Validate with behaviour data. When they conflict, the behaviour is telling the truth.",
   ],
 
-    [
+  [
     "slug"     => 'this-is-just-a-test-blog',
     "category" => 'war',
     "tag"      => 'War Story',
     "featured" => false,
-    "title"    => 'This is just a test blog',
+    "title"    => 'This is just a test blog for review purposes',
     "subtitle" => '',
     "excerpt"  => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel quam at dui convallis pulvinar non a quam. Sed venenatis nisl at lacus pretium, eget tempus nibh lacinia. Curabitur sagittis varius tempor. Aenean non nibh eget velit volutpat bibendum. Nulla vel aliquet erat. Cu',
     "read_time"=> '3 min read',

@@ -3,130 +3,113 @@
    ========================================= */
 
 (function () {
-
   "use strict";
 
-  /* ── SMART NAV — hide on scroll down, reveal on scroll up ── */
+  /* ── SMART NAV ─────────────────────────── */
 
-(function () {
+  (function () {
 
-  const header   = document.querySelector(".site-header");
-  if (!header) return;
+    var header    = document.querySelector(".site-header");
+    if (!header) return;
 
-  const THRESHOLD  = 80;    // px from top before behaviour activates
-  const DELTA      = 12;    // min px scrolled — higher = ignores layout reflow jitter
-  const IDLE_MS    = 2500;  // ms idle before auto-reveal
-  const isMobile   = window.innerWidth < 768;
+    var THRESHOLD = 80;
+    var DELTA     = 12;
+    var IDLE_MS   = 2500;
 
-  let lastY        = 0;
-  let ticking      = false;
-  let idleTimer    = null;
+    var lastY     = 0;
+    var ticking   = false;
+    var idleTimer = null;
 
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(update);
-  }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
 
-  function update() {
-    const y     = window.scrollY;
-    const delta = y - lastY;
+    function update() {
+      var y     = window.scrollY;
+      var delta = y - lastY;
 
-    /* Always visible at top */
-    if (y <= THRESHOLD) {
-      show();
-      header.classList.remove("is-elevated");
+      if (y <= THRESHOLD) {
+        show();
+        header.classList.remove("is-elevated");
+        lastY   = y;
+        ticking = false;
+        return;
+      }
+
+      header.classList.add("is-elevated");
+
+      var threshold = window.innerWidth < 768 ? 20 : DELTA;
+
+      if (delta > threshold) {
+        hide();
+        resetIdle();
+      } else if (delta < -threshold) {
+        show();
+        clearIdleTimer();
+      }
+
       lastY   = y;
       ticking = false;
-      return;
     }
 
-    header.classList.add("is-elevated");
-
-    /* On mobile use larger delta to filter typewriter reflow noise */
-    const threshold = window.innerWidth < 768 ? 20 : DELTA;
-
-    /* Scrolling DOWN past threshold — hide */
-    if (delta > threshold) {
-      hide();
-      resetIdle();
+    function show() {
+      header.classList.remove("is-hidden");
+      document.body.classList.remove("nav-hidden");
     }
 
-    /* Scrolling UP — reveal */
-    else if (delta < -threshold) {
-      show();
+    function hide() {
+      header.classList.add("is-hidden");
+      document.body.classList.add("nav-hidden");
+    }
+
+    function resetIdle() {
       clearIdleTimer();
+      idleTimer = setTimeout(show, IDLE_MS);
     }
 
-    lastY   = y;
-    ticking = false;
-  }
-
-  function show() {
-    header.classList.remove("is-hidden");
-    document.body.classList.remove("nav-hidden");
-  }
-
-  function hide() {
-    header.classList.add("is-hidden");
-    document.body.classList.add("nav-hidden");
-  }
-
-  /* Auto-reveal after idle — user stopped scrolling */
-  function resetIdle() {
-    clearIdleTimer();
-    idleTimer = setTimeout(function () {
-      show();
-    }, IDLE_MS);
-  }
-
-  function clearIdleTimer() {
-    if (idleTimer) {
-      clearTimeout(idleTimer);
-      idleTimer = null;
+    function clearIdleTimer() {
+      if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
     }
-  }
 
-  window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-})();
+  })();
 
-/* ── ACTIVE NAV ────────────────────────── */
+  /* ── ACTIVE NAV ────────────────────────── */
 
-  const path  = window.location.pathname;
-  const links = document.querySelectorAll(".site-nav__link");
+  var path  = window.location.pathname;
+  var links = document.querySelectorAll(".site-nav__link");
 
   links.forEach(function (link) {
-    if (link.getAttribute("href") === path ||
-        (path === "/" && link.getAttribute("href") === "/")) {
+    var href = link.getAttribute("href");
+    if (href === path || (path === "/" && href === "/")) {
       link.classList.add("is-active");
     }
   });
 
-  /* ── STAT CARD 3D TILT ─────────────────── */
+  /* ── STAT CARD 3D TILT (desktop only) ─── */
 
-  const cards = document.querySelectorAll(".stat-card");
+  if (window.innerWidth > 768) {
+    var cards = document.querySelectorAll(".stat-card");
 
-  cards.forEach(function (card) {
+    cards.forEach(function (card) {
+      card.addEventListener("mousemove", function (e) {
+        var rect = card.getBoundingClientRect();
+        var x    = e.clientX - rect.left - rect.width  / 2;
+        var y    = e.clientY - rect.top  - rect.height / 2;
+        var rotY = (x / rect.width)  *  8;
+        var rotX = (y / rect.height) * -8;
+        card.style.transform =
+          "perspective(1200px) rotateX(" + rotX + "deg) rotateY(" + rotY + "deg) translateY(-5px)";
+      });
 
-    card.addEventListener("mousemove", function (e) {
-
-      const rect   = card.getBoundingClientRect();
-      const x      = e.clientX - rect.left - rect.width  / 2;
-      const y      = e.clientY - rect.top  - rect.height / 2;
-      const rotY   = (x / rect.width)  *  8;
-      const rotX   = (y / rect.height) * -8;
-
-      card.style.transform =
-        `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-5px)`;
-
+      card.addEventListener("mouseleave", function () {
+        card.style.transform = "";
+      });
     });
-
-    card.addEventListener("mouseleave", function () {
-      card.style.transform = "";
-    });
-
-  });
+  }
 
 })();
 
@@ -134,9 +117,9 @@
 
 (function () {
 
-  const hamburger = document.querySelector(".nav-hamburger");
-  const drawer    = document.querySelector(".nav-drawer");
-  const close     = document.querySelector(".nav-drawer__close");
+  var hamburger = document.querySelector(".nav-hamburger");
+  var drawer    = document.querySelector(".nav-drawer");
+  var closeBtn  = document.querySelector(".nav-drawer__close");
 
   if (!hamburger || !drawer) return;
 
@@ -145,6 +128,8 @@
     hamburger.classList.add("is-active");
     hamburger.setAttribute("aria-expanded", "true");
     drawer.setAttribute("aria-hidden", "false");
+    /* Lock scroll on both html and body — Android needs both */
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
   }
 
@@ -153,20 +138,27 @@
     hamburger.classList.remove("is-active");
     hamburger.setAttribute("aria-expanded", "false");
     drawer.setAttribute("aria-hidden", "true");
+    document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
   }
 
   hamburger.addEventListener("click", openDrawer);
-  if (close) close.addEventListener("click", closeDrawer);
+  if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
 
-  // close on backdrop tap
+  /* close on backdrop tap */
   drawer.addEventListener("click", function (e) {
     if (e.target === drawer) closeDrawer();
   });
 
-  // close on Escape
+  /* close on Escape */
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeDrawer();
+  });
+
+  /* close drawer links on tap */
+  var drawerLinks = drawer.querySelectorAll(".nav-drawer__link");
+  drawerLinks.forEach(function (link) {
+    link.addEventListener("click", closeDrawer);
   });
 
 })();

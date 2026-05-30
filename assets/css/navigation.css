@@ -8,47 +8,43 @@
   position:        fixed;
   top:             0;
   left:            0;
-  width:           100vw;      /* explicit viewport width — prevents Android stretch */
+  right:           0;           /* right:0 instead of width:100vw — no Android bleed */
   z-index:         100;
   height:          72px;
   display:         flex;
   align-items:     center;
   justify-content: space-between;
-  padding:         0 48px;
+  padding:         0 40px;
   box-sizing:      border-box;
   background:      rgba(245,245,243,0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-bottom:   1px solid transparent;
-
-  /* scroll states */
   transform:       translateY(0);
   transition:
-    transform      0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color   0.3s ease,
-    background     0.3s ease,
-    box-shadow     0.3s ease;
+    transform    0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    background   0.3s ease,
+    box-shadow   0.3s ease;
   will-change: transform;
+  /* Strict containment — nothing inside can bleed out */
+  overflow:        visible;
 }
 
-/* scrolled — show border + shadow */
 .site-header.is-scrolled {
   border-bottom-color: var(--border);
   box-shadow: 0 1px 24px rgba(0,0,0,0.06);
 }
 
-/* hidden — slide up out of view */
 .site-header.is-hidden {
   transform:  translateY(-100%);
   box-shadow: none;
 }
 
-/* revealed — spring back in */
 .site-header.is-revealed {
   transform: translateY(0);
 }
 
-/* at top — visible on all page types */
 .site-header.is-top {
   background:          rgba(245,245,243,0.82);
   backdrop-filter:     blur(12px);
@@ -57,31 +53,30 @@
   box-shadow:          none;
 }
 
-/* hero-page — transparent over full-bleed image hero */
 .has-hero-bg .site-header.is-top {
   background:          rgba(245,245,243,0.0);
   backdrop-filter:     blur(0px);
   -webkit-backdrop-filter: blur(0px);
 }
 
-/* elevated — scrolled away from top */
 .site-header.is-elevated {
   background: rgba(245,245,243,0.97);
   box-shadow: 0 1px 0 var(--border), 0 4px 20px rgba(0,0,0,0.05);
 }
 
-/* push page down since header is now fixed */
+/* push page down since header is fixed */
 .page-wrapper {
   padding-top: 72px;
 }
 
-/* ── LOGO GROUP ──────────────────────────── */
+/* ── LOGO ────────────────────────────────── */
 
 .site-logo {
   display:     flex;
   align-items: center;
   gap:         10px;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
 .site-logo__mark {
@@ -113,33 +108,34 @@
 .site-header__cta {
   display:     flex;
   align-items: center;
-  gap:         40px;
+  gap:         32px;
+  flex-shrink: 0;
 }
 
-/* ── NAV ─────────────────────────────────── */
+/* ── DESKTOP NAV ─────────────────────────── */
 
 .site-nav {
   display:     flex;
   align-items: center;
-  gap:         28px;
+  gap:         24px;
 }
 
 .site-nav__link {
   position:       relative;
-  font-size:      14px;
+  font-size:      13.5px;
   font-weight:    400;
   color:          var(--text-secondary);
   line-height:    1;
   padding-bottom: 2px;
+  white-space:    nowrap;
   transition:     color var(--t-fast) ease;
+  text-decoration: none;
 }
 
-/* hover — blue accent, no underline */
 .site-nav__link:hover {
   color: var(--blue);
 }
 
-/* active — blue with sliding underline */
 .site-nav__link.is-active {
   color: var(--blue);
 }
@@ -161,8 +157,8 @@
   display:         inline-flex;
   align-items:     center;
   justify-content: center;
-  padding:         10px 22px;
-  font-size:       13px;
+  padding:         9px 20px;
+  font-size:       12px;
   font-weight:     600;
   letter-spacing:  0.06em;
   text-transform:  uppercase;
@@ -170,6 +166,8 @@
   border:          1.5px solid rgba(0,0,0,0.18);
   border-radius:   var(--radius-pill);
   background:      transparent;
+  text-decoration: none;
+  white-space:     nowrap;
   transition:
     background   var(--t-fast) ease,
     border-color var(--t-fast) ease,
@@ -184,17 +182,9 @@
 
 /* ── HAMBURGER ───────────────────────────── */
 
+/* Hidden on desktop */
 .nav-hamburger {
-  display:         none;
-  flex-direction:  column;
-  justify-content: center;
-  gap:             5px;
-  width:           36px;
-  height:          36px;
-  cursor:          pointer;
-  background:      transparent;
-  border:          none;
-  padding:         4px;
+  display: none;
 }
 
 .nav-hamburger__line {
@@ -212,8 +202,8 @@
   position:   fixed;
   top:        0;
   left:       0;
-  width:      100vw;           /* explicit — prevents Android document-width stretch */
-  height:     100vh;
+  right:      0;            /* right:0 + left:0 = full width, Android-safe */
+  bottom:     0;            /* bottom:0 instead of height:100vh = dvh equivalent */
   z-index:    200;
   background: rgba(245,245,243,0.98);
   backdrop-filter: blur(24px);
@@ -232,12 +222,12 @@
   visibility: visible;
 }
 
-/* Header — absolute top */
+/* Drawer — header row */
 .nav-drawer__header {
   position:        absolute;
   top:             0;
   left:            0;
-  width:           100%;        /* use width not right:0 — safer on Android */
+  right:           0;
   box-sizing:      border-box;
   display:         flex;
   align-items:     center;
@@ -247,12 +237,12 @@
 }
 
 .nav-drawer__close {
-  width:       36px;
-  height:      36px;
+  width:       40px;
+  height:      40px;
   display:     flex;
   align-items: center;
   justify-content: center;
-  font-size:   22px;
+  font-size:   20px;
   color:       var(--text-primary);
   cursor:      pointer;
   background:  transparent;
@@ -261,12 +251,12 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* CTA — absolute bottom, always visible */
+/* Drawer — CTA pinned to bottom */
 .nav-drawer__cta {
   position:   absolute;
   bottom:     0;
   left:       0;
-  width:      100%;
+  right:      0;
   box-sizing: border-box;
   padding:    16px 24px;
   padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
@@ -298,36 +288,39 @@
   background: #1339a8;
 }
 
-/* Links — scrollable area between header and CTA */
+/* Drawer — scrollable link list */
 .nav-drawer__links {
   position:   absolute;
-  top:        80px;   /* below header */
+  top:        76px;
   left:       0;
   right:      0;
-  bottom:     90px;   /* above CTA */
+  bottom:     90px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding:    8px 24px 16px;
+  box-sizing: border-box;
 }
 
 .nav-drawer__link {
-  display:        block;
-  font-size:      2.2rem;
-  font-weight:    300;
-  letter-spacing: -0.04em;
-  color:          var(--text-primary);
-  padding:        14px 0;
-  border-bottom:  1px solid var(--border);
+  display:         block;
+  font-size:       2rem;
+  font-weight:     300;
+  letter-spacing:  -0.04em;
+  color:           var(--text-primary);
+  padding:         14px 0;
+  border-bottom:   1px solid var(--border);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
-  transition:     color 0.15s ease;
+  transition:      color 0.15s ease;
 }
 
 .nav-drawer__link:last-child { border-bottom: none; }
-.nav-drawer__link:hover,
-.nav-drawer__link:active { color: var(--blue); }
 
-/* ── HAMBURGER ACTIVE STATE ──────────────── */
+.nav-drawer__link:hover,
+.nav-drawer__link:active,
+.nav-drawer__link.is-active { color: var(--blue); }
+
+/* ── HAMBURGER ACTIVE (X) ────────────────── */
 
 .nav-hamburger.is-active .nav-hamburger__line:nth-child(1) {
   transform: translateY(6.5px) rotate(45deg);
@@ -339,31 +332,59 @@
   transform: translateY(-6.5px) rotate(-45deg);
 }
 
-/* ── RESPONSIVE — 768px ──────────────────── */
+/* ── RESPONSIVE ≤ 1024px ─────────────────── */
+
+@media (max-width: 1024px) {
+
+  .site-header {
+    padding: 0 32px;
+  }
+
+  .site-nav {
+    gap: 18px;
+  }
+
+  .site-header__cta {
+    gap: 24px;
+  }
+
+}
+
+/* ── RESPONSIVE ≤ 768px ──────────────────── */
+/* MOBILE — show hamburger, hide desktop nav  */
 
 @media (max-width: 768px) {
 
   .site-header {
-    height:     64px;
-    padding:    0 20px;
-    width:      100vw;
-    box-sizing: border-box;
-    overflow:   visible;  /* ensure hamburger is never clipped */
+    height:   64px;
+    padding:  0 20px;
+    /* DO NOT set width here — left:0 + right:0 already handles it */
   }
 
-  /* hide desktop nav + connect */
-  .site-header .site-nav,
-  .site-header .site-header__cta,
-  .site-header .btn-connect {
+  /* Hide desktop nav group entirely */
+  .site-header__cta {
     display: none !important;
   }
 
-  /* show hamburger — always visible on mobile */
-  .site-header .nav-hamburger {
-    display:     flex !important;
-    flex-shrink: 0;
+  /* Show hamburger */
+  .nav-hamburger {
+    display:         flex !important;
+    flex-direction:  column;
+    justify-content: center;
+    gap:             5px;
+    width:           40px;
+    height:          40px;
+    cursor:          pointer;
+    background:      transparent;
+    border:          none;
+    padding:         8px;
+    flex-shrink:     0;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* drawer is always flex — visibility controls show/hide */
+  /* page-wrapper offset for shorter mobile header */
+  .page-wrapper {
+    padding-top: 64px;
+  }
 
 }

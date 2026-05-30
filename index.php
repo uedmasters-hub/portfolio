@@ -16,6 +16,7 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>" />
+  <meta name="keywords" content="Ramesh Mandal, UX Leader, Product Strategist, Design Systems, AI Workflows, Enterprise UX, Aviation UX, SaaS UX, User Experience Design, UX Strategy, UX Portfolio"/>
 
   <title><?= htmlspecialchars($pageTitle) ?></title>
   <!-- OG / TWITTER META -->
