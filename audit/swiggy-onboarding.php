@@ -504,12 +504,13 @@ $nav = [
         </div>
       </div>
 
-    </main>
 
-    <?php
-    require_once __DIR__ . "/../partials/related-content.php";
-    echo render_related_content(["current_type" => "audit", "current_slug" => "swiggy-onboarding"]);
-  ?>
+      <!-- CROSS-CONTENT INTERNAL LINKS -->
+      <?php
+        require_once __DIR__ . "/../partials/related-content.php";
+        echo render_related_content(["current_type" => "audit", "current_slug" => "swiggy-onboarding"]);
+      ?>
+    </main>
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
 

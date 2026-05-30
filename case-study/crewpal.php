@@ -202,11 +202,13 @@ $nav = [
           </a>
         </div>
       </div>
+
+      <!-- CROSS-CONTENT INTERNAL LINKS -->
+      <?php
+        require_once __DIR__ . "/../partials/related-content.php";
+        echo render_related_content(["current_type" => "case-study", "current_slug" => "crewpal"]);
+      ?>
     </main>
-    <?php
-    require_once __DIR__ . "/../partials/related-content.php";
-    echo render_related_content(["current_type" => "case-study", "current_slug" => "crewpal"]);
-  ?>
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
   </div>
