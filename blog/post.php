@@ -61,8 +61,30 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="<?= $pageDesc ?>"/>
+  <meta name="description"  content="<?= $pageDesc ?>"/>
+  <meta name="author"       content="Ramesh Mandal"/>
   <title><?= $pageTitle ?></title>
+
+  <!-- CANONICAL — clean URL (rewritten by .htaccess) -->
+  <link rel="canonical" href="https://6epixels.com/blog/<?= urlencode($post['slug']) ?>"/>
+
+  <!-- OG / TWITTER -->
+  <meta property="og:site_name"   content="Ramesh Mandal — Field Notes"/>
+  <meta property="og:type"        content="article"/>
+  <meta property="og:url"         content="https://6epixels.com/blog/<?= urlencode($post['slug']) ?>"/>
+  <meta property="og:title"       content="<?= htmlspecialchars($post['title']) ?>"/>
+  <meta property="og:description" content="<?= htmlspecialchars($post['excerpt'] ?? $post['subtitle'] ?? '') ?>"/>
+  <meta property="og:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height"content="630"/>
+  <meta property="og:locale"      content="en_IN"/>
+  <meta property="article:author"         content="Ramesh Mandal"/>
+  <meta property="article:section"        content="<?= htmlspecialchars($post['tag'] ?? 'UX Design') ?>"/>
+  <meta name="twitter:card"       content="summary_large_image"/>
+  <meta name="twitter:site"       content="@ramsmandal"/>
+  <meta name="twitter:title"      content="<?= htmlspecialchars($post['title']) ?>"/>
+  <meta name="twitter:description"content="<?= htmlspecialchars($post['excerpt'] ?? $post['subtitle'] ?? '') ?>"/>
+  <meta name="twitter:image"      content="https://6epixels.com/assets/og/og-default.jpg"/>
 
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"    href="/assets/icons/favicon.ico"/>

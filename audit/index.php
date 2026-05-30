@@ -210,7 +210,7 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
                 <div class="audit-card__thumb audit-card__thumb--soon">
                   <img
                     src="<?= htmlspecialchars($audit['image']) ?>"
-                    alt=""
+                    alt="<?= htmlspecialchars($audit['product']) ?> — UX Audit coming soon"
                     loading="lazy"
                   />
                   <div class="audit-card__thumb-overlay"></div>
