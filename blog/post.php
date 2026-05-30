@@ -245,49 +245,48 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
 
       </div><!-- /.post-body -->
 
-      <!-- RELATED POSTS (same category) -->
-      <?php if (!empty($related)): ?>
-      <section class="post-related">
-        <p class="post-related__label">MORE FROM <?= strtoupper(htmlspecialchars($post['tag'])) ?>S</p>
-        <div class="post-related__grid">
-          <?php foreach ($related as $r): ?>
-            <a href="/blog/<?= urlencode($r['slug']) ?>" class="post-related__card fade-in">
-              <span class="post-related__emoji" aria-hidden="true"><?= $r['emoji'] ?></span>
-              <div>
-                <p class="post-related__card-tag"><?= htmlspecialchars($r['tag']) ?></p>
-                <p class="post-related__card-title"><?= htmlspecialchars($r['title']) ?></p>
-                <p class="post-related__card-excerpt"><?= htmlspecialchars($r['excerpt']) ?></p>
-              </div>
-            </a>
-          <?php endforeach; ?>
-        </div>
-      </section>
-      <?php endif; ?>
-
-      <!-- PREV / NEXT -->
-      <nav class="post-nav" aria-label="Browse posts">
-        <?php if ($prev): ?>
-          <a href="/blog/<?= urlencode($prev['slug']) ?>" class="post-nav__link">
-            <p class="post-nav__dir">← Previous Note</p>
-            <p class="post-nav__meta"><?= htmlspecialchars($prev['tag']) ?></p>
-            <p class="post-nav__title"><?= htmlspecialchars($prev['title']) ?></p>
-          </a>
-        <?php else: ?>
-          <div></div>
-        <?php endif; ?>
-
-        <?php if ($next): ?>
-          <a href="/blog/<?= urlencode($next['slug']) ?>" class="post-nav__link post-nav__link--right">
-            <p class="post-nav__dir">Next Note →</p>
-            <p class="post-nav__meta"><?= htmlspecialchars($next['tag']) ?></p>
-            <p class="post-nav__title"><?= htmlspecialchars($next['title']) ?></p>
-          </a>
-        <?php endif; ?>
-      </nav>
-
     </main>
 
-    <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
+    <!-- SAME-CATEGORY POSTS — outside main, full width like rc-section -->
+    <?php if (!empty($related)): ?>
+    <section class="post-related">
+      <p class="post-related__label">MORE FROM <?= strtoupper(htmlspecialchars($post['tag'])) ?>S</p>
+      <div class="post-related__grid">
+        <?php foreach ($related as $r): ?>
+          <a href="/blog/<?= urlencode($r['slug']) ?>" class="post-related__card fade-in">
+            <span class="post-related__emoji" aria-hidden="true"><?= $r['emoji'] ?></span>
+            <div>
+              <p class="post-related__card-tag"><?= htmlspecialchars($r['tag']) ?></p>
+              <p class="post-related__card-title"><?= htmlspecialchars($r['title']) ?></p>
+              <p class="post-related__card-excerpt"><?= htmlspecialchars($r['excerpt']) ?></p>
+            </div>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    </section>
+    <?php endif; ?>
+
+    <!-- PREV / NEXT — outside main, full width -->
+    <nav class="post-nav" aria-label="Browse posts">
+      <?php if ($prev): ?>
+        <a href="/blog/<?= urlencode($prev['slug']) ?>" class="post-nav__link">
+          <p class="post-nav__dir">← Previous Note</p>
+          <p class="post-nav__meta"><?= htmlspecialchars($prev['tag']) ?></p>
+          <p class="post-nav__title"><?= htmlspecialchars($prev['title']) ?></p>
+        </a>
+      <?php else: ?>
+        <div></div>
+      <?php endif; ?>
+      <?php if ($next): ?>
+        <a href="/blog/<?= urlencode($next['slug']) ?>" class="post-nav__link post-nav__link--right">
+          <p class="post-nav__dir">Next Note →</p>
+          <p class="post-nav__meta"><?= htmlspecialchars($next['tag']) ?></p>
+          <p class="post-nav__title"><?= htmlspecialchars($next['title']) ?></p>
+        </a>
+      <?php endif; ?>
+    </nav>
+
+    <!-- CROSS-CONTENT INTERNAL LINKS -->
     <?php
       require_once __DIR__ . "/../partials/related-content.php";
       render_related_content('blog', $post['slug']);
