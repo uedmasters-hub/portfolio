@@ -275,4 +275,24 @@ $posts = [
     "takeaway" => "Ask 'why' in interviews as a starting point, not an ending point. Validate with behaviour data. When they conflict, the behaviour is telling the truth.",
   ],
 
+    [
+    "slug"     => 'this-is-just-a-test-blog',
+    "category" => 'war',
+    "tag"      => 'War Story',
+    "featured" => false,
+    "title"    => 'This is just a test blog',
+    "subtitle" => '',
+    "excerpt"  => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel quam at dui convallis pulvinar non a quam. Sed venenatis nisl at lacus pretium, eget tempus nibh lacinia. Curabitur sagittis varius tempor. Aenean non nibh eget velit volutpat bibendum. Nulla vel aliquet erat. Cu',
+    "read_time"=> '3 min read',
+    "date"     => 'May 30 2026',
+    "emoji"    => '',
+    "color"    => 'light',
+    "body"     => [
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel quam at dui convallis pulvinar non a quam. Sed venenatis nisl at lacus pretium, eget tempus nibh lacinia. Curabitur sagittis varius tempor. Aenean non nibh eget velit volutpat bibendum. Nulla vel aliquet erat. Curabitur condimentum diam sit amet maximus venenatis. Duis sed turpis interdum, gravida mi nec, tempor ante.
+
+Phasellus sit amet metus orci. Donec pharetra nunc eu purus fringilla, a pretium purus tincidunt. Nam sed neque mi. Nulla auctor nibh odio, nec venenatis erat luctus eget. Donec euismod neque vitae velit feugiat, eget accumsan sem dapibus. Aenean pharetra pellentesque tellus ut blandit. Integer bibendum metus sed lacus eleifend, vel dictum nibh pretium. Cras id imperdiet tortor. Mauris malesuada varius nulla quis lobortis. Pellentesque in magna at ex sodales rhoncus sed sit amet lacus. Quisque consectetur nibh at sapien dignissim luctus. Cras ac sollicitudin nunc. Duis luctus nisl vitae erat pulvinar rutrum. Integer facilisis eros purus, quis porta orci vestibulum eget. Phasellus mollis felis ac nulla placerat, non ultrices arcu dignissim. Duis mattis ultrices erat a laoreet.',
+    ],
+    "takeaway" => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vel quam at dui convallis pulvinar non a quam. Sed venenatis nisl at lacus pretium, eget tempus nibh lacinia. Curabitur sagittis varius tempor. Aenean non nibh eget velit volutpat bibendum. Nulla vel aliquet erat. Curabitur condimentum diam sit amet maximus venenatis. Duis sed turpis interdum, gravida mi nec, tempor ante.',
+  ],
+
 ];

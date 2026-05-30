@@ -51,7 +51,7 @@ $currentKey = $currentKey ?? "home";
 >
 
   <div class="nav-drawer__header">
-    <a href="/portfolio-1/" class="site-logo">
+    <a href="/" class="site-logo">
       <span class="site-logo__mark" aria-hidden="true">RM</span>
       <span class="site-logo__text">Ramesh Mandal</span>
     </a>

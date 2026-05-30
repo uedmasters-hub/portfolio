@@ -21,6 +21,22 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>" />
 
   <title><?= htmlspecialchars($pageTitle) ?></title>
+  <!-- OG / TWITTER META -->
+  <meta property="og:site_name"    content="Ramesh Mandal"/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://6epixels.com/about.php"/>
+  <meta property="og:title"        content="Ramesh Mandal — About"/>
+  <meta property="og:description"  content="Sr. Manager UI/UX, 17+ years. Led IndiGo booking, CrewPal, and design systems serving millions."/>
+  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"       content="en_IN"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@ramsmandal"/>
+  <meta name="twitter:title"       content="Ramesh Mandal — About"/>
+  <meta name="twitter:description" content="Sr. Manager UI/UX, 17+ years. Led IndiGo booking, CrewPal, and design systems serving millions."/>
+  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <link rel="canonical"            href="https://6epixels.com/about.php"/>
   
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -36,6 +52,7 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
 
   <link rel="stylesheet" href="assets/css/preloader.css" />
   <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/animations.css"/>
   <link rel="stylesheet" href="assets/css/reset.css" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/navigation.css" />
@@ -71,9 +88,9 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
     <div class="bg-mouse-glow"></div>
   </div>
 
+  <?php require_once __DIR__ . "/partials/header.php"; ?>
   <div class="page-wrapper">
 
-    <?php require_once __DIR__ . "/partials/header.php"; ?>
 
     <main id="main-content">
 

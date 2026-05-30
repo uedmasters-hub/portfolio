@@ -21,7 +21,7 @@ $downloads = [
     "pages"    => "12 pages",
     "color"    => "blue",
     "cta"      => "Get the template",
-    "href"     => "/portfolio/contact.php?type=resource&item=ux-audit-template",
+    "href"     => "/contact.php?type=resource&item=ux-audit-template",
   ],
   [
     "id"       => "design-brief",
@@ -33,7 +33,7 @@ $downloads = [
     "pages"    => "1 page",
     "color"    => "blue",
     "cta"      => "Get the brief",
-    "href"     => "/portfolio/contact.php?type=resource&item=design-brief",
+    "href"     => "/contact.php?type=resource&item=design-brief",
   ],
   [
     "id"       => "research-synthesis",
@@ -45,7 +45,7 @@ $downloads = [
     "pages"    => "8 pages",
     "color"    => "blue",
     "cta"      => "Get the toolkit",
-    "href"     => "/portfolio/contact.php?type=resource&item=research-synthesis",
+    "href"     => "/contact.php?type=resource&item=research-synthesis",
   ],
   [
     "id"       => "ux-metrics",
@@ -57,7 +57,7 @@ $downloads = [
     "pages"    => "5 pages",
     "color"    => "blue",
     "cta"      => "Get the dashboard",
-    "href"     => "/portfolio/contact.php?type=resource&item=ux-metrics",
+    "href"     => "/contact.php?type=resource&item=ux-metrics",
   ],
 ];
 

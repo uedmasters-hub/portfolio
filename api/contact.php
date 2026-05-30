@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
   exit;
 }
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
 /* ── CSRF ─────────────────────────────────── */
 $token = $_POST["csrf_token"] ?? "";

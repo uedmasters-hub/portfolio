@@ -3,9 +3,12 @@
    CONTACT.PHP
    ========================================= */
 
-require_once __DIR__ . "/includes/config.php";
+/* Session must start before ANY output */
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
-session_start();
+require_once __DIR__ . "/includes/config.php";
 
 /* Generate CSRF token */
 if (empty($_SESSION["csrf_token"])) {
@@ -25,6 +28,22 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>" />
 
   <title><?= htmlspecialchars($pageTitle) ?></title>
+  <!-- OG / TWITTER META -->
+  <meta property="og:site_name"    content="Ramesh Mandal"/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://6epixels.com/contact.php"/>
+  <meta property="og:title"        content="Contact Ramesh Mandal"/>
+  <meta property="og:description"  content="Open to senior UX leadership roles, product strategy, and enterprise design consultancy."/>
+  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"       content="en_IN"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@ramsmandal"/>
+  <meta name="twitter:title"       content="Contact Ramesh Mandal"/>
+  <meta name="twitter:description" content="Open to senior UX leadership roles, product strategy, and enterprise design consultancy."/>
+  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <link rel="canonical"            href="https://6epixels.com/contact.php"/>
 
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -37,7 +56,9 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet" />
 
+  <link rel="stylesheet" href="assets/css/preloader.css"/>
   <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/animations.css"/>
   <link rel="stylesheet" href="assets/css/reset.css" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/navigation.css" />
@@ -49,6 +70,21 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
 </head>
 <body>
 
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__grid"></div>
+    <div class="preloader__inner">
+      <div class="preloader__mark">RM</div>
+      <div class="preloader__name">
+        <span class="preloader__name-text">Get in Touch</span>
+        <span class="preloader__name-role">Let's build something exceptional</span>
+      </div>
+      <div class="preloader__bar-wrap"><div class="preloader__bar" id="preloader-bar"></div></div>
+      <span class="preloader__counter" id="preloader-counter">0%</span>
+    </div>
+  </div>
+
   <!-- BACKGROUND -->
   <div class="bg-canvas" aria-hidden="true">
     <div class="bg-grid"></div>
@@ -57,9 +93,9 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
     <div class="bg-mouse-glow"></div>
   </div>
 
+  <?php require_once __DIR__ . "/partials/header.php"; ?>
   <div class="page-wrapper">
 
-    <?php require_once __DIR__ . "/partials/header.php"; ?>
 
     <main id="main-content">
 
@@ -276,6 +312,7 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
 
   </div>
 
+  <script src="assets/js/preloader.js"></script>
   <script src="assets/js/background.js" defer></script>
   <script src="assets/js/app.js"        defer></script>
   <script src="assets/js/contact.js"    defer></script>

@@ -304,6 +304,15 @@ body:not(.nav-hidden) .blog-filter { top: 72px; }
   grid-template-columns: repeat(3, 1fr);
   gap:                   20px;
   align-items:           start;
+  grid-auto-rows:        auto;
+}
+
+/* last card in a row of 3 — if orphaned, span remaining cols */
+.blog-card:last-child:nth-child(3n - 1) {
+  grid-column: span 2;
+}
+.blog-card:last-child:nth-child(3n - 2) {
+  grid-column: span 3;
 }
 
 /* ── POST CARD ───────────────────────────── */

@@ -13,6 +13,22 @@ $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, desig
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>"/>
   <title><?= htmlspecialchars($pageTitle) ?></title>
+  <!-- OG / TWITTER META -->
+  <meta property="og:site_name"    content="Ramesh Mandal"/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://6epixels.com/case-study/"/>
+  <meta property="og:title"        content="Case Studies — Ramesh Mandal"/>
+  <meta property="og:description"  content="Five enterprise UX case studies with measurable business impact."/>
+  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"       content="en_IN"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@ramsmandal"/>
+  <meta name="twitter:title"       content="Case Studies — Ramesh Mandal"/>
+  <meta name="twitter:description" content="Five enterprise UX case studies with measurable business impact."/>
+  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <link rel="canonical"            href="https://6epixels.com/case-study/"/>
   
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -27,6 +43,7 @@ $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, desig
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/preloader.css"/>
   <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/animations.css"/>
   <link rel="stylesheet" href="../assets/css/reset.css"/>
   <link rel="stylesheet" href="../assets/css/main.css"/>
   <link rel="stylesheet" href="../assets/css/navigation.css"/>
@@ -56,9 +73,9 @@ $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, desig
     <div class="bg-mouse-glow"></div>
   </div>
 
-  <div class="page-wrapper">
+<?php require_once __DIR__ . "/../partials/header.php"; ?>
 
-    <?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <div class="page-wrapper">
 
     <main id="main-content">
 

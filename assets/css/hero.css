@@ -159,16 +159,23 @@
 @media (max-width: 768px) {
 
   .hero-wrapper {
-    min-height: auto;
-    padding:    24px 20px 0;
-    gap:        0;
-    overflow:   hidden;
+    min-height:      auto;
+    padding:         24px 20px 0;
+    gap:             0;
+    overflow:        hidden;
+    overflow-x:      clip;    /* stronger than hidden on Android */
+    width:           100%;
+    max-width:       100vw;
+    box-sizing:      border-box;
+    justify-content: flex-start;
+    flex-direction:  column;
   }
 
   .hero {
     justify-content: flex-start;
     align-items:     flex-start;
-    padding-bottom:  36px;
+    padding-bottom:  28px;
+    flex:            none;       /* don't flex-grow on mobile */
   }
 
   .hero__content {
@@ -177,11 +184,14 @@
   }
 
   .hero__title {
-    font-size:   clamp(2.2rem, 9.5vw, 4rem);
-    line-height: 1.04;
-    max-width:   100%;
-    /* lock 3 lines so typewriter never shifts page height */
-    min-height:  calc(clamp(2.2rem, 9.5vw, 4rem) * 1.04 * 3);
+    font-size:      clamp(1.9rem, 8vw, 3.4rem);
+    line-height:    1.08;
+    letter-spacing: -0.04em;   /* reduce from -0.06em — less overflow risk */
+    max-width:      100%;
+    width:          100%;
+    overflow:       hidden;
+    overflow-wrap:  break-word;
+    word-break:     break-word;
   }
 
   /* bullet separators */
@@ -229,8 +239,12 @@
 @media (max-width: 480px) {
 
   .hero__title {
-    font-size:  clamp(1.9rem, 12vw, 3rem);
-    min-height: calc(clamp(1.9rem, 8.5vw, 3rem) * 2.04 * 3);
+    font-size:      clamp(1.6rem, 9vw, 2.4rem);
+    letter-spacing: -0.03em;
+    overflow-wrap:  break-word;
+    word-break:     break-word;
+    overflow:       hidden;
+    width:          100%;
   }
 
   .hero__chips {

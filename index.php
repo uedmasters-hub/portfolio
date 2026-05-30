@@ -18,6 +18,22 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>" />
 
   <title><?= htmlspecialchars($pageTitle) ?></title>
+  <!-- OG / TWITTER META -->
+  <meta property="og:site_name"    content="Ramesh Mandal"/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://6epixels.com/"/>
+  <meta property="og:title"        content="Ramesh Mandal — UX Leader"/>
+  <meta property="og:description"  content="17+ years designing enterprise products at scale. UX Strategy, Design Systems, AI workflows for 50M+ users."/>
+  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"       content="en_IN"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@ramsmandal"/>
+  <meta name="twitter:title"       content="Ramesh Mandal — UX Leader"/>
+  <meta name="twitter:description" content="17+ years designing enterprise products at scale. UX Strategy, Design Systems, AI workflows for 50M+ users."/>
+  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <link rel="canonical"            href="https://6epixels.com/"/>
   
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -40,6 +56,7 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <!-- ── CSS ── -->
   <link rel="stylesheet" href="assets/css/preloader.css" />
   <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/animations.css"/>
   <link rel="stylesheet" href="assets/css/reset.css" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/navigation.css" />
@@ -83,10 +100,10 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   </div>
 
   <!-- ── PAGE ── -->
+  <?php require_once __DIR__ . "/partials/header.php"; ?>
   <div class="page-wrapper">
 
     <!-- HEADER -->
-    <?php require_once __DIR__ . "/partials/header.php"; ?>
 
     <!-- HERO + STATS -->
     <main id="main-content">

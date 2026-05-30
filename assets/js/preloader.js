@@ -62,22 +62,18 @@
     cancelAnimationFrame(raf);
     setProgress(100);
 
-    /* Short pause at 100% */
     setTimeout(function () {
-      preloader.classList.add("is-done");
-      const scrollY = parseInt(document.body.style.top || "0") * -1;
+      /* Remove loading state */
       document.body.classList.remove("is-loading");
-      document.body.style.position = "";
-      document.body.style.top      = "";
-      document.body.style.left     = "";
-      document.body.style.width    = "";
-      window.scrollTo(0, scrollY);
 
+      /* Fade out preloader */
+      preloader.classList.add("is-done");
+
+      /* Reveal page */
       if (page) {
-        /* Small delay so preloader fade starts first */
         setTimeout(function () {
           page.classList.add("is-revealed");
-        }, 120);
+        }, 100);
       }
     }, 280);
   }

@@ -364,6 +364,7 @@
 
   .transform-section {
     padding: 56px 20px 0;
+    overflow-x: hidden;
   }
 
   .transform-header {
@@ -419,4 +420,12 @@
     font-size: 38px;
   }
 
+}
+@media (max-width: 480px) {
+  .transform-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  .transform-metric {
+    padding: 20px 16px;
+  }
 }

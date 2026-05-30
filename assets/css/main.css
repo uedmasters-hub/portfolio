@@ -59,6 +59,17 @@ body {
   transform: translateY(0);
 }
 
+/* On mobile: no vertical transform to prevent layout bleed */
+@media (max-width: 768px) {
+  .fade-in {
+    transform: none;
+    transition: opacity 0.5s var(--ease-out);
+  }
+  .fade-in.is-visible {
+    opacity: 1;
+  }
+}
+
 /* ── STAGGER DELAYS ──────────────────────── */
 
 .fade-in:nth-child(1) { transition-delay: 0ms;   }

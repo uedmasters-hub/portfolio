@@ -34,14 +34,21 @@
   overflow-y: auto;
   overflow-x: hidden;
   transform:  translateX(100%);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  visibility: hidden;             /* hidden when off-screen — prevents Android overflow */
+  transition:
+    transform   0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility  0s   linear 0.5s; /* delay visibility until after slide-out */
   display:    flex;
   flex-direction: column;
   box-shadow: -24px 0 80px rgba(0,0,0,0.12), -1px 0 0 rgba(0,0,0,0.06);
 }
 
 .chip-panel.is-open {
-  transform: translateX(0);
+  transform:  translateX(0);
+  visibility: visible;
+  transition:
+    transform  0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s   linear 0s;   /* immediately visible when opening */
 }
 
 /* ── PANEL HEADER ────────────────────────── */

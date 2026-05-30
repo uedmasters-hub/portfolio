@@ -13,6 +13,22 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>"/>
   <title><?= htmlspecialchars($pageTitle) ?></title>
+  <!-- OG / TWITTER META -->
+  <meta property="og:site_name"    content="Ramesh Mandal"/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://6epixels.com/resources.php"/>
+  <meta property="og:title"        content="UX Resources — Ramesh Mandal"/>
+  <meta property="og:description"  content="Frameworks, templates, and curated references from 17 years of enterprise UX practice."/>
+  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"       content="en_IN"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@ramsmandal"/>
+  <meta name="twitter:title"       content="UX Resources — Ramesh Mandal"/>
+  <meta name="twitter:description" content="Frameworks, templates, and curated references from 17 years of enterprise UX practice."/>
+  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <link rel="canonical"            href="https://6epixels.com/resources.php"/>
   
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -27,6 +43,7 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="assets/css/preloader.css"/>
   <link rel="stylesheet" href="assets/css/variables.css"/>
+  <link rel="stylesheet" href="assets/css/animations.css"/>
   <link rel="stylesheet" href="assets/css/reset.css"/>
   <link rel="stylesheet" href="assets/css/main.css"/>
   <link rel="stylesheet" href="assets/css/navigation.css"/>
@@ -56,9 +73,9 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
     <div class="bg-mouse-glow"></div>
   </div>
 
+  <?php require_once __DIR__ . "/partials/header.php"; ?>
   <div class="page-wrapper">
 
-    <?php require_once __DIR__ . "/partials/header.php"; ?>
 
     <main id="main-content">
 
@@ -263,8 +280,8 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
             </p>
           </div>
           <div class="res-cta__actions">
-            <a href="/portfolio/contact.php?type=audit" class="res-cta__btn res-cta__btn--primary">Request a UX Audit ↗</a>
-            <a href="/portfolio/case-study/" class="res-cta__btn res-cta__btn--ghost">See the outcomes</a>
+            <a href="/contact.php?type=audit" class="res-cta__btn res-cta__btn--primary">Request a UX Audit ↗</a>
+            <a href="/case-study/" class="res-cta__btn res-cta__btn--ghost">See the outcomes</a>
           </div>
         </div>
       </div>

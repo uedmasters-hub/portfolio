@@ -5,11 +5,13 @@
 /* ── CANVAS ──────────────────────────────── */
 
 .bg-canvas {
-  position: fixed;
-  inset:    0;
-  z-index:  -10;
-  overflow: hidden;
+  position:   fixed;
+  inset:      0;
+  z-index:    -10;
+  overflow:   hidden;
   pointer-events: none;
+  contain:    strict;   /* Android: prevents layout bleed */
+  max-width:  100vw;
 }
 
 /* ── COLUMN GRID ─────────────────────────── */
@@ -39,7 +41,7 @@
   background:    rgba(26,70,201,0.10);
   filter:        blur(140px);
   top:           -80px;
-  left:          -60px;
+  left:          -20px;
   opacity:       0.7;
   will-change:   transform;
   animation:     orbDrift1 18s ease-in-out infinite alternate;

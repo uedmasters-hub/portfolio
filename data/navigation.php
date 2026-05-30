@@ -34,4 +34,14 @@ $navLinks = [
     "href"  => "/resources.php",
     "key"   => "resources"
   ],
+  [
+    "label" => "Audit",
+    "href"  => "/audit/",
+    "key"   => "audit"
+  ],
+  /* [
+    "label" => "Contact",
+    "href"  => "/contact.php",
+    "key"   => "contact"
+  ], */
 ];

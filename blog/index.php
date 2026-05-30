@@ -25,6 +25,22 @@ foreach ($categories as $cat) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>"/>
   <title><?= htmlspecialchars($pageTitle) ?></title>
+  <!-- OG / TWITTER META -->
+  <meta property="og:site_name"    content="Ramesh Mandal"/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://6epixels.com/blog/"/>
+  <meta property="og:title"        content="Field Notes — Ramesh Mandal"/>
+  <meta property="og:description"  content="War stories, quiet wins, unpopular opinions, and research from the field of enterprise UX."/>
+  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"       content="en_IN"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@ramsmandal"/>
+  <meta name="twitter:title"       content="Field Notes — Ramesh Mandal"/>
+  <meta name="twitter:description" content="War stories, quiet wins, unpopular opinions, and research from the field of enterprise UX."/>
+  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <link rel="canonical"            href="https://6epixels.com/blog/"/>
   
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -39,6 +55,7 @@ foreach ($categories as $cat) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/preloader.css"/>
   <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/animations.css"/>
   <link rel="stylesheet" href="../assets/css/reset.css"/>
   <link rel="stylesheet" href="../assets/css/main.css"/>
   <link rel="stylesheet" href="../assets/css/navigation.css"/>
@@ -68,9 +85,9 @@ foreach ($categories as $cat) {
     <div class="bg-mouse-glow"></div>
   </div>
 
-  <div class="page-wrapper">
+<?php require_once __DIR__ . "/../partials/header.php"; ?>
 
-    <?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <div class="page-wrapper">
 
     <main id="main-content">
 
@@ -98,7 +115,7 @@ foreach ($categories as $cat) {
       <!-- ══════════════ FEATURED PAIR ══════════════ -->
       <?php if (count($featured) >= 2): ?>
       <div class="blog-featured fade-in">
-        <a href="<?= htmlspecialchars($featured[0]['slug']) ?>.php" class="blog-featured__link" aria-label="<?= htmlspecialchars($featured[0]['title']) ?>">
+        <a href="post.php?slug=<?= urlencode($featured[0]['slug']) ?>" class="blog-featured__link" aria-label="<?= htmlspecialchars($featured[0]['title']) ?>">
 
           <!-- LEFT: DARK CARD -->
           <div class="blog-featured__card">
@@ -155,7 +172,7 @@ foreach ($categories as $cat) {
         <?php foreach ($regular as $i => $post): ?>
 
           <a
-            href="<?= htmlspecialchars($post['slug']) ?>.php"
+            href="post.php?slug=<?= urlencode($post['slug']) ?>"
             class="blog-card<?= $post['color'] === 'dark' ? ' blog-card--dark' : '' ?> tl-reveal"
             role="listitem"
             data-category="<?= htmlspecialchars($post['category']) ?>"

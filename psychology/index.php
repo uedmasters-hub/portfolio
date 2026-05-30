@@ -13,6 +13,22 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>"/>
   <title><?= htmlspecialchars($pageTitle) ?></title>
+  <!-- OG / TWITTER META -->
+  <meta property="og:site_name"    content="Ramesh Mandal"/>
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://6epixels.com/psychology/"/>
+  <meta property="og:title"        content="UX Psychology — Ramesh Mandal"/>
+  <meta property="og:description"  content="24 psychological principles applied to product design."/>
+  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale"       content="en_IN"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@ramsmandal"/>
+  <meta name="twitter:title"       content="UX Psychology — Ramesh Mandal"/>
+  <meta name="twitter:description" content="24 psychological principles applied to product design."/>
+  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <link rel="canonical"            href="https://6epixels.com/psychology/"/>
   
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -27,6 +43,7 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/preloader.css"/>
   <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/animations.css"/>
   <link rel="stylesheet" href="../assets/css/reset.css"/>
   <link rel="stylesheet" href="../assets/css/main.css"/>
   <link rel="stylesheet" href="../assets/css/navigation.css"/>
@@ -67,9 +84,9 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
     <div class="chip-panel__body"></div>
   </aside>
 
-  <div class="page-wrapper">
+<?php require_once __DIR__ . "/../partials/header.php"; ?>
 
-    <?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <div class="page-wrapper">
 
     <main id="main-content">
 
@@ -152,10 +169,10 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
                 </div>
               </div>
               <div class="psych-interrupt__cta">
-                <a href="/portfolio/contact.php?type=audit" class="psych-interrupt__btn-primary">
+                <a href="/contact.php?type=audit" class="psych-interrupt__btn-primary">
                   Request a UX Audit ↗
                 </a>
-                <a href="/portfolio/case-study/" class="psych-interrupt__btn-ghost">
+                <a href="/case-study/" class="psych-interrupt__btn-ghost">
                   See audit outcomes
                 </a>
                 <p class="psych-interrupt__note">Free 30-min discovery call · No commitment</p>
@@ -319,8 +336,8 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
         </div>
 
         <div class="cp-cta">
-          <a href="/portfolio/contact.php" class="cp-cta__btn cp-cta__btn--primary">Work with me ↗</a>
-          <a href="/portfolio/case-study/" class="cp-cta__btn cp-cta__btn--ghost">See case studies</a>
+          <a href="/contact.php" class="cp-cta__btn cp-cta__btn--primary">Work with me ↗</a>
+          <a href="/case-study/" class="cp-cta__btn cp-cta__btn--ghost">See case studies</a>
         </div>`;
 
       panel.scrollTop = 0;
@@ -356,7 +373,7 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
       <p class="audit-drawer__sub">Free 30-min audit call · Results in 5 days · No deck, just decisions</p>
     </div>
     <div class="audit-drawer__actions">
-      <a href="/portfolio/contact.php?type=audit" class="audit-drawer__btn audit-drawer__btn--primary">Book Free Call</a>
+      <a href="/contact.php?type=audit" class="audit-drawer__btn audit-drawer__btn--primary">Book Free Call</a>
       <button class="audit-drawer__btn audit-drawer__btn--dismiss" id="audit-drawer-dismiss">Maybe later</button>
     </div>
   </div>

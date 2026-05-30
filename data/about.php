@@ -139,7 +139,7 @@ $signatureMoments = [
     "desc"     => "Redesigned the entire IndiGo booking funnel — seat selection, ancillary upsell, payment — across 18 months. The Super 6E Sale version became the highest-converting sale event in company history.",
     "metrics"  => ["22% revenue uplift", "18% drop-off reduction", "₹ crores recovered"],
     "award"    => "IndiGo Innovation Award 2023",
-    "href"     => "/portfolio/case-study/indigo-booking.php",
+    "href"     => "/case-study/indigo-booking.php",
     "color"    => "blue",
   ],
   [
@@ -149,7 +149,7 @@ $signatureMoments = [
     "desc"     => "Rebuilt CrewPal from 14 confusing screens to 4 clear views. Crew had been screenshotting schedules and sharing on WhatsApp for 2 years. After the redesign — that workaround disappeared.",
     "metrics"  => ["47s → 8s task time", "25% satisfaction up", "8,000+ crew served"],
     "award"    => null,
-    "href"     => "/portfolio/case-study/crewpal.php",
+    "href"     => "/case-study/crewpal.php",
     "color"    => "dark",
   ],
   [
@@ -159,7 +159,7 @@ $signatureMoments = [
     "desc"     => "Built the design system that became the single source of truth for a 15-person team across 10+ products. New feature design time went from 2 weeks to 4 days. Still in use today.",
     "metrics"  => ["40% faster delivery", "200+ components", "60% design debt cleared"],
     "award"    => null,
-    "href"     => "/portfolio/case-study/design-system.php",
+    "href"     => "/case-study/design-system.php",
     "color"    => "light",
   ],
 ];
