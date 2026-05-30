@@ -75,6 +75,16 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
   <link rel="stylesheet" href="../assets/css/audit.css"/>
+
+  <!-- JSON-LD STRUCTURED DATA -->
+  <?php
+    require_once __DIR__ . '/../includes/schema.php';
+    $_thisAudit = null;
+    foreach ($audits as $_a) { if ($_a['slug'] === 'zomato-checkout') { $_thisAudit = $_a; break; } }
+    if ($_thisAudit) {
+      echo schema_audit($_thisAudit, $overallScore ?? 0);
+    }
+  ?>
 </head>
 <body>
 
