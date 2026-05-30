@@ -25,7 +25,7 @@ RewriteRule ^case-study/([a-z0-9-]+)/?$ /case-study/$1.php [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^psychology/([a-z0-9-]+)/?$ /psychology/$1.php [QSA,L]
+RewriteRule ^psychology/([a-z0-9-]+)/?$ /psychology/principle.php?id=$1 [QSA,L]
 
 <IfModule mod_headers.c>
   Header always set X-Frame-Options "SAMEORIGIN"

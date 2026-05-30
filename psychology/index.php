@@ -185,12 +185,9 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
           <article
             class="psych-card psych-card--<?= $p['color'] ?> tl-reveal"
             role="listitem"
-            tabindex="0"
-            data-psych="<?= $p['id'] ?>"
-            data-category="<?= $p['category'] ?>"
             style="--delay: <?= ($i % 3) * 60 ?>ms"
-            aria-label="<?= htmlspecialchars($p['name']) ?> — click to learn more"
           >
+            <a href="/psychology/<?= $p['id'] ?>" class="psych-card__link" aria-label="<?= htmlspecialchars($p['name']) ?> — read the full principle">
 
             <div class="psych-card__header">
               <span class="psych-card__category-badge">
@@ -215,9 +212,10 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
 
             <div class="psych-card__footer">
               <span class="psych-card__effort">Effort: <?= $p['effort'] ?></span>
-              <span class="psych-card__cta">Explore principle →</span>
+              <span class="psych-card__cta">Read principle →</span>
             </div>
 
+            </a>
           </article>
         <?php endforeach; ?>
 
