@@ -68,6 +68,7 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
+  <link rel="stylesheet" href="../assets/css/related-content.css"/>
 </head>
 <body>
 
@@ -389,6 +390,11 @@ $nav = [
       </div>
 
     </main>
+
+    <?php
+    require_once __DIR__ . "/../partials/related-content.php";
+    echo render_related_content(["current_type" => "case-study", "current_slug" => "indigo-loyalty"]);
+  ?>
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
 

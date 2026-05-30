@@ -75,6 +75,7 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
   <link rel="stylesheet" href="../assets/css/audit.css"/>
+  <link rel="stylesheet" href="../assets/css/related-content.css"/>
 
   <!-- JSON-LD STRUCTURED DATA -->
   <?php
@@ -473,6 +474,11 @@ $nav = [
       </div>
 
     </main>
+
+    <?php
+    require_once __DIR__ . "/../partials/related-content.php";
+    echo render_related_content(["current_type" => "audit", "current_slug" => "zomato-checkout"]);
+  ?>
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
 
