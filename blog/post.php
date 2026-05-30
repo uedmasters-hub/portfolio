@@ -247,44 +247,57 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
 
     </main>
 
-    <!-- SAME-CATEGORY POSTS — outside main, full width like rc-section -->
+    <!-- SAME-CATEGORY POSTS — outside main, full width -->
     <?php if (!empty($related)): ?>
     <section class="post-related">
-      <p class="post-related__label">MORE FROM <?= strtoupper(htmlspecialchars($post['tag'])) ?>S</p>
-      <div class="post-related__grid">
-        <?php foreach ($related as $r): ?>
-          <a href="/blog/<?= urlencode($r['slug']) ?>" class="post-related__card fade-in">
-            <span class="post-related__emoji" aria-hidden="true"><?= $r['emoji'] ?></span>
-            <div>
-              <p class="post-related__card-tag"><?= htmlspecialchars($r['tag']) ?></p>
-              <p class="post-related__card-title"><?= htmlspecialchars($r['title']) ?></p>
-              <p class="post-related__card-excerpt"><?= htmlspecialchars($r['excerpt']) ?></p>
-            </div>
-          </a>
-        <?php endforeach; ?>
+      <div class="post-related__inner">
+        <?php
+          $tagPlural = [
+            'War Story'         => 'MORE WAR STORIES',
+            'Quiet Win'         => 'MORE QUIET WINS',
+            'Unpopular Opinion' => 'MORE UNPOPULAR OPINIONS',
+            'From the Field'    => 'MORE FROM THE FIELD',
+          ];
+          $label = $tagPlural[$post['tag']] ?? ('MORE ' . strtoupper($post['tag']) . 'S');
+        ?>
+        <p class="post-related__label"><?= $label ?></p>
+        <div class="post-related__grid">
+          <?php foreach ($related as $r): ?>
+            <a href="/blog/<?= urlencode($r['slug']) ?>" class="post-related__card fade-in">
+              <span class="post-related__emoji" aria-hidden="true"><?= $r['emoji'] ?></span>
+              <div>
+                <p class="post-related__card-tag"><?= htmlspecialchars($r['tag']) ?></p>
+                <p class="post-related__card-title"><?= htmlspecialchars($r['title']) ?></p>
+                <p class="post-related__card-excerpt"><?= htmlspecialchars($r['excerpt']) ?></p>
+              </div>
+            </a>
+          <?php endforeach; ?>
+        </div>
       </div>
     </section>
     <?php endif; ?>
 
     <!-- PREV / NEXT — outside main, full width -->
+    <?php if ($prev || $next): ?>
     <nav class="post-nav" aria-label="Browse posts">
-      <?php if ($prev): ?>
-        <a href="/blog/<?= urlencode($prev['slug']) ?>" class="post-nav__link">
-          <p class="post-nav__dir">← Previous Note</p>
-          <p class="post-nav__meta"><?= htmlspecialchars($prev['tag']) ?></p>
-          <p class="post-nav__title"><?= htmlspecialchars($prev['title']) ?></p>
-        </a>
-      <?php else: ?>
-        <div></div>
-      <?php endif; ?>
-      <?php if ($next): ?>
-        <a href="/blog/<?= urlencode($next['slug']) ?>" class="post-nav__link post-nav__link--right">
-          <p class="post-nav__dir">Next Note →</p>
-          <p class="post-nav__meta"><?= htmlspecialchars($next['tag']) ?></p>
-          <p class="post-nav__title"><?= htmlspecialchars($next['title']) ?></p>
-        </a>
-      <?php endif; ?>
+      <div class="post-nav__inner">
+        <?php if ($prev): ?>
+          <a href="/blog/<?= urlencode($prev['slug']) ?>" class="post-nav__link">
+            <p class="post-nav__dir">← Previous Note</p>
+            <p class="post-nav__meta"><?= htmlspecialchars($prev['tag']) ?></p>
+            <p class="post-nav__title"><?= htmlspecialchars($prev['title']) ?></p>
+          </a>
+        <?php endif; ?>
+        <?php if ($next): ?>
+          <a href="/blog/<?= urlencode($next['slug']) ?>" class="post-nav__link post-nav__link--right">
+            <p class="post-nav__dir">Next Note →</p>
+            <p class="post-nav__meta"><?= htmlspecialchars($next['tag']) ?></p>
+            <p class="post-nav__title"><?= htmlspecialchars($next['title']) ?></p>
+          </a>
+        <?php endif; ?>
+      </div>
     </nav>
+    <?php endif; ?>
 
     <!-- CROSS-CONTENT INTERNAL LINKS -->
     <?php
