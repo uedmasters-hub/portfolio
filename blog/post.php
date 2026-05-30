@@ -85,6 +85,17 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/post.css"/>
+
+  <!-- JSON-LD STRUCTURED DATA -->
+  <?php
+    require_once __DIR__ . "/../includes/schema.php";
+    echo schema_article($post);
+    echo schema_breadcrumb([
+      ['Home',        'https://6epixels.com/'],
+      ['Field Notes', 'https://6epixels.com/blog/'],
+      [$post['title'], 'https://6epixels.com/blog/post.php?slug=' . urlencode($post['slug'])],
+    ]);
+  ?>
 </head>
 <body>
 
