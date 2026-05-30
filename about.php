@@ -37,7 +37,17 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
   <meta name="twitter:description" content="Sr. Manager UI/UX, 17+ years. Led IndiGo booking, CrewPal, and design systems serving millions."/>
   <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
   <link rel="canonical"            href="https://6epixels.com/about.php"/>
-  
+
+  <!-- JSON-LD STRUCTURED DATA -->
+  <?php
+    require_once __DIR__ . "/includes/schema.php";
+    echo schema_person();
+    echo schema_breadcrumb([
+      ['Home',  'https://6epixels.com/'],
+      ['About', 'https://6epixels.com/about.php'],
+    ]);
+  ?>
+
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
   <link rel="icon" type="image/svg+xml"    href="/assets/icons/favicon.svg"/>
