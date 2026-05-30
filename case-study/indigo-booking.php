@@ -378,7 +378,7 @@ $nav = [
           <p class="cs-next__label">Next Case Study</p>
           <a href="crewpal.php" class="cs-next__link">
             <p class="cs-next__title">CrewPal Operations<br>Platform</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
               Simplifying high-stakes operations for 8,000+ cabin crew.
             </p>
             <span class="cs-next__arrow">↗</span>
@@ -388,7 +388,7 @@ $nav = [
           <p class="cs-next__label">Also Worth Reading</p>
           <a href="design-system.php" class="cs-next__link">
             <p class="cs-next__title">Enterprise Design<br>System</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
               One system powering 10+ products and a 15-person design team.
             </p>
             <span class="cs-next__arrow">↗</span>

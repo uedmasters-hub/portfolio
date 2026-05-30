@@ -247,55 +247,51 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
 
     </main>
 
-    <!-- SAME-CATEGORY POSTS — outside main, full width -->
+    <!-- SAME-CATEGORY POSTS — full-bleed -->
     <?php if (!empty($related)): ?>
     <section class="post-related">
-      <div class="post-related__inner">
-        <?php
-          $tagPlural = [
-            'War Story'         => 'MORE WAR STORIES',
-            'Quiet Win'         => 'MORE QUIET WINS',
-            'Unpopular Opinion' => 'MORE UNPOPULAR OPINIONS',
-            'From the Field'    => 'MORE FROM THE FIELD',
-          ];
-          $label = $tagPlural[$post['tag']] ?? ('MORE ' . strtoupper($post['tag']) . 'S');
-        ?>
-        <p class="post-related__label"><?= $label ?></p>
-        <div class="post-related__grid">
-          <?php foreach ($related as $r): ?>
-            <a href="/blog/<?= urlencode($r['slug']) ?>" class="post-related__card fade-in">
-              <span class="post-related__emoji" aria-hidden="true"><?= $r['emoji'] ?></span>
-              <div>
-                <p class="post-related__card-tag"><?= htmlspecialchars($r['tag']) ?></p>
-                <p class="post-related__card-title"><?= htmlspecialchars($r['title']) ?></p>
-                <p class="post-related__card-excerpt"><?= htmlspecialchars($r['excerpt']) ?></p>
-              </div>
-            </a>
-          <?php endforeach; ?>
-        </div>
+      <?php
+        $tagPlural = [
+          'War Story'         => 'MORE WAR STORIES',
+          'Quiet Win'         => 'MORE QUIET WINS',
+          'Unpopular Opinion' => 'MORE UNPOPULAR OPINIONS',
+          'From the Field'    => 'MORE FROM THE FIELD',
+        ];
+        $label = $tagPlural[$post['tag']] ?? ('MORE ' . strtoupper($post['tag']) . 'S');
+      ?>
+      <p class="post-related__label"><?= $label ?></p>
+      <div class="post-related__grid">
+        <?php foreach ($related as $r): ?>
+          <a href="/blog/<?= urlencode($r['slug']) ?>" class="post-related__card fade-in">
+            <span class="post-related__emoji" aria-hidden="true"><?= $r['emoji'] ?></span>
+            <div>
+              <p class="post-related__card-tag"><?= htmlspecialchars($r['tag']) ?></p>
+              <p class="post-related__card-title"><?= htmlspecialchars($r['title']) ?></p>
+              <p class="post-related__card-excerpt"><?= htmlspecialchars($r['excerpt']) ?></p>
+            </div>
+          </a>
+        <?php endforeach; ?>
       </div>
     </section>
     <?php endif; ?>
 
-    <!-- PREV / NEXT — outside main, full width -->
+    <!-- PREV / NEXT — dark, full-bleed -->
     <?php if ($prev || $next): ?>
     <nav class="post-nav" aria-label="Browse posts">
-      <div class="post-nav__inner">
-        <?php if ($prev): ?>
-          <a href="/blog/<?= urlencode($prev['slug']) ?>" class="post-nav__link">
-            <p class="post-nav__dir">← Previous Note</p>
-            <p class="post-nav__meta"><?= htmlspecialchars($prev['tag']) ?></p>
-            <p class="post-nav__title"><?= htmlspecialchars($prev['title']) ?></p>
-          </a>
-        <?php endif; ?>
-        <?php if ($next): ?>
-          <a href="/blog/<?= urlencode($next['slug']) ?>" class="post-nav__link post-nav__link--right">
-            <p class="post-nav__dir">Next Note →</p>
-            <p class="post-nav__meta"><?= htmlspecialchars($next['tag']) ?></p>
-            <p class="post-nav__title"><?= htmlspecialchars($next['title']) ?></p>
-          </a>
-        <?php endif; ?>
-      </div>
+      <?php if ($prev): ?>
+        <a href="/blog/<?= urlencode($prev['slug']) ?>" class="post-nav__link">
+          <p class="post-nav__dir">← Previous Note</p>
+          <p class="post-nav__meta"><?= htmlspecialchars($prev['tag']) ?></p>
+          <p class="post-nav__title"><?= htmlspecialchars($prev['title']) ?></p>
+        </a>
+      <?php endif; ?>
+      <?php if ($next): ?>
+        <a href="/blog/<?= urlencode($next['slug']) ?>" class="post-nav__link post-nav__link--right">
+          <p class="post-nav__dir">Next Note →</p>
+          <p class="post-nav__meta"><?= htmlspecialchars($next['tag']) ?></p>
+          <p class="post-nav__title"><?= htmlspecialchars($next['title']) ?></p>
+        </a>
+      <?php endif; ?>
     </nav>
     <?php endif; ?>
 

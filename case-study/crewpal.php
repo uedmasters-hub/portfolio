@@ -188,7 +188,7 @@ $nav = [
           <p class="cs-next__label">Previous Case Study</p>
           <a href="indigo-booking.php" class="cs-next__link">
             <p class="cs-next__title">IndiGo Booking<br>Ecosystem</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">22% revenue growth. 50M users.</p>
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">22% revenue growth. 50M users.</p>
             <span class="cs-next__arrow">↗</span>
           </a>
         </div>
@@ -196,7 +196,7 @@ $nav = [
           <p class="cs-next__label">Next Case Study</p>
           <a href="design-system.php" class="cs-next__link">
             <p class="cs-next__title">Enterprise<br>Design System</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">One system. Ten products. 40% faster delivery.</p>
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">One system. Ten products. 40% faster delivery.</p>
             <span class="cs-next__arrow">↗</span>
           </a>
         </div>

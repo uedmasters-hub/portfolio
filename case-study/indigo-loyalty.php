@@ -370,7 +370,7 @@ $nav = [
           <p class="cs-next__label">Next Case Study</p>
           <a href="indigo-holidays.php" class="cs-next__link">
             <p class="cs-next__title">IndiGo Holidays<br>Marketplace</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
               Personalised hotel bundles driving 22% ancillary revenue growth.
             </p>
             <span class="cs-next__arrow">↗</span>
@@ -380,7 +380,7 @@ $nav = [
           <p class="cs-next__label">Also Worth Reading</p>
           <a href="indigo-booking.php" class="cs-next__link">
             <p class="cs-next__title">IndiGo Booking<br>Ecosystem</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
               Redesigning a 50M-user booking flow. 22% revenue growth.
             </p>
             <span class="cs-next__arrow">↗</span>

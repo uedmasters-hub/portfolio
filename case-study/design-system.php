@@ -380,7 +380,7 @@ $nav = [
           <p class="cs-next__label">Start From The Beginning</p>
           <a href="indigo-booking.php" class="cs-next__link">
             <p class="cs-next__title">IndiGo Booking<br>Ecosystem</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
               Redesigning a 50M-user booking flow. 22% revenue growth.
             </p>
             <span class="cs-next__arrow">↗</span>
@@ -390,7 +390,7 @@ $nav = [
           <p class="cs-next__label">Also Worth Reading</p>
           <a href="crewpal.php" class="cs-next__link">
             <p class="cs-next__title">CrewPal Operations<br>Platform</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
               High-stakes enterprise UX for 8,000+ cabin crew.
             </p>
             <span class="cs-next__arrow">↗</span>

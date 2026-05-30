@@ -377,7 +377,7 @@ $nav = [
           <p class="cs-next__label">Next Case Study</p>
           <a href="design-system.php" class="cs-next__link">
             <p class="cs-next__title">Enterprise Design<br>System</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
               One system. Ten products. 40% faster delivery.
             </p>
             <span class="cs-next__arrow">↗</span>
@@ -387,7 +387,7 @@ $nav = [
           <p class="cs-next__label">Also Worth Reading</p>
           <a href="indigo-loyalty.php" class="cs-next__link">
             <p class="cs-next__title">IndiGo Gamified<br>Loyalty Program</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
+            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
               Turning passive flyers into engaged members. 40% retention lift.
             </p>
             <span class="cs-next__arrow">↗</span>
