@@ -119,6 +119,7 @@
 .cs-section.fade-in.is-visible {
   opacity:   1;
   transform: translateY(0);
+  margin: 20px 0;
 }
 
 /* =========================================
