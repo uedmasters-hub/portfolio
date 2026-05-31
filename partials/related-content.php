@@ -69,7 +69,7 @@ function render_related_content(string $type, string $slug): void {
    all page types. Padding mirrors footer.
    ============================================= */
 .rc-section {
-  padding:     64px 48px;
+  padding:     64px 64px;
   background:  var(--bg, #f5f5f3);
   border-top:  1px solid var(--border, rgba(0,0,0,.07));
   border-bottom: 1px solid var(--border, rgba(0,0,0,.07));
@@ -83,7 +83,7 @@ function render_related_content(string $type, string $slug): void {
 }
 .rc-kicker::before { content:""; width:18px; height:1.5px; background:var(--blue,#1a46c9); }
 .rc-title {
-  font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300;
+  font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 300;
   letter-spacing: -.06em; line-height: 1; color: var(--text-primary, #0f0f0f);
 }
 .rc-title span { color: var(--blue, #1a46c9); }
@@ -154,15 +154,29 @@ function render_related_content(string $type, string $slug): void {
 }
 .rc-item__browse:hover { border-color: rgba(26,70,201,.3); background: rgba(26,70,201,.04); }
 
-/* Responsive — stack to 2 cols then 1 col */
+/* Responsive */
 @media (max-width: 1024px) {
   .rc-section { padding: 64px 40px; }
   .rc-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .rc-section { padding: 48px 20px; }
-  .rc-grid { grid-template-columns: 1fr; }
-  .rc-col { padding: 20px; }
+  .rc-section { padding: 40px 20px; }
+
+  /* On mobile: one unified card, cols separated by border-bottom only */
+  .rc-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    background: var(--bg-elevated, #fff);
+  }
+  .rc-col {
+    padding: 20px;
+    border-bottom: 1px solid var(--border, rgba(0,0,0,.07));
+  }
+  .rc-col:last-child { border-bottom: none; }
+
+  /* Items: allow title to wrap on small screens */
+  .rc-item__title { white-space: normal; }
+  .rc-item__thumb { width: 48px; height: 32px; }
 }
 </style>
 
