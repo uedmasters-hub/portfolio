@@ -329,6 +329,7 @@
   border-radius: var(--radius-lg);
   position:      relative;
   overflow:      hidden;
+  margin-top:    40px;
 }
 
 .art-takeaway::before {
@@ -504,36 +505,30 @@
 
 
 /* =============================================
-   NEXT CASE STUDY / NEXT POST  — 2-col cards
-   Section has page-edge padding. Cards are
-   inset, separated by a 1px right border.
+   NEXT CASE STUDY / NEXT POST
+   Full-bleed white. 1px border top/bottom.
+   Cards sit at same horizontal safe area as body.
    ============================================= */
 
+.art-next-wrap {
+  border-top:    1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background:    var(--bg-elevated);
+}
+
 .art-next {
-  padding:               0 64px 64px;
   display:               grid;
   grid-template-columns: repeat(2, 1fr);
-  gap:                   1px;
-  background:            var(--border);
-  border-top:            1px solid var(--border);
-  border-bottom:         1px solid var(--border);
-  box-sizing:            border-box;
   max-width:             1280px;
   margin:                0 auto;
   width:                 100%;
-}
-
-/* full-bleed outer wrapper so bg colour extends edge to edge */
-.art-next-wrap {
-  background:    var(--bg-elevated);
-  border-top:    1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  box-sizing:            border-box;
 }
 
 .art-next__card {
   position:        relative;
-  padding:         40px 40px 40px;
-  background:      var(--bg-elevated);
+  padding:         48px 64px;
+  background:      transparent;
   text-decoration: none;
   color:           inherit;
   display:         flex;
@@ -544,7 +539,11 @@
   min-height:      180px;
 }
 
-.art-next__card:hover { background: #fafafa; }
+.art-next__card:not(:last-child) {
+  border-right: 1px solid var(--border);
+}
+
+.art-next__card:hover { background: rgba(0,0,0,0.015); }
 
 .art-next__arrow {
   position:  absolute;
@@ -596,11 +595,19 @@
    ============================================= */
 
 .art-nav-dark {
+  padding:    0;
+  background: #0a0a0a;
+  box-sizing: border-box;
+}
+
+.art-nav-dark__inner {
+  max-width:             1280px;
+  margin:                0 auto;
+  width:                 100%;
   padding:               48px 64px;
   display:               grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap:                   20px;
-  background:            #0a0a0a;
   box-sizing:            border-box;
 }
 
@@ -625,14 +632,8 @@
 
 .art-navlink--right { text-align: right; }
 
-.art-navlink__dir {
-  font-size:      10px;
-  font-weight:    600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color:          rgba(255,255,255,0.32);
-  margin-bottom:  10px;
-}
+/* direction label removed */
+.art-navlink__dir { display: none; }
 
 .art-navlink__tag {
   font-size:      10px;
@@ -640,7 +641,8 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color:          var(--blue-light);
-  margin-bottom:  8px;
+  margin-bottom:  10px;
+  display:        block;
 }
 
 .art-navlink__title {
@@ -669,7 +671,15 @@
 
   .art-next {
     grid-template-columns: 1fr;
-    padding:               0 40px 40px;
+  }
+
+  .art-next__card {
+    padding:       40px;
+  }
+
+  .art-next__card:not(:last-child) {
+    border-right:  none;
+    border-bottom: 1px solid var(--border);
   }
 
   .art-meta-bar {
@@ -701,11 +711,11 @@
 
   .art-sidebar       { position: static; top: auto; }
 
-  .art-next          { padding: 0 20px 32px; }
-  .art-next__card    { min-height: 140px; padding: 28px 20px; }
+  .art-next__card        { min-height: 120px; padding: 28px 20px; }
+  .art-next__card:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
 
-  .art-nav-dark      { padding: 40px 20px; }
-  .art-navlink--right{ text-align: left; }
+  .art-nav-dark__inner   { padding: 32px 20px; }
+  .art-navlink--right    { text-align: left; }
 
   .art-metrics       { grid-template-columns: 1fr; }
 

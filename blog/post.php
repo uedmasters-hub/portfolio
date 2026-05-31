@@ -248,20 +248,22 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
     <!-- ③ PREV / NEXT DARK NAV -->
     <?php if ($prev || $next): ?>
     <nav class="art-nav-dark" aria-label="Browse posts">
-      <?php if ($prev): ?>
-        <a href="/blog/<?= urlencode($prev['slug']) ?>" class="art-navlink">
-          <p class="art-navlink__dir">← Previous Note</p>
-          <p class="art-navlink__tag"><?= htmlspecialchars($prev['tag']) ?></p>
-          <p class="art-navlink__title"><?= htmlspecialchars($prev['title']) ?></p>
-        </a>
-      <?php endif; ?>
-      <?php if ($next): ?>
-        <a href="/blog/<?= urlencode($next['slug']) ?>" class="art-navlink art-navlink--right">
-          <p class="art-navlink__dir">Next Note →</p>
-          <p class="art-navlink__tag"><?= htmlspecialchars($next['tag']) ?></p>
-          <p class="art-navlink__title"><?= htmlspecialchars($next['title']) ?></p>
-        </a>
-      <?php endif; ?>
+      <div class="art-nav-dark__inner">
+        <?php if ($prev): ?>
+          <a href="/blog/<?= urlencode($prev['slug']) ?>" class="art-navlink">
+            <p class="art-navlink__dir">← Previous Note</p>
+            <p class="art-navlink__tag"><?= htmlspecialchars($prev['tag']) ?></p>
+            <p class="art-navlink__title"><?= htmlspecialchars($prev['title']) ?></p>
+          </a>
+        <?php endif; ?>
+        <?php if ($next): ?>
+          <a href="/blog/<?= urlencode($next['slug']) ?>" class="art-navlink art-navlink--right">
+            <p class="art-navlink__dir">Next Note →</p>
+            <p class="art-navlink__tag"><?= htmlspecialchars($next['tag']) ?></p>
+            <p class="art-navlink__title"><?= htmlspecialchars($next['title']) ?></p>
+          </a>
+        <?php endif; ?>
+      </div>
     </nav>
     <?php endif; ?>
 
