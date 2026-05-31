@@ -4,11 +4,9 @@
 
 .hero-wrapper {
   min-height: calc(100vh - 76px);
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   padding: 0 50px 32px;
 }
 
@@ -18,7 +16,6 @@
 
 .hero {
   flex: 1;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,85 +28,69 @@
 .hero-content {
   width: 100%;
   max-width: 750px;
-
   display: flex;
   flex-direction: column;
-
   gap: 24px;
-
   margin-top: -20px;
 }
 
 /* =========================
-   EYEBROW — cognitive anchor
-   Reads first, sets context instantly
-   before title even registers
+   EYEBROW
 ========================= */
 
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
-
   color: var(--blue);
 }
 
 .hero-eyebrow-dot {
   display: inline-block;
-
   width: 6px;
   height: 6px;
-
   background: var(--blue);
   border-radius: 50%;
-
   flex-shrink: 0;
 }
 
 /* =========================
    HERO TITLE
-   Line 1: "I design clarity" — static, complete thought
-   Line 2: "into [typewriter]" — supporting specificity
+   Reduced from 6.5rem to 5rem
+   so longest phrase fits ≤2 lines
+   eliminating the 3-line jump
 ========================= */
 
 .hero-title {
-  font-size: clamp(3.4rem, 7vw, 5.8rem);
-
+  font-size: clamp(3rem, 6.5vw, 5rem);
   line-height: 1.0;
-
   letter-spacing: -0.06em;
-
   font-weight: 300;
-
-  max-width: 14ch;
-
+  max-width: 16ch;
   margin: 0;
 }
 
 /* =========================
    TYPEWRITER WRAPPER
-   Fixed min-height prevents layout shift —
-   the block below never moves regardless
-   of how long the typed phrase is
+   KEY LAYOUT SHIFT FIX:
+   min-height reserves space for
+   exactly 2 lines at current font-size.
+   Nothing below ever moves.
 ========================= */
 
 .hero-title-typewriter {
   display: inline-block;
-
-  /* Reserve height for one line of typewriter text
-     at the current font-size — adjust if wrapping occurs */
-  min-height: 1.05em;
-
-  vertical-align: bottom;
+  min-height: 2.1em;       /* 2 lines × line-height 1.0 + buffer */
+  vertical-align: top;
+  position: relative;
 }
 
 /* =========================
-   TYPEWRITER SPAN
+   TYPEWRITER TEXT
 ========================= */
 
 #typewriter {
@@ -118,26 +99,57 @@
   display: inline;
 }
 
-/* CURSOR */
+/* blinking cursor */
 #typewriter::after {
   content: "";
-
   position: absolute;
-
   right: -8px;
   top: 8%;
-
   width: 3px;
   height: 84%;
-
   background: var(--blue);
-
   animation: blink 1s infinite;
 }
 
 @keyframes blink {
-  0%, 50% { opacity: 1; }
+  0%, 50%  { opacity: 1; }
   51%, 100% { opacity: 0; }
+}
+
+/* =========================
+   SKELETON LOADER
+   Shows on page load in place
+   of blank typewriter space.
+   Shimmer signals "loading"
+   so the eye doesn't fixate.
+   Fades out when first char types.
+========================= */
+
+.typewriter-skeleton {
+  display: inline-block;
+  width: 280px;               /* approximate width of a phrase */
+  height: 0.85em;             /* matches text cap-height */
+  background: linear-gradient(
+    90deg,
+    rgba(26, 70, 201, 0.08) 25%,
+    rgba(26, 70, 201, 0.16) 50%,
+    rgba(26, 70, 201, 0.08) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: 6px;
+  vertical-align: middle;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+
+  /* Transition for fade-out when typing starts */
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+  transform-origin: left center;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* =========================
@@ -147,13 +159,9 @@
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
-
   gap: 14px;
-
   font-size: 13px;
-
   color: var(--muted);
-
   line-height: 1.7;
 }
 
@@ -180,75 +188,17 @@
 
 .chip {
   padding: 9px 16px;
-
   border: 1px solid #cccccc;
   border-radius: 999px;
-
   background: rgba(255,255,255,0.7);
-
   font-size: 12px;
   font-weight: 500;
-
   letter-spacing: 0.03em;
 }
 
 .chip.blue {
   color: var(--blue);
   border-color: #b6c5ee;
-}
-
-/* =========================
-   SOCIAL PROOF QUOTE
-========================= */
-
-.hero-proof {
-  margin: 0;
-  padding: 18px 22px;
-
-  background: rgba(26, 70, 201, 0.04);
-  border-left: 2px solid var(--blue);
-  border-radius: 0 10px 10px 0;
-
-  max-width: 560px;
-}
-
-.hero-proof p {
-  font-size: 14px;
-  line-height: 1.65;
-  color: #444;
-  font-style: italic;
-  margin: 0 0 10px;
-}
-
-.hero-proof cite {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  font-style: normal;
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.hero-proof-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 26px;
-  height: 26px;
-
-  background: var(--blue);
-  color: white;
-
-  border-radius: 50%;
-
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-
-  flex-shrink: 0;
 }
 
 /* =========================
@@ -262,31 +212,23 @@
   gap: 12px;
 }
 
-/* PRIMARY */
 .hero-cta-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-
   padding: 13px 26px;
-
   background: var(--blue);
   color: #fff;
-
   border: 1.5px solid var(--blue);
   border-radius: 999px;
-
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.01em;
-
   text-decoration: none;
-
   transition:
     background 0.22s ease,
     transform 0.22s ease,
     box-shadow 0.22s ease;
-
   will-change: transform;
 }
 
@@ -312,36 +254,28 @@
   transform: translateX(4px);
 }
 
-/* SECONDARY */
 .hero-cta-secondary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-
   padding: 13px 26px;
-
   background: transparent;
   color: #222;
-
-  border: 1.5px solid rgba(0, 0, 0, 0.16);
+  border: 1.5px solid rgba(0,0,0,0.16);
   border-radius: 999px;
-
   font-size: 14px;
   font-weight: 500;
-
   text-decoration: none;
-
   transition:
     border-color 0.22s ease,
     background 0.22s ease,
     transform 0.22s ease;
-
   will-change: transform;
 }
 
 .hero-cta-secondary:hover {
-  border-color: rgba(0, 0, 0, 0.35);
-  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0,0,0,0.35);
+  background: rgba(0,0,0,0.03);
   transform: translateY(-2px);
 }
 
@@ -368,21 +302,16 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-
   font-size: 12px;
   color: #666;
-  font-weight: 400;
 }
 
 .hero-availability-dot {
   display: inline-block;
-
   width: 7px;
   height: 7px;
-
   background: #22c55e;
   border-radius: 50%;
-
   flex-shrink: 0;
   position: relative;
 }
@@ -424,15 +353,13 @@
   border-radius: 24px;
   background: transparent;
   border: 1px solid transparent;
-  backdrop-filter: blur(0px);
   overflow: hidden;
   transform-style: preserve-3d;
   transition:
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
     background 0.5s ease,
     box-shadow 0.5s ease,
-    border-color 0.5s ease,
-    backdrop-filter 0.5s ease;
+    border-color 0.5s ease;
 }
 
 .stat::before {
@@ -463,9 +390,7 @@
     0 10px 24px rgba(0,0,0,0.04);
 }
 
-.stat:hover::before {
-  opacity: 1;
-}
+.stat:hover::before { opacity: 1; }
 
 .stat > * {
   position: relative;
@@ -494,6 +419,148 @@
   color: #333;
 }
 
+/* ================================================
+   FLOATING TESTIMONIAL BUBBLE
+   Fixed to bottom-right of viewport.
+   Slides in after 2s. Dismissable.
+   Doesn't scroll. Doesn't compete with title.
+================================================ */
+
+.hero-bubble {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 200;
+
+  width: 300px;
+
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px 16px 4px 16px;
+
+  padding: 20px 20px 16px;
+
+  box-shadow:
+    0 4px 6px rgba(0,0,0,0.04),
+    0 16px 40px rgba(0,0,0,0.10);
+
+  /* Hidden state — off screen bottom-right */
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  pointer-events: none;
+
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Visible state — added by JS after 2s */
+.hero-bubble--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Dismissed state */
+.hero-bubble--dismissed {
+  opacity: 0;
+  transform: translateY(12px) scale(0.95);
+  pointer-events: none;
+}
+
+/* Blue accent top bar */
+.hero-bubble::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--blue);
+  border-radius: 16px 16px 0 0;
+}
+
+/* Quote text */
+.hero-bubble-body p {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #333;
+  font-style: italic;
+  margin: 0 0 14px;
+}
+
+/* Footer — avatar + name */
+.hero-bubble-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-bubble-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--blue);
+  color: white;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.hero-bubble-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.hero-bubble-meta strong {
+  font-size: 12px;
+  font-weight: 600;
+  color: #111;
+  display: block;
+}
+
+.hero-bubble-meta span {
+  font-size: 11px;
+  color: var(--muted);
+  display: block;
+}
+
+/* Close button */
+.hero-bubble-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  background: rgba(0,0,0,0.05);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 10px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.hero-bubble-close:hover {
+  background: rgba(0,0,0,0.10);
+  color: #333;
+}
+
+.hero-bubble-close:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
 /* =========================
    TABLET
 ========================= */
@@ -511,6 +578,12 @@
   .stats {
     grid-template-columns: repeat(2, 1fr);
     gap: 50px 30px;
+  }
+
+  .hero-bubble {
+    right: 24px;
+    bottom: 24px;
+    width: 270px;
   }
 
 }
@@ -538,32 +611,24 @@
   }
 
   .hero-title {
-    font-size: clamp(2.6rem, 12vw, 4rem);
+    font-size: clamp(2.4rem, 11vw, 3.6rem);
     line-height: 1.02;
     max-width: 100%;
   }
 
-  /* On mobile the typewriter wraps — give more room */
   .hero-title-typewriter {
     min-height: 2.2em;
+  }
+
+  .typewriter-skeleton {
+    width: 180px;
   }
 
   .hero-meta span::after {
     display: none;
   }
 
-  .chips {
-    gap: 8px;
-  }
-
-  .hero-proof {
-    padding: 14px 16px;
-    max-width: 100%;
-  }
-
-  .hero-proof p {
-    font-size: 13px;
-  }
+  .chips { gap: 8px; }
 
   .hero-cta {
     flex-direction: column;
@@ -583,12 +648,16 @@
     gap: 32px;
   }
 
-  .stat {
-    padding: 20px;
-  }
+  .stat { padding: 20px; }
+  .stat h2 { font-size: 34px; }
 
-  .stat h2 {
-    font-size: 34px;
+  /* Bubble sits at bottom, narrower */
+  .hero-bubble {
+    right: 16px;
+    left: 16px;
+    bottom: 16px;
+    width: auto;
+    border-radius: 16px;
   }
 
 }
@@ -599,26 +668,17 @@
 
 @media (max-width: 480px) {
 
-  .hero-title {
-    font-size: 2.2rem;
-  }
+  .hero-title { font-size: 2.2rem; }
 
-  .hero-title-typewriter {
-    min-height: 2.6em;
-  }
+  .hero-title-typewriter { min-height: 2.6em; }
 
-  .chips {
-    flex-direction: column;
-  }
+  .typewriter-skeleton { width: 140px; }
+
+  .chips { flex-direction: column; }
 
   .chip {
     width: 100%;
     text-align: center;
-  }
-
-  .hero-cta-primary,
-  .hero-cta-secondary {
-    font-size: 13px;
   }
 
 }
@@ -629,20 +689,25 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .hero-availability-dot::before {
+  .typewriter-skeleton {
     animation: none;
+    background: rgba(26, 70, 201, 0.08);
   }
+
+  .hero-availability-dot::before { animation: none; }
 
   .hero-cta-primary,
   .hero-cta-secondary,
   .hero-cta-arrow,
-  .hero-cta-icon {
-    transition: none;
-  }
+  .hero-cta-icon { transition: none; }
 
   #typewriter::after {
     animation: none;
     opacity: 1;
+  }
+
+  .hero-bubble {
+    transition: none;
   }
 
 }

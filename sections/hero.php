@@ -2,54 +2,91 @@
 /**
  * sections/hero.php
  *
- * COGNITIVE RESTRUCTURE:
- * - Static identity line first — readable instantly, no waiting
- * - Typewriter demoted to secondary supporting line
- * - Fixed typewriter container height — stops layout shift
+ * Changes:
+ * - Skeleton element inside typewriter wrapper
+ * - Floating testimonial bubble (fixed, bottom-right)
+ * - Eyebrow identity line
+ * - Shorter title: "I design clarity into"
+ * - CTA buttons + availability signal
  */
 ?>
 
+<!-- ================================
+     FLOATING TESTIMONIAL BUBBLE
+     Fixed position, bottom-right
+     Appears after 2s delay
+================================ -->
+<div class="hero-bubble" id="heroBubble" role="complementary" aria-label="Peer testimonial">
+
+  <button
+    class="hero-bubble-close"
+    id="heroBubbleClose"
+    aria-label="Dismiss testimonial"
+  >✕</button>
+
+  <div class="hero-bubble-body">
+    <p>
+      "Ramesh has a rare ability to translate complex
+      business requirements into elegant, scalable UX systems."
+    </p>
+  </div>
+
+  <div class="hero-bubble-footer">
+    <span class="hero-bubble-avatar" aria-hidden="true">PS</span>
+    <div class="hero-bubble-meta">
+      <strong>Priya Sharma</strong>
+      <span>VP Product &middot; IndiGo Airlines</span>
+    </div>
+  </div>
+
+  <!-- Tail -->
+  <span class="hero-bubble-tail" aria-hidden="true"></span>
+
+</div>
+
+
+<!-- ================================
+     HERO SECTION
+================================ -->
 <section class="hero">
 
   <div class="hero-content">
 
-    <!-- IDENTITY EYEBROW — reads instantly, sets context -->
+    <!-- EYEBROW -->
     <div class="hero-eyebrow">
       <span class="hero-eyebrow-dot" aria-hidden="true"></span>
       UX Leader &amp; Product Strategist
     </div>
 
-    <!-- TITLE
-         Line 1: static — reader gets the full thought immediately
-         Line 2: typewriter adds specificity, doesn't block comprehension
-         Container has fixed min-height — zero layout shift
-    -->
+    <!-- TITLE + TYPEWRITER -->
     <h1 class="hero-title">
       I design clarity<br>
       into <span class="hero-title-typewriter">
-        <span id="typewriter" aria-live="polite"></span>
+
+        <!-- SKELETON — visible on load, hidden when typing starts -->
+        <span
+          class="typewriter-skeleton"
+          id="typewriter-skeleton"
+          aria-hidden="true"
+        ></span>
+
+        <!-- TYPEWRITER -->
+        <span
+          id="typewriter"
+          aria-live="polite"
+          aria-label="Specialisation area"
+        ></span>
+
       </span>
     </h1>
 
-    <!-- META PILLS -->
+    <!-- META -->
     <div class="hero-meta">
       <span>17+ Years</span>
       <span>10+ Enterprise Products</span>
       <span>50M+ Users Served</span>
-      <span>Sr. Manager UX · Intelegencia</span>
+      <span>Sr. Manager UX &middot; Intelegencia</span>
     </div>
-
-    <!-- SOCIAL PROOF QUOTE -->
-    <blockquote class="hero-proof">
-      <p>
-        "Ramesh has a rare ability to translate complex business
-        requirements into elegant, scalable UX systems."
-      </p>
-      <cite>
-        <span class="hero-proof-avatar" aria-hidden="true">PS</span>
-        Priya Sharma &mdash; VP Product &middot; IndiGo Airlines
-      </cite>
-    </blockquote>
 
     <!-- CHIPS -->
     <div class="chips">
@@ -59,7 +96,7 @@
       <div class="chip blue" data-chip="ai-workflows" role="button" tabindex="0">AI-ENABLED WORKFLOWS</div>
     </div>
 
-    <!-- CTA BUTTONS -->
+    <!-- CTA -->
     <div class="hero-cta">
       <a href="/case-study/" class="hero-cta-primary">
         View Case Studies
@@ -80,3 +117,39 @@
   </div>
 
 </section>
+
+
+<!-- ================================
+     BUBBLE SCRIPT (inline, minimal)
+     Handles show/dismiss only
+================================ -->
+<script>
+(function() {
+
+  var bubble    = document.getElementById("heroBubble");
+  var closeBtn  = document.getElementById("heroBubbleClose");
+
+  if (!bubble) return;
+
+  // Show after 2s delay
+  setTimeout(function() {
+    bubble.classList.add("hero-bubble--visible");
+  }, 2000);
+
+  // Dismiss on close button
+  closeBtn.addEventListener("click", function() {
+    bubble.classList.remove("hero-bubble--visible");
+    bubble.classList.add("hero-bubble--dismissed");
+    // Remember dismissal for session
+    try { sessionStorage.setItem("bubbleDismissed", "1"); } catch(e) {}
+  });
+
+  // Don't show if already dismissed this session
+  try {
+    if (sessionStorage.getItem("bubbleDismissed") === "1") {
+      bubble.style.display = "none";
+    }
+  } catch(e) {}
+
+})();
+</script>

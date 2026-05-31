@@ -1,49 +1,102 @@
-(function () {
-  "use strict";
+// =========================
+// TYPEWRITER TEXTS
+// Keep phrases SHORT — max 3 words
+// so they never wrap beyond 2 lines
+// =========================
 
-  const el = document.getElementById("typewriter");
-  if (!el) return;
+const texts = [
+  "complex systems.",
+  "AI-led workflows.",
+  "enterprise products.",
+  "design infrastructure.",
+  "scalable teams."
+];
 
-  /* inject cursor as sibling element */
-  const cursor = document.createElement("span");
-  cursor.className = "tw-cursor";
-  cursor.setAttribute("aria-hidden", "true");
-  el.insertAdjacentElement("afterend", cursor);
+// =========================
+// ELEMENTS
+// =========================
 
-  const texts = [
-    "modern digital products.",
-    "AI-enabled workflows.",
-    "enterprise UX systems.",
-    "design infrastructure.",
-    "scalable product teams."
-  ];
+const typewriterEl  = document.getElementById("typewriter");
+const skeletonEl    = document.getElementById("typewriter-skeleton");
 
-  let textIdx  = 0;
-  let charIdx  = 0;
-  let deleting = false;
+// =========================
+// STATE
+// =========================
 
-  function tick() {
-    const current = texts[textIdx];
+let textIndex   = 0;
+let charIndex   = 0;
+let isDeleting  = false;
+let hasStarted  = false; // tracks if first char ever typed
 
-    if (!deleting) {
-      el.textContent = current.slice(0, charIdx + 1);
-      charIdx++;
-      if (charIdx === current.length) {
-        deleting = true;
-        setTimeout(tick, 1800);
-        return;
-      }
-    } else {
-      el.textContent = current.slice(0, charIdx - 1);
-      charIdx--;
-      if (charIdx === 0) {
-        deleting = false;
-        textIdx  = (textIdx + 1) % texts.length;
-      }
+// =========================
+// SKELETON — hide on first
+// character typed, never shown again
+// =========================
+
+function hideSkeleton() {
+  if (!skeletonEl) return;
+  skeletonEl.style.opacity   = "0";
+  skeletonEl.style.transform = "scaleX(0.6)";
+  // remove from DOM after transition
+  setTimeout(() => {
+    if (skeletonEl) skeletonEl.style.display = "none";
+  }, 400);
+}
+
+// =========================
+// TYPE FUNCTION
+// =========================
+
+function typeEffect() {
+
+  const currentText = texts[textIndex];
+
+  // TYPING
+  if (!isDeleting) {
+
+    typewriterEl.textContent =
+      currentText.substring(0, charIndex + 1);
+
+    // Hide skeleton the moment first character appears
+    if (!hasStarted && charIndex === 0) {
+      hasStarted = true;
+      hideSkeleton();
     }
 
-    setTimeout(tick, deleting ? 42 : 78);
+    charIndex++;
+
+    if (charIndex === currentText.length) {
+      isDeleting = true;
+      setTimeout(typeEffect, 1800);
+      return;
+    }
+
   }
 
-  tick();
-})();
+  // DELETING
+  else {
+
+    typewriterEl.textContent =
+      currentText.substring(0, charIndex - 1);
+
+    charIndex--;
+
+    if (charIndex === 0) {
+      isDeleting = false;
+      textIndex++;
+      if (textIndex >= texts.length) textIndex = 0;
+    }
+
+  }
+
+  const speed = isDeleting ? 45 : 85;
+  setTimeout(typeEffect, speed);
+
+}
+
+// =========================
+// START — small delay so
+// skeleton is visible briefly
+// =========================
+
+setTimeout(typeEffect, 600);
