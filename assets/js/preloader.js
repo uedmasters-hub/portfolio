@@ -112,22 +112,4 @@
     }
   }, 4000);
 
-  function getPreloaderCopy(progress) {
- 
-    if (progress < 30) {
-      return "Loading systems&hellip;";
-    }
-  
-    if (progress < 70) {
-      return "Parsing 17 years&hellip;";
-    }
-  
-    if (progress < 95) {
-      return "Rendering clarity&hellip;";
-    }
-  
-    return "Ready.";
-  
-  }
-
 })();

@@ -1,740 +1,254 @@
-/* =========================
-   HERO WRAPPER
-   Full 100vh, vertically
-   distributed layout
-========================= */
+/* =========================================
+   HERO — hero.css
+   ========================================= */
+
+/* ── WRAPPER ─────────────────────────────── */
 
 .hero-wrapper {
-  min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
+  min-height:      calc(100vh - 72px);
+  display:         flex;
+  flex-direction:  column;
   justify-content: space-between;
-
-  /* Top padding = navbar height (82px) + breathing room */
-  padding: 82px 50px 40px;
+  padding:         0 48px 40px;
+  overflow:        hidden;
 }
 
-/* =========================
-   HERO
-   Takes remaining space,
-   centres content vertically
-========================= */
+/* ── HERO ────────────────────────────────── */
 
 .hero {
-  flex: 1;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  padding: 40px 0 20px;
+  flex:            1;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
 }
 
-/* =========================
-   HERO CONTENT
-========================= */
+/* ── HERO CONTENT ────────────────────────── */
 
-.hero-content {
-  width: 100%;
-  max-width: 720px;
-
-  display: flex;
+.hero__content {
+  width:          100%;
+  max-width:      780px;
+  display:        flex;
   flex-direction: column;
-
-  gap: 22px;
+  gap:            32px;
 }
 
-/* =========================
-   EYEBROW
-========================= */
+/* ── HERO TITLE ──────────────────────────── */
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-
-  color: var(--blue);
+.hero__title {
+  font-size:      clamp(3.2rem, 5.2vw, 6.4rem);
+  line-height:    1.08;
+  letter-spacing: -0.04em;
+  font-weight:    300;
+  color:          var(--text-primary);
+  max-width:      100%;
 }
 
-.hero-eyebrow-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  background: var(--blue);
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* =========================
-   HERO TITLE
-
-   THE LAYOUT SHIFT FIX:
-   The title is split into two
-   visual lines via <br>.
-
-   Line 1: "I design clarity" — static
-   Line 2: the typewriter line
-
-   The typewriter LINE is given a
-   fixed height as a BLOCK element.
-   This means no matter what text
-   is typed (or not typed), the
-   line height never changes.
-   Nothing below ever moves.
-========================= */
-
-.hero-title {
-  font-size: clamp(2.8rem, 5.5vw, 4.4rem);
-
-  line-height: 1.08;
-
-  letter-spacing: -0.05em;
-
-  font-weight: 300;
-
-  margin: 0;
-}
-
-/* =========================
-   TYPEWRITER LINE
-   This is the KEY fix.
-   display: block gives it
-   its own stable line.
-   height is fixed — not min-height —
-   so it NEVER changes size.
-========================= */
-
-.hero-title-typewriter {
-  display: block;               /* own line, not inline */
-  height: 1.2em;                /* exactly one line tall, always */
-  overflow: visible;
-  position: relative;
-}
-
-/* =========================
-   TYPEWRITER TEXT
-========================= */
+/* ── TYPEWRITER ──────────────────────────── */
 
 #typewriter {
-  color: var(--blue);
-  position: relative;
-  display: inline;
-
-  white-space: nowrap;          /* NEVER wraps — forces single line */
+  color:       var(--blue-light);
+  display:     inline;
+  font-size:   inherit;
+  font-weight: inherit;
 }
 
-/* blinking cursor */
 #typewriter::after {
-  content: "";
-  position: absolute;
-  right: -8px;
-  top: 8%;
-  width: 3px;
-  height: 84%;
-  background: var(--blue);
-  animation: blink 1s infinite;
+  content:        "";
+  display:        inline-block;
+  width:          2px;
+  height:         0.75em;
+  background:     var(--blue-light);
+  border-radius:  2px;
+  margin-left:    3px;
+  vertical-align: 0.05em;
+  animation:      cursorBlink 1.4s ease-in-out infinite;
 }
 
-@keyframes blink {
-  0%, 50%  { opacity: 1; }
-  51%, 100% { opacity: 0; }
+@keyframes cursorBlink {
+  0%   { opacity: 1; }
+  40%  { opacity: 1; }
+  60%  { opacity: 0; }
+  100% { opacity: 0; }
 }
 
-/* =========================
-   SKELETON LOADER
-   Sits in the same line as
-   typewriter, visible on load.
-   Shimmer = "something loading here"
-   Brain registers it, moves on.
-========================= */
+/* ── META ROW ────────────────────────────── */
 
-.typewriter-skeleton {
-  display: inline-block;
-
-  width: 260px;
-  height: 0.8em;
-
-  background: linear-gradient(
-    90deg,
-    rgba(26, 70, 201, 0.07) 25%,
-    rgba(26, 70, 201, 0.15) 50%,
-    rgba(26, 70, 201, 0.07) 75%
-  );
-  background-size: 200% 100%;
-
-  border-radius: 8px;
-
-  vertical-align: middle;
-
-  animation: skeleton-shimmer 1.6s ease-in-out infinite;
-
-  /* Transition for JS fade-out */
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
-
-  transform-origin: left center;
-}
-
-@keyframes skeleton-shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* =========================
-   HERO META
-========================= */
-
-.hero-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  font-size: 13px;
-  color: var(--muted);
+.hero__meta {
+  display:     flex;
+  flex-wrap:   wrap;
+  align-items: center;
+  font-size:   14px;
+  color:       var(--text-muted);
   line-height: 1.6;
 }
 
-.hero-meta span {
-  position: relative;
+.hero__meta-item {
+  display:     inline-flex;
+  align-items: center;
 }
 
-.hero-meta span:not(:last-child)::after {
-  content: "·";
-  position: absolute;
-  right: -10px;
-  color: #ccc;
+.hero__meta-item:not(:last-child)::after {
+  content:     "|";
+  margin:      0 14px;
+  color:       rgba(0,0,0,0.20);
+  font-weight: 300;
 }
 
-/* =========================
-   CHIPS
-========================= */
+/* ── CHIPS — DESKTOP ─────────────────────── */
 
-.chips {
-  display: flex;
+.hero__chips {
+  display:   flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap:       10px;
 }
 
 .chip {
-  padding: 9px 16px;
-  border: 1px solid #d0d0d0;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.7);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-}
-
-.chip.blue {
-  color: var(--blue);
-  border-color: #c0cef5;
-}
-
-/* =========================
-   CTA BUTTONS
-========================= */
-
-.hero-cta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.hero-cta-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 26px;
-  background: var(--blue);
-  color: #fff;
-  border: 1.5px solid var(--blue);
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    background 0.22s ease,
-    transform 0.22s ease,
-    box-shadow 0.22s ease;
-}
-
-.hero-cta-primary:hover {
-  background: #1538a8;
-  border-color: #1538a8;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(26,70,201,0.28);
-}
-
-.hero-cta-primary:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 3px;
-}
-
-.hero-cta-arrow {
-  font-size: 15px;
-  transition: transform 0.22s ease;
-  display: inline-block;
-}
-
-.hero-cta-primary:hover .hero-cta-arrow {
-  transform: translateX(4px);
-}
-
-.hero-cta-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 26px;
-  background: transparent;
-  color: #222;
-  border: 1.5px solid rgba(0,0,0,0.16);
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  transition:
-    border-color 0.22s ease,
-    background 0.22s ease,
-    transform 0.22s ease;
-}
-
-.hero-cta-secondary:hover {
-  border-color: rgba(0,0,0,0.35);
-  background: rgba(0,0,0,0.03);
-  transform: translateY(-2px);
-}
-
-.hero-cta-secondary:focus-visible {
-  outline: 2px solid #333;
-  outline-offset: 3px;
-}
-
-.hero-cta-icon {
-  font-size: 13px;
-  transition: transform 0.22s ease;
-  display: inline-block;
-}
-
-.hero-cta-secondary:hover .hero-cta-icon {
-  transform: translateY(2px);
-}
-
-/* =========================
-   AVAILABILITY SIGNAL
-========================= */
-
-.hero-availability {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 12px;
-  color: #666;
-}
-
-.hero-availability-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  background: #22c55e;
-  border-radius: 50%;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.hero-availability-dot::before {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: rgba(34, 197, 94, 0.22);
-  animation: availability-pulse 2s ease-out infinite;
-}
-
-@keyframes availability-pulse {
-  0%   { transform: scale(1);   opacity: 0.8; }
-  70%  { transform: scale(2.2); opacity: 0;   }
-  100% { transform: scale(2.2); opacity: 0;   }
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  align-items: end;
-  padding-top: 0;
-  perspective: 1400px;
-}
-
-.stat {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 22px 22px 20px;
-  border-radius: 24px;
-  background: transparent;
-  border: 1px solid transparent;
-  overflow: hidden;
-  transform-style: preserve-3d;
-  transition:
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.5s ease,
-    box-shadow 0.5s ease,
-    border-color 0.5s ease;
-}
-
-.stat::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(180,210,255,0.10),
-    rgba(240,220,255,0.10),
-    rgba(255,230,240,0.08)
-  );
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-.stat:hover {
-  transform:
-    perspective(1400px)
-    rotateX(5deg)
-    rotateY(-5deg)
-    translateY(-6px);
-  background: rgba(255,255,255,0.52);
-  border-color: rgba(255,255,255,0.75);
-  box-shadow:
-    0 24px 50px rgba(120,170,255,0.10),
-    0 10px 24px rgba(0,0,0,0.04);
-}
-
-.stat:hover::before { opacity: 1; }
-
-.stat > * {
-  position: relative;
-  z-index: 2;
-  transform: translateZ(28px);
-}
-
-.stat-label {
-  font-size: 11px;
-  letter-spacing: 4px;
-  color: #444;
-  margin-bottom: 2px;
-}
-
-.stat h2 {
-  font-size: 42px;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: -2px;
-  color: #111;
-}
-
-.stat span {
-  font-size: 15px;
-  line-height: 1.5;
-  color: #333;
-}
-
-/* ================================================
-   FLOATING TESTIMONIAL BUBBLE
-================================================ */
-
-.hero-bubble {
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  z-index: 200;
-
-  width: 296px;
-
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px 16px 4px 16px;
-
-  padding: 20px 20px 16px;
-
-  box-shadow:
-    0 4px 6px rgba(0,0,0,0.04),
-    0 16px 40px rgba(0,0,0,0.10);
-
-  opacity: 0;
-  transform: translateY(16px) scale(0.97);
-  pointer-events: none;
-
-  transition:
-    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hero-bubble--visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-
-.hero-bubble--dismissed {
-  opacity: 0;
-  transform: translateY(12px) scale(0.95);
-  pointer-events: none;
-}
-
-.hero-bubble::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--blue);
-  border-radius: 16px 16px 0 0;
-}
-
-.hero-bubble-body p {
-  font-size: 13px;
-  line-height: 1.65;
-  color: #333;
-  font-style: italic;
-  margin: 0 0 14px;
-  padding-right: 16px; /* space for close button */
-}
-
-.hero-bubble-footer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.hero-bubble-avatar {
-  display: inline-flex;
-  align-items: center;
+  display:         inline-flex;
+  align-items:     center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: var(--blue);
-  color: white;
-  border-radius: 50%;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  flex-shrink: 0;
+  padding:         10px 20px;
+  border:          1.5px solid rgba(0,0,0,0.12);
+  border-radius:   var(--radius-pill);
+  background:      rgba(255,255,255,0.65);
+  font-size:       12px;
+  font-weight:     500;
+  letter-spacing:  0.06em;
+  text-transform:  uppercase;
+  color:           var(--text-secondary);
+  backdrop-filter: blur(8px);
+  white-space:     nowrap;
+  transition:
+    background   var(--t-fast) ease,
+    border-color var(--t-fast) ease,
+    transform    var(--t-fast) ease;
 }
 
-.hero-bubble-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.chip:hover {
+  background:   rgba(255,255,255,0.95);
+  border-color: rgba(26,70,201,0.30);
+  color:        var(--blue);
+  transform:    translateY(-2px);
 }
 
-.hero-bubble-meta strong {
-  font-size: 12px;
-  font-weight: 600;
-  color: #111;
-  display: block;
+.chip--accent {
+  color:        var(--blue);
+  border-color: rgba(26,70,201,0.22);
+  background:   rgba(26,70,201,0.04);
 }
 
-.hero-bubble-meta span {
-  font-size: 11px;
-  color: var(--muted);
-  display: block;
+.chip--accent:hover {
+  background: rgba(26,70,201,0.08);
 }
 
-.hero-bubble-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 20px;
-  height: 20px;
-  background: rgba(0,0,0,0.05);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 9px;
-  color: #888;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease;
-  padding: 0;
-  line-height: 1;
-}
-
-.hero-bubble-close:hover {
-  background: rgba(0,0,0,0.10);
-  color: #333;
-}
-
-/* =========================
-   TABLET
-========================= */
+/* ── RESPONSIVE — 1024px ─────────────────── */
 
 @media (max-width: 1024px) {
 
   .hero-wrapper {
-    padding: 82px 40px 36px;
+    padding: 0 40px 36px;
   }
 
-  .hero-content {
-    max-width: 600px;
-  }
-
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px 24px;
-  }
-
-  .hero-bubble {
-    right: 24px;
-    bottom: 24px;
-    width: 260px;
+  .hero__content {
+    max-width: 660px;
   }
 
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* ── RESPONSIVE — 768px ──────────────────── */
 
 @media (max-width: 768px) {
 
   .hero-wrapper {
-    min-height: 100vh;
-    padding: 100px 20px 32px;
-    gap: 40px;
+    min-height:      auto;
+    padding:         24px 20px 0;
+    gap:             0;
+    overflow:        hidden;
+    overflow-x:      clip;    /* stronger than hidden on Android */
+    width:           100%;
+    max-width:       100vw;
+    box-sizing:      border-box;
+    justify-content: flex-start;
+    flex-direction:  column;
   }
 
   .hero {
-    padding: 20px 0;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items:     flex-start;
+    padding-bottom:  28px;
+    flex:            none;       /* don't flex-grow on mobile */
   }
 
-  .hero-content {
+  .hero__content {
     max-width: 100%;
-    gap: 18px;
+    gap:       24px;
   }
 
-  .hero-title {
-    font-size: clamp(2.2rem, 10vw, 3.2rem);
-    line-height: 1.08;
+  .hero__title {
+    font-size:      clamp(1.9rem, 8vw, 3.4rem);
+    line-height:    1.08;
+    letter-spacing: -0.04em;   /* reduce from -0.06em — less overflow risk */
+    max-width:      100%;
+    width:          100%;
+    overflow:       hidden;
+    overflow-wrap:  break-word;
+    word-break:     break-word;
   }
 
-  /* On mobile, nowrap can overflow — allow wrap
-     but keep height fixed at 2 lines */
-  #typewriter {
-    white-space: normal;
+  /* bullet separators */
+  .hero__meta {
+    gap:       4px 0;
+    font-size: 13px;
+    color:     var(--text-muted);
   }
 
-  .hero-title-typewriter {
-    height: 2.4em;    /* 2 lines on mobile */
+  .hero__meta-item:not(:last-child)::after {
+    content:     "•" !important;
+    margin:      0 8px !important;
+    color:       var(--text-muted);
+    font-weight: 400;
+    opacity:     0.5;
   }
 
-  .typewriter-skeleton {
-    width: 160px;
-  }
+  /* ── CHIPS MOBILE — 2×2 equal height ────── */
 
-  .hero-meta {
-    gap: 4px 12px;
-  }
-
-  .hero-meta span::after {
-    display: none;
-  }
-
-  .chips { gap: 8px; }
-
-  .hero-cta {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .hero-cta-primary,
-  .hero-cta-secondary {
-    justify-content: center;
-    padding: 14px 20px;
-  }
-
-  .stats {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .stat { padding: 18px; }
-  .stat h2 { font-size: 34px; }
-
-  .hero-bubble {
-    right: 12px;
-    left: 12px;
-    bottom: 12px;
-    width: auto;
-    border-radius: 14px;
-  }
-
-}
-
-/* =========================
-   SMALL MOBILE
-========================= */
-
-@media (max-width: 480px) {
-
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .hero-title-typewriter {
-    height: 2.6em;
-  }
-
-  .chips {
-    flex-direction: column;
+  .hero__chips {
+    display:               grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows:        56px;
+    gap:                   8px;
   }
 
   .chip {
-    width: 100%;
-    text-align: center;
+    /* reset desktop styles */
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    text-align:      center;
+    white-space:     normal;
+    /* no padding — height controlled by grid-auto-rows */
+    padding:         0 10px;
+    height:          100%;
+    font-size:       11px;
+    line-height:     1.3;
   }
 
 }
 
-/* =========================
-   REDUCED MOTION
-========================= */
+/* ── RESPONSIVE — 480px ──────────────────── */
 
-@media (prefers-reduced-motion: reduce) {
+@media (max-width: 480px) {
 
-  .typewriter-skeleton {
-    animation: none;
-    background: rgba(26,70,201,0.08);
+  .hero__title {
+    font-size:      clamp(1.6rem, 9vw, 2.4rem);
+    letter-spacing: -0.03em;
+    overflow-wrap:  break-word;
+    word-break:     break-word;
+    overflow:       hidden;
+    width:          100%;
   }
 
-  .hero-availability-dot::before { animation: none; }
-
-  .hero-cta-primary,
-  .hero-cta-secondary,
-  .hero-cta-arrow,
-  .hero-cta-icon { transition: none; }
-
-  #typewriter::after {
-    animation: none;
-    opacity: 1;
+  .hero__chips {
+    grid-auto-rows: 52px;
   }
-
-  .hero-bubble { transition: none; }
 
 }

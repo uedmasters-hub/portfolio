@@ -1,116 +1,49 @@
-// =========================
-// TYPEWRITER + SKELETON
-// Wrapped in DOMContentLoaded
-// so elements are guaranteed
-// to exist before JS runs
-// =========================
+(function () {
+  "use strict";
 
-document.addEventListener("DOMContentLoaded", function () {
+  const el = document.getElementById("typewriter");
+  if (!el) return;
 
-  // =========================
-  // ELEMENTS
-  // =========================
+  /* inject cursor as sibling element */
+  const cursor = document.createElement("span");
+  cursor.className = "tw-cursor";
+  cursor.setAttribute("aria-hidden", "true");
+  el.insertAdjacentElement("afterend", cursor);
 
-  var typewriterEl = document.getElementById("typewriter");
-  var skeletonEl   = document.getElementById("typewriter-skeleton");
-
-  if (!typewriterEl) return; // guard — not on this page
-
-  // =========================
-  // TEXTS
-  // Keep phrases short (2-3 words)
-  // white-space: nowrap on desktop
-  // means they must stay one line
-  // =========================
-
-  var texts = [
-    "complex systems.",
-    "AI-led workflows.",
-    "enterprise products.",
+  const texts = [
+    "modern digital products.",
+    "AI-enabled workflows.",
+    "enterprise UX systems.",
     "design infrastructure.",
-    "scalable teams."
+    "scalable product teams."
   ];
 
-  // =========================
-  // STATE
-  // =========================
+  let textIdx  = 0;
+  let charIdx  = 0;
+  let deleting = false;
 
-  var textIndex  = 0;
-  var charIndex  = 0;
-  var isDeleting = false;
-  var hasStarted = false;
+  function tick() {
+    const current = texts[textIdx];
 
-  // =========================
-  // HIDE SKELETON
-  // Called once when first
-  // character is typed.
-  // Never called again.
-  // =========================
-
-  function hideSkeleton() {
-    if (!skeletonEl) return;
-    skeletonEl.style.opacity   = "0";
-    skeletonEl.style.transform = "scaleX(0.5)";
-    setTimeout(function () {
-      if (skeletonEl) skeletonEl.style.display = "none";
-    }, 400);
-  }
-
-  // =========================
-  // TYPE FUNCTION
-  // =========================
-
-  function typeEffect() {
-
-    var currentText = texts[textIndex];
-
-    if (!isDeleting) {
-
-      // Typing
-      typewriterEl.textContent =
-        currentText.substring(0, charIndex + 1);
-
-      // Hide skeleton on very first character
-      if (!hasStarted) {
-        hasStarted = true;
-        hideSkeleton();
-      }
-
-      charIndex++;
-
-      if (charIndex === currentText.length) {
-        isDeleting = true;
-        setTimeout(typeEffect, 1800);
+    if (!deleting) {
+      el.textContent = current.slice(0, charIdx + 1);
+      charIdx++;
+      if (charIdx === current.length) {
+        deleting = true;
+        setTimeout(tick, 1800);
         return;
       }
-
     } else {
-
-      // Deleting
-      typewriterEl.textContent =
-        currentText.substring(0, charIndex - 1);
-
-      charIndex--;
-
-      if (charIndex === 0) {
-        isDeleting = false;
-        textIndex++;
-        if (textIndex >= texts.length) textIndex = 0;
+      el.textContent = current.slice(0, charIdx - 1);
+      charIdx--;
+      if (charIdx === 0) {
+        deleting = false;
+        textIdx  = (textIdx + 1) % texts.length;
       }
-
     }
 
-    var speed = isDeleting ? 45 : 85;
-    setTimeout(typeEffect, speed);
-
+    setTimeout(tick, deleting ? 42 : 78);
   }
 
-  // =========================
-  // START
-  // 700ms delay so skeleton
-  // is visible on load
-  // =========================
-
-  setTimeout(typeEffect, 700);
-
-});
+  tick();
+})();
