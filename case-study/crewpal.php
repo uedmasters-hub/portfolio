@@ -64,7 +64,7 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
 </head>
 <body>
-  <div class="art-progress" id="art-progress></div>
+  <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader__grid"></div>
     <div class="preloader__inner">

@@ -73,7 +73,7 @@ $nav = [
 <body>
 
   <!-- READING PROGRESS -->
-  <div class="art-progress" id="art-progress role="progressbar" aria-label="Reading progress"></div>
+  <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
 
   <!-- PRELOADER -->
   <div class="preloader" id="preloader" aria-hidden="true">
