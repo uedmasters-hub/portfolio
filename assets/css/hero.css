@@ -251,4 +251,305 @@
     grid-auto-rows: 52px;
   }
 
+  /* ==============================================
+   HERO.CSS — ADDITIONS
+   UX Roadmap: P1.2 (CTA) · P2.1 (Proof) · P2.2 (Availability)
+
+   ADD THESE BLOCKS to assets/css/hero.css
+   Place after the existing .chips block styles
+   ============================================== */
+
+
+/* ==============================================
+   SOCIAL PROOF QUOTE — P2.1
+   ============================================== */
+
+.hero-proof {
+  margin: 0;
+  padding: 20px 24px;
+
+  background: rgba(26, 70, 201, 0.04);
+  border-left: 2px solid var(--blue);
+  border-radius: 0 12px 12px 0;
+
+  max-width: 580px;
+}
+
+.hero-proof p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #333;
+  font-style: italic;
+  margin: 0 0 12px;
+}
+
+.hero-proof cite {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-style: normal;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.hero-proof-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  background: var(--blue);
+  color: white;
+
+  border-radius: 50%;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  flex-shrink: 0;
+}
+
+
+/* ==============================================
+   CTA BUTTONS — P1.2
+   ============================================== */
+
+.hero-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  margin-top: 4px;
+}
+
+/* PRIMARY — filled blue */
+.hero-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 14px 28px;
+
+  background: var(--blue);
+  color: #fff;
+
+  border: 1.5px solid var(--blue);
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+
+  text-decoration: none;
+
+  transition:
+    background 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+
+  will-change: transform;
+}
+
+.hero-cta-primary:hover {
+  background: #1538a8;
+  border-color: #1538a8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(26, 70, 201, 0.28);
+}
+
+.hero-cta-primary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.hero-cta-arrow {
+  font-size: 16px;
+  transition: transform 0.22s ease;
+  display: inline-block;
+}
+
+.hero-cta-primary:hover .hero-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* SECONDARY — ghost outline */
+.hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 14px 28px;
+
+  background: transparent;
+  color: #222;
+
+  border: 1.5px solid rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition:
+    border-color 0.22s ease,
+    background 0.22s ease,
+    transform 0.22s ease;
+
+  will-change: transform;
+}
+
+.hero-cta-secondary:hover {
+  border-color: rgba(0, 0, 0, 0.38);
+  background: rgba(0, 0, 0, 0.03);
+  transform: translateY(-2px);
+}
+
+.hero-cta-secondary:focus-visible {
+  outline: 2px solid #333;
+  outline-offset: 3px;
+}
+
+.hero-cta-icon {
+  font-size: 14px;
+  transition: transform 0.22s ease;
+  display: inline-block;
+}
+
+.hero-cta-secondary:hover .hero-cta-icon {
+  transform: translateY(2px);
+}
+
+
+/* ==============================================
+   AVAILABILITY SIGNAL — P2.2
+   ============================================== */
+
+.hero-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 13px;
+  color: #555;
+  font-weight: 400;
+}
+
+/* PULSING DOT */
+.hero-availability-dot {
+  display: inline-block;
+
+  width: 8px;
+  height: 8px;
+
+  background: #22c55e;        /* green */
+  border-radius: 50%;
+
+  flex-shrink: 0;
+
+  position: relative;
+}
+
+/* Outer pulse ring */
+.hero-availability-dot::before {
+  content: "";
+
+  position: absolute;
+  inset: -3px;
+
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.25);
+
+  animation: availability-pulse 2s ease-out infinite;
+}
+
+@keyframes availability-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+
+/* ==============================================
+   RESPONSIVE — MOBILE
+   ============================================== */
+
+@media (max-width: 768px) {
+
+  .hero-proof {
+    padding: 16px 18px;
+    max-width: 100%;
+  }
+
+  .hero-proof p {
+    font-size: 14px;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .hero-cta-primary,
+  .hero-cta-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 15px 24px;
+  }
+
+  .hero-availability {
+    font-size: 12px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .hero-cta-primary,
+  .hero-cta-secondary {
+    font-size: 13px;
+    padding: 14px 20px;
+  }
+
+}
+
+
+/* ==============================================
+   REDUCED MOTION — P1.4
+   ============================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-availability-dot::before {
+    animation: none;
+  }
+
+  .hero-cta-primary,
+  .hero-cta-secondary {
+    transition: none;
+  }
+
+  .hero-cta-arrow,
+  .hero-cta-icon {
+    transition: none;
+  }
+
+}
+
 }
