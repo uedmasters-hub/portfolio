@@ -13,6 +13,7 @@ body {
   background:  var(--bg);
   color:       var(--text-primary);
   transition:  background 5s ease;
+  overflow-x:  hidden; /* prevent horizontal scroll; does NOT break sticky */
 }
 
 /* ── PAGE WRAPPER ────────────────────────── */
@@ -20,12 +21,12 @@ body {
 .page-wrapper {
   position:  relative;
   min-height: 100vh;
-  /* overflow-x:clip contains child overflow WITHOUT affecting
-     position:fixed children (unlike overflow:hidden).
-     This prevents any wide section from stretching the document
-     and pushing the fixed header to the right. */
-  overflow-x: clip;
+  /* NOTE: overflow must NOT be set here — it breaks position:sticky
+     on all child elements. Horizontal overflow is controlled on body. */
 }
+
+/* ── BODY OVERFLOW ───────────────────────── */
+/* Prevent horizontal scroll without breaking sticky children */
 
 /* ── UTILITIES ───────────────────────────── */
 
