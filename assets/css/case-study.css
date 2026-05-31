@@ -749,3 +749,61 @@
   .cs-next { grid-template-columns: 1fr; padding: 48px 20px; gap: 16px; }
 
 }
+/* =============================================
+   CASE-STUDY ↔ ARTICLE.CSS BRIDGE
+   Maps old cs-* class names to art-* tokens
+   so existing case study content markup still
+   works while both templates share article.css
+   ============================================= */
+
+/* Body layout */
+.cs-content   { display: grid; grid-template-columns: 220px 1fr; gap: 0; padding: 64px 64px 96px; box-sizing: border-box; align-items: start; column-gap: 56px; max-width: 1280px; margin: 0 auto; width: 100%; }
+.cs-nav       { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 1px; }
+.cs-nav__item { display: block; font-size: 12px; line-height: 1.55; color: var(--text-muted); padding: 7px 0 7px 14px; border-left: 2px solid var(--border); text-decoration: none; transition: color var(--t-fast) ease, border-color var(--t-fast) ease; }
+.cs-nav__item:hover, .cs-nav__item.is-active { color: var(--blue); border-color: var(--blue); }
+.cs-article   { min-width: 0; display: flex; flex-direction: column; gap: 56px; }
+
+/* Section block */
+.cs-section         { scroll-margin-top: 96px; }
+.cs-section__label  { font-size: 10px; font-weight: 600; letter-spacing: 0.20em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; display: block; }
+.cs-section__title  { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 300; letter-spacing: -0.05em; color: var(--text-primary); line-height: 1.05; margin-bottom: 20px; }
+.cs-section__body   { font-size: 16px; line-height: 1.85; color: var(--text-secondary); }
+.cs-section__body p + p  { margin-top: 16px; }
+.cs-section__body strong { font-weight: 600; color: var(--text-primary); }
+
+/* Callout */
+.cs-callout { padding: 24px 28px; background: rgba(26,70,201,0.04); border-left: 3px solid var(--blue); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 15px; line-height: 1.75; color: var(--text-secondary); font-style: italic; margin: 0; }
+.cs-callout small { display: block; margin-top: 8px; font-size: 13px; font-style: normal; color: var(--text-muted); }
+
+/* Metrics row */
+.cs-metrics-row       { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 4px 0 0; }
+.cs-metric-card       { padding: 24px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-md); transition: border-color var(--t-fast) ease, background var(--t-fast) ease; }
+.cs-metric-card:hover { border-color: rgba(26,70,201,0.22); background: rgba(26,70,201,0.02); }
+.cs-metric-card__value{ font-size: 2.4rem; font-weight: 700; letter-spacing: -0.05em; color: var(--blue); line-height: 1; margin-bottom: 6px; }
+.cs-metric-card__label{ font-size: 13px; color: var(--text-muted); line-height: 1.45; }
+
+/* Steps */
+.cs-steps          { display: flex; flex-direction: column; gap: 0; margin: 4px 0 0; }
+.cs-step           { display: grid; grid-template-columns: 36px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+.cs-step:first-child{ border-top: 1px solid var(--border); }
+.cs-step:last-child { border-bottom: none; }
+.cs-step__num      { width: 36px; height: 36px; border-radius: 50%; background: rgba(26,70,201,0.06); border: 1.5px solid rgba(26,70,201,0.16); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+.cs-step__title    { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.4; }
+.cs-step__desc     { font-size: 14px; line-height: 1.65; color: var(--text-secondary); }
+
+/* Insight tags */
+.cs-insight        { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(26,70,201,0.06); border: 1px solid rgba(26,70,201,0.14); border-radius: var(--radius-pill); font-size: 12px; font-weight: 500; color: var(--blue); margin: 4px 4px 4px 0; }
+
+/* Bridge: .art-body used by case study too */
+.art-body .cs-nav { position: static; }
+
+@media (max-width: 1024px) {
+  .cs-content { grid-template-columns: 1fr; padding: 48px 40px; }
+  .cs-nav     { display: none; }
+  .cs-article { gap: 48px; }
+}
+
+@media (max-width: 768px) {
+  .cs-content      { padding: 40px 20px; }
+  .cs-metrics-row  { grid-template-columns: 1fr 1fr; }
+}

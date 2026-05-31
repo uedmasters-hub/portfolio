@@ -119,7 +119,6 @@ $nav = [
         />
         <div class="art-hero__overlay"></div>
         <div class="art-hero__content">
-          <a href="/case-study/" class="art-hero__back">← Case Studies</a>
           <div class="art-hero__kicker">AIRLINE COMMERCE SYSTEM</div>
           <h1 class="art-hero__title">IndiGo Booking<br>Ecosystem</h1>
           <p class="art-hero__subtitle">
@@ -380,22 +379,24 @@ $nav = [
     </main>
 
       <!-- NEXT CASE STUDIES — shared art-next layout -->
-      <section class="art-next" aria-label="Next case studies">
-        <a href="crewpal.php" class="art-next__card">
-          <span class="art-next__arrow">↗</span>
-          <p class="art-next__label">NEXT CASE STUDY</p>
-          <p class="art-next__category">ENTERPRISE APP</p>
-          <h3 class="art-next__title">CrewPal Operations Platform</h3>
-          <p class="art-next__tagline">Simplifying high-stakes operations for 8,000+ cabin crew.</p>
-        </a>
-        <a href="design-system.php" class="art-next__card">
-          <span class="art-next__arrow">↗</span>
-          <p class="art-next__label">ALSO WORTH READING</p>
-          <p class="art-next__category">DESIGN INFRASTRUCTURE</p>
-          <h3 class="art-next__title">Enterprise Design System</h3>
-          <p class="art-next__tagline">One system powering 10+ products and a 15-person design team.</p>
-        </a>
-      </section>
+      <div class="art-next-wrap">
+        <section class="art-next" aria-label="Next case studies">
+          <a href="crewpal.php" class="art-next__card">
+            <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">NEXT CASE STUDY</p>
+            <p class="art-next__category">ENTERPRISE APP</p>
+            <h3 class="art-next__title">CrewPal Operations Platform</h3>
+            <p class="art-next__tagline">Simplifying high-stakes operations for 8,000+ cabin crew.</p>
+          </a>
+          <a href="design-system.php" class="art-next__card">
+            <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">ALSO WORTH READING</p>
+            <p class="art-next__category">DESIGN INFRASTRUCTURE</p>
+            <h3 class="art-next__title">Enterprise Design System</h3>
+            <p class="art-next__tagline">One system powering 10+ products and a 15-person design team.</p>
+          </a>
+        </section>
+      </div>
 
     <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
     <?php

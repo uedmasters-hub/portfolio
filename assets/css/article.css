@@ -64,21 +64,6 @@
   z-index:  2;
 }
 
-.art-hero__back {
-  display:         inline-flex;
-  align-items:     center;
-  gap:             6px;
-  font-size:       12px;
-  letter-spacing:  0.08em;
-  text-transform:  uppercase;
-  color:           rgba(255,255,255,0.60);
-  text-decoration: none;
-  margin-bottom:   24px;
-  transition:      color var(--t-fast) ease;
-}
-
-.art-hero__back:hover { color: #fff; }
-
 .art-hero__kicker {
   display:        flex;
   align-items:    center;
@@ -170,12 +155,15 @@
 
 .art-body {
   display:               grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 220px 1fr;
   gap:                   0;
   align-items:           start;
   padding:               64px 64px 96px;
   box-sizing:            border-box;
-  column-gap:            64px;
+  column-gap:            56px;
+  max-width:             1280px;
+  margin:                0 auto;
+  width:                 100%;
 }
 
 
@@ -266,6 +254,7 @@
 
 .art-article {
   min-width:      0;
+  max-width:      680px;
   display:        flex;
   flex-direction: column;
   gap:            0;
@@ -516,20 +505,34 @@
 
 /* =============================================
    NEXT CASE STUDY / NEXT POST  — 2-col cards
-   Full-bleed. White cards, 1px divider between.
-   Matches mockup: no outer bg, no extra padding.
+   Section has page-edge padding. Cards are
+   inset, separated by a 1px right border.
    ============================================= */
 
 .art-next {
+  padding:               0 64px 64px;
   display:               grid;
   grid-template-columns: repeat(2, 1fr);
+  gap:                   1px;
+  background:            var(--border);
   border-top:            1px solid var(--border);
+  border-bottom:         1px solid var(--border);
   box-sizing:            border-box;
+  max-width:             1280px;
+  margin:                0 auto;
+  width:                 100%;
+}
+
+/* full-bleed outer wrapper so bg colour extends edge to edge */
+.art-next-wrap {
+  background:    var(--bg-elevated);
+  border-top:    1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .art-next__card {
   position:        relative;
-  padding:         48px 64px;
+  padding:         40px 40px 40px;
   background:      var(--bg-elevated);
   text-decoration: none;
   color:           inherit;
@@ -538,11 +541,7 @@
   justify-content: flex-end;
   gap:             10px;
   transition:      background var(--t-fast) ease;
-  min-height:      200px;
-}
-
-.art-next__card:not(:last-child) {
-  border-right: 1px solid var(--border);
+  min-height:      180px;
 }
 
 .art-next__card:hover { background: #fafafa; }
@@ -670,11 +669,7 @@
 
   .art-next {
     grid-template-columns: 1fr;
-  }
-
-  .art-next__card:not(:last-child) {
-    border-right:  none;
-    border-bottom: 1px solid var(--border);
+    padding:               0 40px 40px;
   }
 
   .art-meta-bar {
@@ -706,7 +701,8 @@
 
   .art-sidebar       { position: static; top: auto; }
 
-  .art-next__card    { min-height: 160px; padding: 32px 20px; }
+  .art-next          { padding: 0 20px 32px; }
+  .art-next__card    { min-height: 140px; padding: 28px 20px; }
 
   .art-nav-dark      { padding: 40px 20px; }
   .art-navlink--right{ text-align: left; }
