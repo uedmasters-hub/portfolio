@@ -388,6 +388,28 @@ $nav = [
         </div>
       </div>
 
+
+      <!-- MOBILE FAB TOC -->
+      <div class="art-fab-backdrop" id="fabBackdrop" aria-hidden="true"></div>
+      <button class="art-fab" id="fabBtn" aria-label="Table of contents" aria-expanded="false" aria-controls="fabDrawer">
+        <span class="art-fab__icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+      <div class="art-fab-drawer" id="fabDrawer" role="dialog" aria-label="Table of contents" aria-modal="true">
+        <div class="art-fab-drawer__handle"></div>
+        <div class="art-fab-drawer__header">
+          <span class="art-fab-drawer__title">In this note</span>
+        </div>
+        <nav class="art-fab-drawer__nav">
+          <?php foreach ($nav as $i => $n): ?>
+            <a href="#<?= $n['id'] ?>" class="art-fab-drawer__item" data-fab-toc="<?= $n['id'] ?>">
+              <span class="art-fab-drawer__num"><?= str_pad($i + 1, 2, '0', STR_PAD_LEFT) ?></span>
+              <?= htmlspecialchars($n['label']) ?>
+            </a>
+          <?php endforeach; ?>
+        </nav>
+      </div>
 </main>
 
     <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
