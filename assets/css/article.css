@@ -29,9 +29,9 @@
 .art-hero {
   position:    relative;
   width:       100%;
-  height:      56vh;
-  min-height:  460px;
-  max-height:  640px;
+  height:      48vh;
+  min-height:  360px;
+  max-height:  520px;
   overflow:    hidden;
   display:     block;
 }
@@ -173,9 +173,9 @@
   grid-template-columns: 240px 1fr;
   gap:                   0;
   align-items:           start;
-  padding:               64px 50px 96px;
+  padding:               64px 64px 96px;
   box-sizing:            border-box;
-  column-gap:            56px;
+  column-gap:            64px;
 }
 
 
@@ -268,25 +268,26 @@
   min-width:      0;
   display:        flex;
   flex-direction: column;
-  gap:            56px;
+  gap:            0;
 }
 
 /* ── plain paragraph body (blog) */
 
 .art-para {
   font-size:     16px;
-  line-height:   1.88;
+  line-height:   1.85;
   color:         var(--text-secondary);
   margin-bottom: 20px;
 }
 
-.art-para:last-child { margin-bottom: 0; }
+.art-para:last-of-type { margin-bottom: 0; }
 
 .art-para--lead {
-  font-size:   1.1rem;
-  font-weight: 400;
-  color:       var(--text-primary);
-  line-height: 1.75;
+  font-size:     1.05rem;
+  font-weight:   400;
+  color:         var(--text-primary);
+  line-height:   1.75;
+  margin-bottom: 20px;
 }
 
 /* ── section block (case study) */
@@ -515,31 +516,33 @@
 
 /* =============================================
    NEXT CASE STUDY / NEXT POST  — 2-col cards
-   Full-bleed, matches mockup light section
+   Full-bleed. White cards, 1px divider between.
+   Matches mockup: no outer bg, no extra padding.
    ============================================= */
 
 .art-next {
-  padding:               64px 50px;
   display:               grid;
   grid-template-columns: repeat(2, 1fr);
-  gap:                   1px;
-  background:            var(--border);
   border-top:            1px solid var(--border);
   box-sizing:            border-box;
 }
 
 .art-next__card {
   position:        relative;
-  padding:         48px 40px;
+  padding:         48px 64px;
   background:      var(--bg-elevated);
   text-decoration: none;
   color:           inherit;
   display:         flex;
   flex-direction:  column;
   justify-content: flex-end;
-  gap:             12px;
+  gap:             10px;
   transition:      background var(--t-fast) ease;
-  min-height:      220px;
+  min-height:      200px;
+}
+
+.art-next__card:not(:last-child) {
+  border-right: 1px solid var(--border);
 }
 
 .art-next__card:hover { background: #fafafa; }
@@ -594,7 +597,7 @@
    ============================================= */
 
 .art-nav-dark {
-  padding:               48px 50px;
+  padding:               48px 64px;
   display:               grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap:                   20px;
@@ -666,7 +669,12 @@
   }
 
   .art-next {
-    padding: 56px 40px;
+    grid-template-columns: 1fr;
+  }
+
+  .art-next__card:not(:last-child) {
+    border-right:  none;
+    border-bottom: 1px solid var(--border);
   }
 
   .art-meta-bar {
@@ -683,8 +691,8 @@
 
 @media (max-width: 768px) {
 
-  .art-hero          { height: 50vh; min-height: 400px; }
-  .art-hero__content { left: 20px; right: 20px; bottom: 28px; }
+  .art-hero          { height: 44vh; min-height: 300px; }
+  .art-hero__content { left: 20px; right: 20px; bottom: 24px; }
   .art-hero__title   { font-size: clamp(1.8rem, 8vw, 2.6rem); max-width: 100%; }
   .art-hero__subtitle{ font-size: 15px; }
 
@@ -698,12 +706,7 @@
 
   .art-sidebar       { position: static; top: auto; }
 
-  .art-next {
-    grid-template-columns: 1fr;
-    padding:               40px 20px;
-  }
-
-  .art-next__card    { min-height: 160px; padding: 32px 24px; }
+  .art-next__card    { min-height: 160px; padding: 32px 20px; }
 
   .art-nav-dark      { padding: 40px 20px; }
   .art-navlink--right{ text-align: left; }

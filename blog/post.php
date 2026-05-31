@@ -180,7 +180,6 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
         <div class="art-hero__overlay"></div>
 
         <div class="art-hero__content">
-          <a href="index.php" class="art-hero__back">← Field Notes</a>
 
           <div class="art-hero__kicker"><?= htmlspecialchars($post['tag']) ?></div>
 
