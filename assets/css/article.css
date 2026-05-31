@@ -514,8 +514,10 @@
   border-top:    1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background:    var(--bg-elevated);
-  padding:       0 64px;
+  padding:       0 0px;
   box-sizing:    border-box;
+  margin: 0 45px;
+  border-radius: 16px;
 }
 
 .art-next {
