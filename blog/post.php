@@ -317,7 +317,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
     document.querySelectorAll("[id]").forEach(function(el){ obs.observe(el); });
   })();
 
-  /* ── MOBILE FAB TOC ── */
+  /* ── MOBILE FAB — scroll hide/show + footer avoidance ── */
   (function(){
     var fab      = document.getElementById("fabBtn");
     var drawer   = document.getElementById("fabDrawer");
@@ -334,7 +334,6 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
       });
       document.body.style.overflow = "hidden";
     }
-
     function closeDrawer() {
       fab.classList.remove("is-open");
       fab.setAttribute("aria-expanded", "false");
@@ -349,23 +348,33 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
     });
     backdrop.addEventListener("click", closeDrawer);
     document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeDrawer(); });
-
-    drawer.querySelectorAll(".art-fab-drawer__item").forEach(function(link){
-      link.addEventListener("click", function(){ closeDrawer(); });
+    drawer.querySelectorAll(".art-fab-drawer__item").forEach(function(l){
+      l.addEventListener("click", function(){ closeDrawer(); });
     });
 
-    /* Highlight active drawer item on scroll */
-    var fabItems = drawer.querySelectorAll(".art-fab-drawer__item[data-fab-toc]");
-    if (fabItems.length) {
-      var obs2 = new IntersectionObserver(function(entries){
+    var lastY = 0, scrollTimer = null;
+    function checkFabVisibility() {
+      var y = window.scrollY, winH = window.innerHeight, docH = document.documentElement.scrollHeight;
+      if ((y + winH) > (docH - 200)) { fab.classList.add("is-hidden"); return; }
+      if (y > lastY + 4)      { fab.classList.add("is-hidden"); }
+      else if (y < lastY - 4) { fab.classList.remove("is-hidden"); }
+      lastY = y;
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function(){ fab.classList.remove("is-hidden"); }, 800);
+    }
+    window.addEventListener("scroll", checkFabVisibility, { passive: true });
+
+    var fi = drawer.querySelectorAll(".art-fab-drawer__item[data-fab-toc]");
+    if (fi.length) {
+      var obs = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
           if (!e.isIntersecting) return;
-          fabItems.forEach(function(n){ n.classList.remove("is-active"); });
+          fi.forEach(function(n){ n.classList.remove("is-active"); });
           var a = drawer.querySelector('.art-fab-drawer__item[data-fab-toc="' + e.target.id + '"]');
           if (a) a.classList.add("is-active");
         });
       }, { rootMargin: "-15% 0px -70% 0px" });
-      document.querySelectorAll("[id]").forEach(function(el){ obs2.observe(el); });
+      document.querySelectorAll("[id]").forEach(function(el){ obs.observe(el); });
     }
   })();
   </script>

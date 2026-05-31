@@ -774,9 +774,11 @@
       0 4px 16px rgba(0,0,0,0.10),
       0 1px 4px  rgba(0,0,0,0.06);
     transition:
-      transform    var(--t-fast) var(--ease-out),
+      transform    0.25s var(--ease-out),
+      opacity      0.25s ease,
       box-shadow   var(--t-fast) ease,
-      background   var(--t-fast) ease;
+      background   var(--t-fast) ease,
+      border-color var(--t-fast) ease;
   }
 
   .art-fab:hover {
@@ -789,6 +791,13 @@
     background:   var(--bg-elevated);
     border-color: var(--blue);
     transform:    scale(0.94);
+  }
+
+  /* Scroll-hide state — slides down and fades */
+  .art-fab.is-hidden {
+    opacity:    0;
+    transform:  translateY(16px) scale(0.92);
+    pointer-events: none;
   }
 
   /* Icon — 3 lines → X */
