@@ -67,12 +67,13 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/navigation.css"/>
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
+  <link rel="stylesheet" href="../assets/css/article.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
 </head>
 <body>
 
   <!-- READING PROGRESS -->
-  <div class="cs-progress-bar" id="cs-progress" role="progressbar" aria-label="Reading progress"></div>
+  <div class="art-progress" id="art-progress role="progressbar" aria-label="Reading progress"></div>
 
   <!-- PRELOADER -->
   <div class="preloader" id="preloader" aria-hidden="true">
@@ -372,31 +373,26 @@ $nav = [
       </div>
 
       <!-- NEXT CASE STUDIES -->
-      <div class="cs-next">
-        <div>
-          <p class="cs-next__label">Next Case Study</p>
-          <a href="design-system.php" class="cs-next__link">
-            <p class="cs-next__title">Enterprise Design<br>System</p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
-              One system. Ten products. 40% faster delivery.
-            </p>
-            <span class="cs-next__arrow">↗</span>
+            <div class="art-next-wrap">
+        <div class="art-next">
+          <a href="indigo-loyalty.php" class="art-next__card">
+            <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">PREVIOUS CASE STUDY</p>
+            <p class="art-next__category">LOYALTY</p>
+            <h3 class="art-next__title">Gamified Loyalty Program</h3>
+            <p class="art-next__tagline">40% retention increase.</p>
           </a>
-        </div>
-        <div>
-          <p class="cs-next__label">Also Worth Reading</p>
-          <a href="indigo-loyalty.php" class="cs-next__link">
-            <p class="cs-next__title">IndiGo Gamified<br>Loyalty Program</p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
-              Turning passive flyers into engaged members. 40% retention lift.
-            </p>
-            <span class="cs-next__arrow">↗</span>
+          <a href="design-system.php" class="art-next__card">
+            <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">NEXT CASE STUDY</p>
+            <p class="art-next__category">DESIGN INFRASTRUCTURE</p>
+            <h3 class="art-next__title">Enterprise Design System</h3>
+            <p class="art-next__tagline">One system. Ten products. 40% faster delivery.</p>
           </a>
         </div>
       </div>
 
-
-    </main>
+</main>
 
     <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
     <?php
@@ -415,7 +411,7 @@ $nav = [
   <script>
   /* ── READING PROGRESS ── */
   (function(){
-    const bar  = document.getElementById("cs-progress");
+    const bar  = document.getElementById("art-progress");
     const main = document.getElementById("main-content");
     if (!bar || !main) return;
     window.addEventListener("scroll", function(){

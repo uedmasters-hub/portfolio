@@ -67,12 +67,13 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/navigation.css"/>
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
+  <link rel="stylesheet" href="../assets/css/article.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
 </head>
 <body>
 
   <!-- READING PROGRESS -->
-  <div class="cs-progress-bar" id="cs-progress" role="progressbar" aria-label="Reading progress"></div>
+  <div class="art-progress" id="art-progress role="progressbar" aria-label="Reading progress"></div>
 
   <!-- PRELOADER -->
   <div class="preloader" id="preloader" aria-hidden="true">
@@ -375,31 +376,19 @@ $nav = [
       </div>
 
       <!-- NEXT CASE STUDIES -->
-      <div class="cs-next">
-        <div>
-          <p class="cs-next__label">Start From The Beginning</p>
-          <a href="indigo-booking.php" class="cs-next__link">
-            <p class="cs-next__title">IndiGo Booking<br>Ecosystem</p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
-              Redesigning a 50M-user booking flow. 22% revenue growth.
-            </p>
-            <span class="cs-next__arrow">↗</span>
-          </a>
-        </div>
-        <div>
-          <p class="cs-next__label">Also Worth Reading</p>
-          <a href="crewpal.php" class="cs-next__link">
-            <p class="cs-next__title">CrewPal Operations<br>Platform</p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
-              High-stakes enterprise UX for 8,000+ cabin crew.
-            </p>
-            <span class="cs-next__arrow">↗</span>
+            <div class="art-next-wrap">
+        <div class="art-next">
+          <a href="indigo-booking.php" class="art-next__card">
+            <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">START FROM THE BEGINNING</p>
+            <p class="art-next__category">AIRLINE COMMERCE</p>
+            <h3 class="art-next__title">IndiGo Booking Ecosystem</h3>
+            <p class="art-next__tagline">Redesigning a 50M-user booking flow.</p>
           </a>
         </div>
       </div>
 
-
-    </main>
+</main>
 
     <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
     <?php
@@ -418,7 +407,7 @@ $nav = [
   <script>
   /* ── READING PROGRESS ── */
   (function(){
-    const bar  = document.getElementById("cs-progress");
+    const bar  = document.getElementById("art-progress");
     const main = document.getElementById("main-content");
     if (!bar || !main) return;
     window.addEventListener("scroll", function(){

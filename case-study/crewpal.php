@@ -60,10 +60,11 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/navigation.css"/>
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
+  <link rel="stylesheet" href="../assets/css/article.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
 </head>
 <body>
-  <div class="cs-progress-bar" id="cs-progress"></div>
+  <div class="art-progress" id="art-progress></div>
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader__grid"></div>
     <div class="preloader__inner">
@@ -183,21 +184,21 @@ $nav = [
 
         </article>
       </div>
-      <div class="cs-next">
-        <div>
-          <p class="cs-next__label">Previous Case Study</p>
-          <a href="indigo-booking.php" class="cs-next__link">
-            <p class="cs-next__title">IndiGo Booking<br>Ecosystem</p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">22% revenue growth. 50M users.</p>
-            <span class="cs-next__arrow">↗</span>
+      <div class="art-next-wrap">
+        <div class="art-next">
+          <a href="indigo-booking.php" class="art-next__card">
+            <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">PREVIOUS CASE STUDY</p>
+            <p class="art-next__category">AIRLINE COMMERCE</p>
+            <h3 class="art-next__title">IndiGo Booking Ecosystem</h3>
+            <p class="art-next__tagline">22% revenue growth. 50M users.</p>
           </a>
-        </div>
-        <div>
-          <p class="cs-next__label">Next Case Study</p>
-          <a href="design-system.php" class="cs-next__link">
-            <p class="cs-next__title">Enterprise<br>Design System</p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">One system. Ten products. 40% faster delivery.</p>
-            <span class="cs-next__arrow">↗</span>
+          <a href="design-system.php" class="art-next__card">
+            <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">NEXT CASE STUDY</p>
+            <p class="art-next__category">DESIGN INFRASTRUCTURE</p>
+            <h3 class="art-next__title">Enterprise Design System</h3>
+            <p class="art-next__tagline">One system. Ten products. 40% faster delivery.</p>
           </a>
         </div>
       </div>
@@ -217,7 +218,7 @@ $nav = [
   <script src="../assets/js/animations.js" defer></script>
   <script src="../assets/js/app.js" defer></script>
   <script>
-  (function(){const bar=document.getElementById("cs-progress"),main=document.getElementById("main-content");if(!bar||!main)return;window.addEventListener("scroll",function(){bar.style.width=Math.min(100,(window.scrollY/(main.scrollHeight-window.innerHeight))*100)+"%";},{passive:true});})();
+  (function(){const bar=document.getElementById("art-progress"),main=document.getElementById("main-content");if(!bar||!main)return;window.addEventListener("scroll",function(){bar.style.width=Math.min(100,(window.scrollY/(main.scrollHeight-window.innerHeight))*100)+"%";},{passive:true});})();
   (function(){const items=document.querySelectorAll(".cs-nav__item[data-nav]"),secs=document.querySelectorAll(".cs-section[id]");if(!items.length)return;const obs=new IntersectionObserver(function(e){e.forEach(function(s){if(s.isIntersecting){items.forEach(function(n){n.classList.remove("is-active");});const a=document.querySelector('.cs-nav__item[data-nav="'+s.target.id+'"]');if(a)a.classList.add("is-active");}});},{rootMargin:"-20% 0px -70% 0px"});secs.forEach(function(s){obs.observe(s);});})();
   </script>
 </body>

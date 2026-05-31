@@ -647,68 +647,7 @@
   margin:         4px 4px 4px 0;
 }
 
-/* NEXT CASE STUDY */
-.cs-next {
-  padding:         64px 48px;
-  display:         grid;
-  grid-template-columns: 1fr 1fr;
-  gap:             24px;
-  background:      #0a0a0a;
-  align-items:     start;
-}
-
-.cs-next__label {
-  font-size:      10px;
-  font-weight:    600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color:          rgba(255,255,255,0.35);
-  margin-bottom:  12px;
-}
-
-.cs-next__title {
-  font-size:      clamp(1.6rem, 3vw, 2.8rem);
-  font-weight:    300;
-  letter-spacing: -0.05em;
-  color:          rgba(255,255,255,0.9);
-  margin-bottom:  20px;
-  line-height:    1.05;
-  transition:     color var(--t-fast) ease;
-}
-
-.cs-next__link:hover .cs-next__title { color: #ffffff; }
-
-.cs-next__link {
-  text-decoration: none;
-  display:         block;
-  padding:         32px;
-  background:      #161616;
-  border:          1px solid rgba(255,255,255,0.08);
-  border-radius:   var(--radius-lg);
-  transition:
-    transform    0.35s var(--ease-out),
-    box-shadow   0.35s ease,
-    border-color 0.3s ease;
-}
-
-.cs-next__link:hover {
-  transform:    translateY(-4px);
-  box-shadow:   0 16px 48px rgba(0,0,0,0.5);
-  border-color: rgba(255,255,255,0.2);
-}
-
-.cs-next__arrow {
-  font-size:  22px;
-  color:      rgba(255,255,255,0.4);
-  display:    block;
-  margin-top: 8px;
-  transition: transform var(--t-fast) ease, color var(--t-fast) ease;
-}
-
-.cs-next__link:hover .cs-next__arrow {
-  transform: translate(4px,-4px);
-  color:     rgba(255,255,255,0.9);
-}
+/* cs-next removed — now uses shared art-next-wrap / art-next pattern */
 
 /* ── RESPONSIVE ──────────────────────────── */
 
@@ -746,7 +685,6 @@
   .cs-card__metric:nth-child(3) { border-top: 1px solid var(--border); }
   .cs-card__metric:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
 
-  .cs-next { grid-template-columns: 1fr; padding: 48px 20px; gap: 16px; }
 
 }
 /* =============================================
