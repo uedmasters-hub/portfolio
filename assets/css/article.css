@@ -750,6 +750,93 @@
   display: none;
 }
 
+@media (max-width: 1024px) {
+
+  /* Show FAB for cs-content pages (cs-nav hides at 1024px) */
+  .art-fab {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    position:        fixed;
+    bottom:          28px;
+    right:           20px;
+    z-index:         150;
+    width:           48px;
+    height:          48px;
+    border-radius:   50%;
+    background:      var(--bg-elevated);
+    border:          1px solid var(--border);
+    cursor:          pointer;
+    box-shadow:      0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    transition:      transform 0.25s var(--ease-out), opacity 0.25s ease, box-shadow var(--t-fast) ease, background var(--t-fast) ease, border-color var(--t-fast) ease;
+  }
+
+  .art-fab__icon {
+    display: flex; flex-direction: column; gap: 5px; width: 18px;
+  }
+  .art-fab__icon span {
+    display: block; height: 1.5px; background: var(--text-primary); border-radius: 2px;
+    transform-origin: center;
+    transition: transform 0.22s var(--ease-out), opacity 0.18s ease;
+  }
+  .art-fab.is-open .art-fab__icon span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .art-fab.is-open .art-fab__icon span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .art-fab.is-open .art-fab__icon span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .art-fab.is-open   { background: var(--bg-elevated); border-color: var(--blue); transform: scale(0.94); }
+  .art-fab.is-hidden { opacity: 0; transform: translateY(16px) scale(0.92); pointer-events: none; }
+  .art-fab:hover     { transform: scale(1.06); box-shadow: 0 6px 24px rgba(0,0,0,0.14); border-color: rgba(26,70,201,0.3); }
+
+  /* Backdrop — hidden until JS adds .is-open */
+  .art-fab-backdrop {
+    display: none; position: fixed; inset: 0; z-index: 140;
+    background: rgba(0,0,0,0.30); backdrop-filter: blur(2px);
+    opacity: 0; transition: opacity 0.22s ease;
+  }
+  .art-fab-backdrop.is-open    { display: block; }
+  .art-fab-backdrop.is-visible { opacity: 1; }
+
+  /* Drawer — off-screen until JS adds .is-open */
+  .art-fab-drawer {
+    display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 145;
+    background: var(--bg-elevated); border-radius: 20px 20px 0 0;
+    padding: 0; box-shadow: 0 -8px 40px rgba(0,0,0,0.14);
+    transform: translateY(100%); transition: transform 0.30s var(--ease-out);
+    max-height: 70vh; overflow-y: auto;
+  }
+  .art-fab-drawer.is-open { transform: translateY(0); }
+
+  .art-fab-drawer__handle {
+    width: 40px; height: 4px; background: var(--border);
+    border-radius: 2px; margin: 12px auto 0;
+  }
+  .art-fab-drawer__header {
+    padding: 16px 20px 12px;
+    display: flex; align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .art-fab-drawer__title {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+  .art-fab-drawer__nav {
+    padding: 8px 0 16px; display: flex; flex-direction: column;
+  }
+  .art-fab-drawer__item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 20px; font-size: 15px; color: var(--text-secondary);
+    text-decoration: none; border-left: 3px solid transparent;
+    transition: color var(--t-fast) ease, background var(--t-fast) ease, border-color var(--t-fast) ease;
+  }
+  .art-fab-drawer__item:active,
+  .art-fab-drawer__item.is-active {
+    color: var(--blue); border-color: var(--blue); background: rgba(26,70,201,0.04);
+  }
+  .art-fab-drawer__num {
+    font-size: 11px; color: var(--text-muted); min-width: 20px; flex-shrink: 0;
+  }
+
+}
+
 @media (max-width: 768px) {
 
   /* Hide the sidebar entirely on mobile */

@@ -453,5 +453,26 @@ $nav = [
   })();
   </script>
 
+  <script>
+  /* ── MOBILE FAB — scroll hide/show + footer avoidance ── */
+  (function(){
+    var fab=document.getElementById("fabBtn"),drawer=document.getElementById("fabDrawer"),backdrop=document.getElementById("fabBackdrop");
+    if(!fab||!drawer)return;
+    function openDrawer(){fab.classList.add("is-open");fab.setAttribute("aria-expanded","true");backdrop.classList.add("is-open");requestAnimationFrame(function(){drawer.classList.add("is-open");backdrop.classList.add("is-visible");});document.body.style.overflow="hidden";}
+    function closeDrawer(){fab.classList.remove("is-open");fab.setAttribute("aria-expanded","false");drawer.classList.remove("is-open");backdrop.classList.remove("is-visible");setTimeout(function(){backdrop.classList.remove("is-open");},240);document.body.style.overflow="";}
+    fab.addEventListener("click",function(){fab.classList.contains("is-open")?closeDrawer():openDrawer();});
+    backdrop.addEventListener("click",closeDrawer);
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")closeDrawer();});
+    drawer.querySelectorAll(".art-fab-drawer__item").forEach(function(l){l.addEventListener("click",function(){closeDrawer();});});
+    var lastY=0,timer=null;
+    function checkVis(){var y=window.scrollY,h=window.innerHeight,dh=document.documentElement.scrollHeight;
+      if((y+h)>(dh-200)){fab.classList.add("is-hidden");return;}
+      if(y>lastY+4){fab.classList.add("is-hidden");}else if(y<lastY-4){fab.classList.remove("is-hidden");}
+      lastY=y;clearTimeout(timer);timer=setTimeout(function(){fab.classList.remove("is-hidden");},800);}
+    window.addEventListener("scroll",checkVis,{passive:true});
+    var fi=drawer.querySelectorAll(".art-fab-drawer__item[data-fab-toc]");
+    if(fi.length){var o=new IntersectionObserver(function(en){en.forEach(function(e){if(!e.isIntersecting)return;fi.forEach(function(n){n.classList.remove("is-active");});var a=drawer.querySelector('.art-fab-drawer__item[data-fab-toc="'+e.target.id+'"]');if(a)a.classList.add("is-active");});},{rootMargin:"-15% 0px -70% 0px"});document.querySelectorAll("[id]").forEach(function(el){o.observe(el);});}
+  })();
+  </script>
 </body>
 </html>
