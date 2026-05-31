@@ -162,19 +162,24 @@ function render_related_content(string $type, string $slug): void {
 @media (max-width: 768px) {
   .rc-section { padding: 40px 20px; }
 
-  /* On mobile: one unified card, cols separated by border-bottom only */
+  /* One unified card — cols divided by border-bottom only */
   .rc-grid {
     grid-template-columns: 1fr;
-    gap: 0;
-    background: var(--bg-elevated, #fff);
+    gap:           0 !important;
+    background:    var(--bg-elevated, #fff) !important;
+    border-radius: var(--radius-md, 16px);
+    overflow:      hidden;
+    border:        1px solid var(--border, rgba(0,0,0,.07));
   }
   .rc-col {
-    padding: 20px;
+    padding:       20px;
+    background:    var(--bg-elevated, #fff);
     border-bottom: 1px solid var(--border, rgba(0,0,0,.07));
+    border-right:  none !important;
   }
   .rc-col:last-child { border-bottom: none; }
 
-  /* Items: allow title to wrap on small screens */
+  /* Items: wrap titles, tighter thumbs */
   .rc-item__title { white-space: normal; }
   .rc-item__thumb { width: 48px; height: 32px; }
 }
