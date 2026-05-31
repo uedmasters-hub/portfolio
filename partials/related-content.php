@@ -179,18 +179,19 @@ function render_related_content(string $type, string $slug): void {
     border-right:  none !important;
   }
   .rc-col:last-child { border-bottom: none; }
-  .rc-col__items { width: 100%; box-sizing: border-box; }
+  .rc-col__items { width: 100%; box-sizing: border-box; overflow: hidden; }
+  .rc-col         { overflow: hidden; }
 
-  /* Items: wrap titles, tighter thumbs, no overflow */
+  /* Items: contained, no overflow */
   .rc-item {
-    box-sizing:  border-box;
-    width:       100%;
-    min-width:   0;
+    box-sizing: border-box;
+    min-width:  0;
+    max-width:  100%;
   }
   .rc-item__title { white-space: normal; }
   .rc-item__meta  { white-space: normal; }
   .rc-item__thumb { width: 44px; height: 30px; flex-shrink: 0; }
-  .rc-item__body  { min-width: 0; overflow: hidden; }
+  .rc-item__body  { min-width: 0; flex: 1; overflow: hidden; }
 }
 </style>
 
