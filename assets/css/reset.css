@@ -11,11 +11,10 @@
 }
 
 html {
-  scroll-behavior:       smooth;
+  scroll-behavior:          smooth;
   -webkit-text-size-adjust: 100%;
-  /* overflow-x:hidden on html is the most reliable Android fix.
-     overflow-x:clip does NOT work on html — use hidden here. */
-  overflow-x: hidden;
+  /* Do NOT set overflow-x here — it breaks position:sticky globally.
+     Horizontal overflow controlled on body only. */
 }
 
 body {
