@@ -1,268 +1,338 @@
-/* =========================================
-   HERO — hero.css
-   ========================================= */
-
-/* ── WRAPPER ─────────────────────────────── */
+/* =========================
+   HERO WRAPPER
+========================= */
 
 .hero-wrapper {
-  min-height:      calc(100vh - 72px);
-  display:         flex;
-  flex-direction:  column;
+  min-height: calc(100vh - 76px);
+
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  padding:         0 48px 40px;
-  overflow:        hidden;
+
+  padding: 0 50px 32px;
 }
 
-/* ── HERO ────────────────────────────────── */
+/* =========================
+   HERO
+========================= */
 
 .hero {
-  flex:            1;
-  display:         flex;
-  align-items:     center;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-/* ── HERO CONTENT ────────────────────────── */
+/* =========================
+   HERO CONTENT
+========================= */
 
-.hero__content {
-  width:          100%;
-  max-width:      780px;
-  display:        flex;
+.hero-content {
+  width: 100%;
+  max-width: 750px;
+
+  display: flex;
   flex-direction: column;
-  gap:            32px;
+
+  gap: 28px;
+
+  margin-top: -20px;
 }
 
-/* ── HERO TITLE ──────────────────────────── */
+/* =========================
+   HERO TITLE
+========================= */
 
-.hero__title {
-  font-size:      clamp(3.2rem, 5.2vw, 6.4rem);
-  line-height:    1.08;
-  letter-spacing: -0.04em;
-  font-weight:    300;
-  color:          var(--text-primary);
-  max-width:      100%;
-}
+.hero-title {
+  font-size: clamp(4rem, 8vw, 6.5rem);
 
-/* ── TYPEWRITER ──────────────────────────── */
+  line-height: 0.92;
 
-#typewriter {
-  color:       var(--blue-light);
-  display:     inline;
-  font-size:   inherit;
-  font-weight: inherit;
-}
+  letter-spacing: -0.08em;
 
-#typewriter::after {
-  content:        "";
-  display:        inline-block;
-  width:          2px;
-  height:         0.75em;
-  background:     var(--blue-light);
-  border-radius:  2px;
-  margin-left:    3px;
-  vertical-align: 0.05em;
-  animation:      cursorBlink 1.4s ease-in-out infinite;
-}
-
-@keyframes cursorBlink {
-  0%   { opacity: 1; }
-  40%  { opacity: 1; }
-  60%  { opacity: 0; }
-  100% { opacity: 0; }
-}
-
-/* ── META ROW ────────────────────────────── */
-
-.hero__meta {
-  display:     flex;
-  flex-wrap:   wrap;
-  align-items: center;
-  font-size:   14px;
-  color:       var(--text-muted);
-  line-height: 1.6;
-}
-
-.hero__meta-item {
-  display:     inline-flex;
-  align-items: center;
-}
-
-.hero__meta-item:not(:last-child)::after {
-  content:     "|";
-  margin:      0 14px;
-  color:       rgba(0,0,0,0.20);
   font-weight: 300;
+
+  max-width: 11ch;
 }
 
-/* ── CHIPS — DESKTOP ─────────────────────── */
+.hero-title span {
+  color: var(--blue);
+}
 
-.hero__chips {
-  display:   flex;
+/* =========================
+   HERO META
+========================= */
+
+.hero-meta {
+  display: flex;
   flex-wrap: wrap;
-  gap:       10px;
+
+  gap: 14px;
+
+  font-size: 14px;
+
+  color: var(--muted);
+
+  line-height: 1.7;
 }
+
+.hero-meta span {
+  position: relative;
+}
+
+.hero-meta span:not(:last-child)::after {
+  content: "·";
+
+  position: absolute;
+
+  right: -10px;
+
+  color: #999;
+}
+
+/* =========================
+   CHIPS
+========================= */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 12px;
+}
+
+/* =========================
+   CHIP
+========================= */
 
 .chip {
-  display:         inline-flex;
-  align-items:     center;
-  justify-content: center;
-  padding:         10px 20px;
-  border:          1.5px solid rgba(0,0,0,0.12);
-  border-radius:   var(--radius-pill);
-  background:      rgba(255,255,255,0.65);
-  font-size:       12px;
-  font-weight:     500;
-  letter-spacing:  0.06em;
-  text-transform:  uppercase;
-  color:           var(--text-secondary);
-  backdrop-filter: blur(8px);
-  white-space:     nowrap;
+  padding: 10px 18px;
+
+  border: 1px solid #cccccc;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.7);
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chip.blue {
+  color: var(--blue);
+  border-color: #b6c5ee;
+}
+
+/* =========================
+   TYPEWRITER
+========================= */
+
+#typewriter {
+  color: #2453d4;
+
+  position: relative;
+
+  display: inline-block;
+}
+
+/* CURSOR */
+
+#typewriter::after {
+  content: "";
+
+  position: absolute;
+
+  right: -10px;
+  top: 8%;
+
+  width: 4px;
+  height: 82%;
+
+  background: #2453d4;
+
+  animation: blink 1s infinite;
+}
+
+/* BLINK */
+
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 20px;
+
+  align-items: end;
+
+  padding-top: 20px;
+
+  perspective: 1400px;
+}
+
+/* =========================
+   STAT
+========================= */
+
+.stat {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  padding: 22px 22px 20px;
+
+  border-radius: 24px;
+
+  background: transparent;
+
+  border: 1px solid transparent;
+
+  backdrop-filter: blur(0px);
+
+  overflow: hidden;
+
+  transform-style: preserve-3d;
+
   transition:
-    background   var(--t-fast) ease,
-    border-color var(--t-fast) ease,
-    transform    var(--t-fast) ease;
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease,
+    box-shadow 0.5s ease,
+    border-color 0.5s ease,
+    backdrop-filter 0.5s ease;
 }
 
-.chip:hover {
-  background:   rgba(255,255,255,0.95);
-  border-color: rgba(26,70,201,0.30);
-  color:        var(--blue);
-  transform:    translateY(-2px);
+/* =========================
+   PASTEL LIGHT
+========================= */
+
+.stat::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(180,210,255,0.10),
+      rgba(240,220,255,0.10),
+      rgba(255,230,240,0.08)
+    );
+
+  opacity: 0;
+
+  transition: opacity 0.5s ease;
+
+  pointer-events: none;
 }
 
-.chip--accent {
-  color:        var(--blue);
-  border-color: rgba(26,70,201,0.22);
-  background:   rgba(26,70,201,0.04);
+/* =========================
+   HOVER
+========================= */
+
+.stat:hover {
+  transform:
+    perspective(1400px)
+    rotateX(5deg)
+    rotateY(-5deg)
+    translateY(-6px);
+
+  background: rgba(255,255,255,0.52);
+
+  border-color: rgba(255,255,255,0.75);
+
+  box-shadow:
+    0 24px 50px rgba(120,170,255,0.10),
+    0 10px 24px rgba(0,0,0,0.04);
 }
 
-.chip--accent:hover {
-  background: rgba(26,70,201,0.08);
+.stat:hover::before {
+  opacity: 1;
 }
 
-/* ── RESPONSIVE — 1024px ─────────────────── */
+/* =========================
+   DEPTH
+========================= */
 
-@media (max-width: 1024px) {
+.stat > * {
+  position: relative;
+  z-index: 2;
 
-  .hero-wrapper {
-    padding: 0 40px 36px;
-  }
-
-  .hero__content {
-    max-width: 660px;
-  }
-
+  transform: translateZ(28px);
 }
 
-/* ── RESPONSIVE — 768px ──────────────────── */
+/* =========================
+   STAT LABEL
+========================= */
 
-@media (max-width: 768px) {
+.stat-label {
+  font-size: 11px;
 
-  .hero-wrapper {
-    min-height:      auto;
-    padding:         24px 20px 0;
-    gap:             0;
-    overflow:        hidden;
-    overflow-x:      clip;    /* stronger than hidden on Android */
-    width:           100%;
-    max-width:       100vw;
-    box-sizing:      border-box;
-    justify-content: flex-start;
-    flex-direction:  column;
-  }
+  letter-spacing: 4px;
 
-  .hero {
-    justify-content: flex-start;
-    align-items:     flex-start;
-    padding-bottom:  28px;
-    flex:            none;       /* don't flex-grow on mobile */
-  }
+  color: #444;
 
-  .hero__content {
-    max-width: 100%;
-    gap:       24px;
-  }
-
-  .hero__title {
-    font-size:      clamp(1.9rem, 8vw, 3.4rem);
-    line-height:    1.08;
-    letter-spacing: -0.04em;   /* reduce from -0.06em — less overflow risk */
-    max-width:      100%;
-    width:          100%;
-    overflow:       hidden;
-    overflow-wrap:  break-word;
-    word-break:     break-word;
-  }
-
-  /* bullet separators */
-  .hero__meta {
-    gap:       4px 0;
-    font-size: 13px;
-    color:     var(--text-muted);
-  }
-
-  .hero__meta-item:not(:last-child)::after {
-    content:     "•" !important;
-    margin:      0 8px !important;
-    color:       var(--text-muted);
-    font-weight: 400;
-    opacity:     0.5;
-  }
-
-  /* ── CHIPS MOBILE — 2×2 equal height ────── */
-
-  .hero__chips {
-    display:               grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows:        56px;
-    gap:                   8px;
-  }
-
-  .chip {
-    /* reset desktop styles */
-    display:         flex;
-    align-items:     center;
-    justify-content: center;
-    text-align:      center;
-    white-space:     normal;
-    /* no padding — height controlled by grid-auto-rows */
-    padding:         0 10px;
-    height:          100%;
-    font-size:       11px;
-    line-height:     1.3;
-  }
-
+  margin-bottom: 2px;
 }
 
-/* ── RESPONSIVE — 480px ──────────────────── */
+/* =========================
+   STAT VALUE
+========================= */
 
-@media (max-width: 480px) {
+.stat h2 {
+  font-size: 42px;
 
-  .hero__title {
-    font-size:      clamp(1.6rem, 9vw, 2.4rem);
-    letter-spacing: -0.03em;
-    overflow-wrap:  break-word;
-    word-break:     break-word;
-    overflow:       hidden;
-    width:          100%;
-  }
+  line-height: 1;
 
-  .hero__chips {
-    grid-auto-rows: 52px;
-  }
+  font-weight: 700;
 
-  /* ==============================================
-   HERO.CSS — ADDITIONS
-   UX Roadmap: P1.2 (CTA) · P2.1 (Proof) · P2.2 (Availability)
+  letter-spacing: -2px;
 
-   ADD THESE BLOCKS to assets/css/hero.css
-   Place after the existing .chips block styles
-   ============================================== */
+  color: #111;
+}
+
+/* =========================
+   STAT TEXT
+========================= */
+
+.stat span {
+  font-size: 15px;
+
+  line-height: 1.5;
+
+  color: #333;
+}
 
 
-/* ==============================================
+/* ================================================
+   NEW ADDITIONS — UX Roadmap P1.2 · P2.1 · P2.2
+   ================================================ */
+
+
+/* =========================
    SOCIAL PROOF QUOTE — P2.1
-   ============================================== */
+========================= */
 
 .hero-proof {
   margin: 0;
@@ -315,9 +385,9 @@
 }
 
 
-/* ==============================================
+/* =========================
    CTA BUTTONS — P1.2
-   ============================================== */
+========================= */
 
 .hero-cta {
   display: flex;
@@ -427,9 +497,9 @@
 }
 
 
-/* ==============================================
+/* =========================
    AVAILABILITY SIGNAL — P2.2
-   ============================================== */
+========================= */
 
 .hero-availability {
   display: inline-flex;
@@ -441,14 +511,13 @@
   font-weight: 400;
 }
 
-/* PULSING DOT */
 .hero-availability-dot {
   display: inline-block;
 
   width: 8px;
   height: 8px;
 
-  background: #22c55e;        /* green */
+  background: #22c55e;
   border-radius: 50%;
 
   flex-shrink: 0;
@@ -456,7 +525,6 @@
   position: relative;
 }
 
-/* Outer pulse ring */
 .hero-availability-dot::before {
   content: "";
 
@@ -485,11 +553,75 @@
 }
 
 
-/* ==============================================
-   RESPONSIVE — MOBILE
-   ============================================== */
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1024px) {
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px 30px;
+  }
+
+  .hero-wrapper {
+    padding: 0 40px 30px;
+  }
+
+  .hero-content {
+    max-width: 620px;
+  }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 768px) {
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .stat {
+    padding: 20px;
+  }
+
+  .stat h2 {
+    font-size: 34px;
+  }
+
+  .hero-wrapper {
+    min-height: auto;
+    padding: 50px 20px;
+    gap: 60px;
+  }
+
+  .hero {
+    justify-content: flex-start;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    margin-top: 0;
+    gap: 22px;
+  }
+
+  .hero-title {
+    max-width: 100%;
+    font-size: clamp(2.8rem, 13vw, 4.5rem);
+    line-height: 0.96;
+  }
+
+  .hero-meta span::after {
+    display: none;
+  }
+
+  .chips {
+    gap: 10px;
+  }
 
   .hero-proof {
     padding: 16px 18px;
@@ -519,7 +651,24 @@
 
 }
 
+/* =========================
+   SMALL MOBILE
+========================= */
+
 @media (max-width: 480px) {
+
+  .hero-title {
+    font-size: 2.4rem;
+  }
+
+  .chips {
+    flex-direction: column;
+  }
+
+  .chip {
+    width: 100%;
+    text-align: center;
+  }
 
   .hero-cta-primary,
   .hero-cta-secondary {
@@ -530,9 +679,9 @@
 }
 
 
-/* ==============================================
-   REDUCED MOTION — P1.4
-   ============================================== */
+/* =========================
+   REDUCED MOTION
+========================= */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -550,6 +699,9 @@
     transition: none;
   }
 
-}
+  #typewriter::after {
+    animation: none;
+    opacity: 1;
+  }
 
 }
