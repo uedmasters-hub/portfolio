@@ -733,7 +733,13 @@
    ============================================= */
 
 .art-fab {
-  display:         none; /* desktop: hidden */
+  display: none; /* desktop: hidden */
+}
+
+/* Drawer and backdrop always hidden on desktop */
+.art-fab-drawer,
+.art-fab-backdrop {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -827,6 +833,7 @@
 
   /* DRAWER — slides up from bottom */
   .art-fab-drawer {
+    display:         block;
     position:        fixed;
     bottom:          0;
     left:            0;
