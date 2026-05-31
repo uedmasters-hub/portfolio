@@ -376,6 +376,32 @@ $nav = [
 
       </div><!-- /.art-body -->
 
+      <!-- MOBILE FAB TOC -->
+      <div class="art-fab-backdrop" id="fabBackdrop" aria-hidden="true"></div>
+
+      <button class="art-fab" id="fabBtn" aria-label="Table of contents" aria-expanded="false" aria-controls="fabDrawer">
+        <span class="art-fab__icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="art-fab-drawer" id="fabDrawer" role="dialog" aria-label="Table of contents" aria-modal="true">
+        <div class="art-fab-drawer__handle"></div>
+        <div class="art-fab-drawer__header">
+          <span class="art-fab-drawer__title">In this note</span>
+        </div>
+        <nav class="art-fab-drawer__nav">
+          <?php foreach ($nav as $i => $n): ?>
+            <a href="#<?= $n['id'] ?>"
+               class="art-fab-drawer__item"
+               data-fab-toc="<?= $n['id'] ?>">
+              <span class="art-fab-drawer__num"><?= str_pad($i + 1, 2, '0', STR_PAD_LEFT) ?></span>
+              <?= htmlspecialchars($n['label']) ?>
+            </a>
+          <?php endforeach; ?>
+        </nav>
+      </div>
+
     </main>
 
       <!-- NEXT CASE STUDIES — shared art-next layout -->
@@ -439,6 +465,19 @@ $nav = [
       });
     }, { rootMargin: "-20% 0px -70% 0px" });
     sections.forEach(function(s){ obs.observe(s); });
+  })();
+  /* ── FAB TOC (mobile) ── */
+  (function(){
+    var fab=document.getElementById("fabBtn"),drawer=document.getElementById("fabDrawer"),backdrop=document.getElementById("fabBackdrop");
+    if(!fab||!drawer)return;
+    function open(){fab.classList.add("is-open");fab.setAttribute("aria-expanded","true");backdrop.classList.add("is-open");requestAnimationFrame(function(){drawer.classList.add("is-open");backdrop.classList.add("is-visible");});document.body.style.overflow="hidden";}
+    function close(){fab.classList.remove("is-open");fab.setAttribute("aria-expanded","false");drawer.classList.remove("is-open");backdrop.classList.remove("is-visible");setTimeout(function(){backdrop.classList.remove("is-open");},240);document.body.style.overflow="";}
+    fab.addEventListener("click",function(){fab.classList.contains("is-open")?close():open();});
+    backdrop.addEventListener("click",close);
+    drawer.querySelectorAll(".art-fab-drawer__item").forEach(function(l){l.addEventListener("click",function(){close();});});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});
+    var fi=drawer.querySelectorAll(".art-fab-drawer__item[data-fab-toc]");
+    if(fi.length){var o=new IntersectionObserver(function(en){en.forEach(function(e){if(!e.isIntersecting)return;fi.forEach(function(n){n.classList.remove("is-active");});var a=drawer.querySelector('.art-fab-drawer__item[data-fab-toc="'+e.target.id+'"]');if(a)a.classList.add("is-active");});},{rootMargin:"-15% 0px -70% 0px"});document.querySelectorAll("[id]").forEach(function(el){o.observe(el);});}
   })();
   </script>
 

@@ -183,6 +183,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
       <!-- BODY: sidebar TOC + article -->
       <div class="art-body">
 
+        <!-- DESKTOP: sticky sidebar -->
         <aside class="art-sidebar" aria-label="Article contents">
           <nav class="art-nav">
             <span class="art-nav__label">In this note</span>
@@ -219,6 +220,35 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
         </article>
 
       </div><!-- /.art-body -->
+
+      <!-- MOBILE: FAB + drawer TOC -->
+      <div class="art-fab-backdrop" id="fabBackdrop" aria-hidden="true"></div>
+
+      <button class="art-fab" id="fabBtn" aria-label="Table of contents" aria-expanded="false" aria-controls="fabDrawer">
+        <span class="art-fab__icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="art-fab-drawer" id="fabDrawer" role="dialog" aria-label="Table of contents" aria-modal="true">
+        <div class="art-fab-drawer__handle"></div>
+        <div class="art-fab-drawer__header">
+          <span class="art-fab-drawer__title">In this note</span>
+        </div>
+        <nav class="art-fab-drawer__nav">
+          <?php foreach ($post['body'] as $i => $para): ?>
+            <a href="#para-<?= $i ?>"
+               class="art-fab-drawer__item"
+               data-fab-toc="para-<?= $i ?>">
+              <span class="art-fab-drawer__num"><?= str_pad($i + 1, 2, '0', STR_PAD_LEFT) ?></span>
+              <?= mb_strimwidth(strip_tags($para), 0, 52, '…') ?>
+            </a>
+          <?php endforeach; ?>
+          <a href="#takeaway" class="art-fab-drawer__item" data-fab-toc="takeaway">
+            <span class="art-fab-drawer__num">↳</span>Takeaway
+          </a>
+        </nav>
+      </div>
 
     </main>
 
@@ -265,9 +295,67 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
       bar.style.width = pct + "%";
     }, { passive: true });
   })();
+  /* ── FAB TOC (mobile) ────────────────────── */
   (function(){
-    var items = document.querySelectorAll(".art-nav__item[data-toc]");
-    if (!items.length) return;
+    var fab      = document.getElementById("fabBtn");
+    var drawer   = document.getElementById("fabDrawer");
+    var backdrop = document.getElementById("fabBackdrop");
+    if (!fab || !drawer) return;
+
+    function openDrawer() {
+      fab.classList.add("is-open");
+      fab.setAttribute("aria-expanded", "true");
+      backdrop.classList.add("is-open");
+      requestAnimationFrame(function(){
+        drawer.classList.add("is-open");
+        backdrop.classList.add("is-visible");
+      });
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDrawer() {
+      fab.classList.remove("is-open");
+      fab.setAttribute("aria-expanded", "false");
+      drawer.classList.remove("is-open");
+      backdrop.classList.remove("is-visible");
+      setTimeout(function(){
+        backdrop.classList.remove("is-open");
+      }, 240);
+      document.body.style.overflow = "";
+    }
+
+    fab.addEventListener("click", function(){
+      fab.classList.contains("is-open") ? closeDrawer() : openDrawer();
+    });
+
+    backdrop.addEventListener("click", closeDrawer);
+
+    /* Close on nav link tap, then scroll */
+    drawer.querySelectorAll(".art-fab-drawer__item").forEach(function(link){
+      link.addEventListener("click", function(){
+        closeDrawer();
+      });
+    });
+
+    /* Escape key */
+    document.addEventListener("keydown", function(e){
+      if (e.key === "Escape") closeDrawer();
+    });
+
+    /* Highlight active item as user scrolls */
+    var fabItems = drawer.querySelectorAll(".art-fab-drawer__item[data-fab-toc]");
+    if (fabItems.length) {
+      var obs2 = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (!e.isIntersecting) return;
+          fabItems.forEach(function(n){ n.classList.remove("is-active"); });
+          var a = drawer.querySelector('.art-fab-drawer__item[data-fab-toc="'+e.target.id+'"]');
+          if (a) a.classList.add("is-active");
+        });
+      }, { rootMargin: "-15% 0px -70% 0px" });
+      document.querySelectorAll("[id]").forEach(function(el){ obs2.observe(el); });
+    }
+  })();
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if (!e.isIntersecting) return;
