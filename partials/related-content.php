@@ -69,11 +69,8 @@ function render_related_content(string $type, string $slug): void {
    all page types. Padding mirrors footer.
    ============================================= */
 .rc-section {
-  padding:     64px 64px;
-  background:  var(--bg, #f5f5f3);
-  border-top:  1px solid var(--border, rgba(0,0,0,.07));
-  border-bottom: 1px solid var(--border, rgba(0,0,0,.07));
-  box-sizing:  border-box;
+  padding:    64px 64px;
+  box-sizing: border-box;
 }
 .rc-header { margin-bottom: 36px; }
 .rc-kicker {
