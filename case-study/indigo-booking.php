@@ -66,6 +66,7 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/navigation.css"/>
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
+  <link rel="stylesheet" href="../assets/css/article.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
 
   <!-- JSON-LD STRUCTURED DATA -->
@@ -81,7 +82,7 @@ $nav = [
 <body>
 
   <!-- READING PROGRESS -->
-  <div class="cs-progress-bar" id="cs-progress" role="progressbar" aria-label="Reading progress"></div>
+  <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
 
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader__grid"></div>
@@ -109,47 +110,51 @@ $nav = [
     <main id="main-content">
 
       <!-- HERO IMAGE -->
-      <div class="cs-detail-hero fade-in">
+      <div class="art-hero fade-in">
         <img
-          class="cs-detail-hero__img"
+          class="art-hero__img"
           src="https://images.unsplash.com/photo-1529074963764-98f45c47344b?q=80&w=2400&auto=format&fit=crop"
           alt="IndiGo aircraft representing the booking ecosystem"
           loading="eager"
         />
-        <div class="cs-detail-hero__overlay"></div>
-        <div class="cs-detail-hero__content">
-          <p class="cs-detail-hero__category">AIRLINE COMMERCE SYSTEM</p>
-          <h1 class="cs-detail-hero__title">IndiGo Booking<br>Ecosystem</h1>
-          <p class="cs-detail-hero__tagline">
+        <div class="art-hero__overlay"></div>
+        <div class="art-hero__content">
+          <a href="/case-study/" class="art-hero__back">← Case Studies</a>
+          <div class="art-hero__kicker">AIRLINE COMMERCE SYSTEM</div>
+          <h1 class="art-hero__title">IndiGo Booking<br>Ecosystem</h1>
+          <p class="art-hero__subtitle">
             Redesigning a 50M-user booking flow for conversion, clarity, and scale.
           </p>
         </div>
       </div>
 
       <!-- META BAR -->
-      <div class="cs-meta-bar">
+      <div class="art-meta-bar">
         <?php foreach ($meta as $m): ?>
-          <div class="cs-meta-item">
-            <span class="cs-meta-item__label"><?= htmlspecialchars($m['label']) ?></span>
-            <span class="cs-meta-item__value"><?= htmlspecialchars($m['value']) ?></span>
+          <div class="art-meta-item">
+            <span class="art-meta-item__label"><?= htmlspecialchars($m['label']) ?></span>
+            <span class="art-meta-item__value"><?= htmlspecialchars($m['value']) ?></span>
           </div>
         <?php endforeach; ?>
       </div>
 
       <!-- CONTENT -->
-      <div class="cs-content">
+      <div class="art-body">
 
         <!-- STICKY NAV -->
-        <nav class="cs-nav" aria-label="Case study sections">
-          <?php foreach ($nav as $n): ?>
-            <a href="#<?= $n['id'] ?>" class="cs-nav__item" data-nav="<?= $n['id'] ?>">
-              <?= htmlspecialchars($n['label']) ?>
-            </a>
-          <?php endforeach; ?>
+        <nav class="art-sidebar" aria-label="Case study sections">
+          <div class="art-nav">
+            <span class="art-nav__label">In this note</span>
+            <?php foreach ($nav as $n): ?>
+              <a href="#<?= $n['id'] ?>" class="art-nav__item" data-nav="<?= $n['id'] ?>">
+                <?= htmlspecialchars($n['label']) ?>
+              </a>
+            <?php endforeach; ?>
+          </div>
         </nav>
 
         <!-- ARTICLE -->
-        <article class="cs-article">
+        <article class="art-article" id="art-article">
 
           <!-- OVERVIEW -->
           <section class="cs-section" id="overview">
@@ -370,34 +375,27 @@ $nav = [
 
         </article>
 
-      </div>
-
-      <!-- NEXT CASE STUDIES -->
-      <div class="cs-next">
-        <div>
-          <p class="cs-next__label">Next Case Study</p>
-          <a href="crewpal.php" class="cs-next__link">
-            <p class="cs-next__title">CrewPal Operations<br>Platform</p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
-              Simplifying high-stakes operations for 8,000+ cabin crew.
-            </p>
-            <span class="cs-next__arrow">↗</span>
-          </a>
-        </div>
-        <div>
-          <p class="cs-next__label">Also Worth Reading</p>
-          <a href="design-system.php" class="cs-next__link">
-            <p class="cs-next__title">Enterprise Design<br>System</p>
-            <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:8px">
-              One system powering 10+ products and a 15-person design team.
-            </p>
-            <span class="cs-next__arrow">↗</span>
-          </a>
-        </div>
-      </div>
-
+      </div><!-- /.art-body -->
 
     </main>
+
+      <!-- NEXT CASE STUDIES — shared art-next layout -->
+      <section class="art-next" aria-label="Next case studies">
+        <a href="crewpal.php" class="art-next__card">
+          <span class="art-next__arrow">↗</span>
+          <p class="art-next__label">NEXT CASE STUDY</p>
+          <p class="art-next__category">ENTERPRISE APP</p>
+          <h3 class="art-next__title">CrewPal Operations Platform</h3>
+          <p class="art-next__tagline">Simplifying high-stakes operations for 8,000+ cabin crew.</p>
+        </a>
+        <a href="design-system.php" class="art-next__card">
+          <span class="art-next__arrow">↗</span>
+          <p class="art-next__label">ALSO WORTH READING</p>
+          <p class="art-next__category">DESIGN INFRASTRUCTURE</p>
+          <h3 class="art-next__title">Enterprise Design System</h3>
+          <p class="art-next__tagline">One system powering 10+ products and a 15-person design team.</p>
+        </a>
+      </section>
 
     <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
     <?php
@@ -416,25 +414,25 @@ $nav = [
   <script>
   /* ── READING PROGRESS ── */
   (function(){
-    const bar  = document.getElementById("cs-progress");
+    const bar  = document.getElementById("art-progress");
     const main = document.getElementById("main-content");
     if (!bar || !main) return;
     window.addEventListener("scroll", function(){
       const h   = main.scrollHeight - window.innerHeight;
-      const pct = Math.min(100, (window.scrollY / h) * 100);
+      const pct = h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0;
       bar.style.width = pct + "%";
     }, { passive: true });
   })();
   /* ── ACTIVE NAV HIGHLIGHT ── */
   (function(){
-    const navItems = document.querySelectorAll(".cs-nav__item[data-nav]");
-    const sections = document.querySelectorAll(".cs-section[id]");
+    const navItems = document.querySelectorAll(".art-nav__item[data-nav]");
+    const sections = document.querySelectorAll(".art-section[id]");
     if (!navItems.length) return;
     const obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if (e.isIntersecting){
           navItems.forEach(function(n){ n.classList.remove("is-active"); });
-          const active = document.querySelector('.cs-nav__item[data-nav="'+e.target.id+'"]');
+          const active = document.querySelector('.art-nav__item[data-nav="'+e.target.id+'"]');
           if (active) active.classList.add("is-active");
         }
       });

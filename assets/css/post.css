@@ -1,262 +1,18 @@
-/* =========================================
+/* =============================================
    POST.CSS — Blog post page styles
-   Used by: blog/post.php
-   ========================================= */
+   Layout tokens live in article.css (shared with case-study)
+   This file: post-specific components only.
+   ============================================= */
 
-/* =========================================
-   READING PROGRESS
-========================================= */
 
-.post-progress {
-  position:   fixed;
-  top:        0;
-  left:       0;
-  height:     2px;
-  width:      0%;
-  background: var(--blue);
-  z-index:    200;
-  transition: width 0.1s linear;
-}
-
-/* =========================================
-   HERO
-========================================= */
-
-.post-hero {
-  padding:       80px 50px 56px;
-  border-bottom: 1px solid var(--border);
-  box-sizing:    border-box;
-}
-
-.post-hero__back {
-  display:         inline-flex;
-  align-items:     center;
-  gap:             6px;
-  font-size:       13px;
-  color:           var(--text-muted);
-  text-decoration: none;
-  margin-bottom:   36px;
-  transition:      color 0.2s ease;
-}
-
-.post-hero__back:hover { color: var(--blue); }
-
-.post-hero__emoji {
-  font-size:     3rem;
-  line-height:   1;
-  display:       block;
-  margin-bottom: 20px;
-}
-
-.post-hero__tag-wrap { margin-bottom: 14px; }
-
-.post-hero__tag {
-  font-size:      11px;
-  font-weight:    600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color:          var(--blue);
-}
-
-.post-hero__title {
-  font-size:      clamp(2rem, 4vw, 3.4rem);
-  font-weight:    300;
-  letter-spacing: -0.06em;
-  line-height:    1.05;
-  color:          var(--text-primary);
-  margin-bottom:  16px;
-  max-width:      18ch;
-}
-
-.post-hero__subtitle {
-  font-size:     1.05rem;
-  line-height:   1.65;
-  color:         var(--text-muted);
-  margin-bottom: 28px;
-  max-width:     52ch;
-}
-
-.post-hero__meta {
-  display:     flex;
-  align-items: center;
-  gap:         12px;
-  font-size:   13px;
-  color:       var(--text-muted);
-  flex-wrap:   wrap;
-}
-
-.post-hero__dot {
-  width:         3px;
-  height:        3px;
-  border-radius: 50%;
-  background:    var(--text-muted);
-  opacity:       0.5;
-}
-
-/* =========================================
-   BODY LAYOUT
-========================================= */
-
-.post-body {
-  display:               grid;
-  grid-template-columns: 240px 1fr;
-  gap:                   56px;
-  padding:               56px 50px 80px;
-  box-sizing:            border-box;
-  align-items:           start;
-}
-
-/* =========================================
-   SIDEBAR
-========================================= */
-
-.post-sidebar {
-  position: sticky;
-  top:      100px;
-  display:  flex;
-  flex-direction: column;
-  gap:      36px;
-}
-
-/* TOC */
-
-.post-toc {
-  display:        flex;
-  flex-direction: column;
-  gap:            2px;
-}
-
-.post-toc__label {
-  font-size:      10px;
-  font-weight:    600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color:          var(--text-muted);
-  margin-bottom:  10px;
-  display:        block;
-}
-
-.post-toc__item {
-  display:         block;
-  font-size:       12px;
-  line-height:     1.5;
-  color:           var(--text-muted);
-  padding:         6px 0 6px 14px;
-  border-left:     2px solid var(--border);
-  text-decoration: none;
-  transition:
-    color       0.2s ease,
-    border-color 0.2s ease;
-}
-
-.post-toc__item:hover,
-.post-toc__item.is-active {
-  color:        var(--blue);
-  border-color: var(--blue);
-}
-
-/* SHARE */
-
-.post-share { display: flex; flex-direction: column; gap: 10px; }
-
-.post-share__btns {
-  display: flex;
-  gap:     8px;
-  flex-wrap: wrap;
-}
-
-.post-share__btn {
-  font-size:       12px;
-  padding:         6px 14px;
-  border-radius:   var(--radius-pill);
-  border:          1px solid var(--border);
-  color:           var(--text-muted);
-  text-decoration: none;
-  transition:
-    color        0.2s ease,
-    border-color 0.2s ease;
-}
-
-.post-share__btn:hover {
-  color:        var(--blue);
-  border-color: var(--blue);
-}
-
-/* =========================================
-   ARTICLE
-========================================= */
-
-.post-article {
-  min-width: 0;   /* prevents grid blowout */
-}
-
-.post-article__para {
-  font-size:     16px;
-  line-height:   1.88;
-  color:         var(--text-secondary);
-  margin-bottom: 24px;
-}
-
-.post-article__para--lead {
-  font-size:   1.12rem;
-  font-weight: 400;
-  color:       var(--text-primary);
-  line-height: 1.75;
-}
-
-/* =========================================
-   TAKEAWAY
-========================================= */
-
-.post-takeaway {
-  margin:        36px 0 0;
-  padding:       28px 32px;
-  background:    var(--text-primary);
-  border-radius: var(--radius-lg);
-  position:      relative;
-  overflow:      hidden;
-}
-
-.post-takeaway::before {
-  content:        "";
-  position:       absolute;
-  top:            -40%;
-  left:           -10%;
-  width:          60%;
-  height:         200%;
-  background:     radial-gradient(ellipse, rgba(26,70,201,0.35) 0%, transparent 65%);
-  pointer-events: none;
-}
-
-.post-takeaway__label {
-  font-size:      10px;
-  font-weight:    600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color:          rgba(255,255,255,0.40);
-  margin-bottom:  10px;
-  position:       relative;
-  z-index:        1;
-  display:        block;
-}
-
-.post-takeaway__text {
-  font-size:   15px;
-  line-height: 1.75;
-  color:       rgba(255,255,255,0.88);
-  font-style:  italic;
-  position:    relative;
-  z-index:     1;
-}
-
-   RELATED POSTS
-   Full-bleed. Padding token: 64px 48px.
-========================================= */
+/* =============================================
+   RELATED POSTS  — full-bleed light section
+   ============================================= */
 
 .post-related {
-  padding:     64px 48px;
+  padding:     64px 50px;
   border-top:  1px solid var(--border);
-  background:  var(--bg, #f5f5f3);
+  background:  var(--bg);
   box-sizing:  border-box;
 }
 
@@ -267,12 +23,13 @@
   text-transform: uppercase;
   color:          var(--text-muted);
   margin-bottom:  24px;
+  display:        block;
 }
 
 .post-related__grid {
   display:               grid;
   grid-template-columns: repeat(2, 1fr);
-  gap:                   20px;
+  gap:                   16px;
 }
 
 .post-related__card {
@@ -318,7 +75,7 @@
   font-weight:   500;
   color:         var(--text-primary);
   line-height:   1.35;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .post-related__card-excerpt {
@@ -327,91 +84,16 @@
   color:       var(--text-muted);
 }
 
-/* =========================================
-   POST NAV — dark, matches cs-next on case studies
-   Full-bleed. Padding token: 64px 48px.
-========================================= */
 
-.post-nav {
-  padding:               64px 48px;
-  display:               grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap:                   24px;
-  background:            #0a0a0a;
-  box-sizing:            border-box;
-}
-
-.post-nav__link {
-  padding:         32px;
-  background:      #161616;
-  border:          1px solid rgba(255,255,255,0.08);
-  border-radius:   var(--radius-md);
-  text-decoration: none;
-  display:         block;
-  transition:
-    transform    0.3s var(--ease-out),
-    box-shadow   0.35s ease,
-    border-color 0.3s ease;
-}
-
-.post-nav__link:hover {
-  transform:    translateY(-3px);
-  box-shadow:   0 12px 40px rgba(0,0,0,0.5);
-  border-color: rgba(255,255,255,0.2);
-}
-
-.post-nav__link--right { text-align: right; }
-
-.post-nav__dir {
-  font-size:      10px;
-  font-weight:    600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color:          rgba(255,255,255,0.35);
-  margin-bottom:  10px;
-}
-
-.post-nav__meta {
-  font-size:      10px;
-  font-weight:    600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color:          var(--blue-light, #2453d4);
-  margin-bottom:  8px;
-}
-
-.post-nav__title {
-  font-size:      clamp(1.3rem, 2.5vw, 2rem);
-  font-weight:    300;
-  letter-spacing: -0.04em;
-  color:          rgba(255,255,255,0.9);
-  line-height:    1.15;
-  transition:     color 0.2s ease;
-}
-
-.post-nav__link:hover .post-nav__title { color: #ffffff; }
-
-/* =========================================
+/* =============================================
    RESPONSIVE
-========================================= */
+   ============================================= */
 
 @media (max-width: 1024px) {
-  .post-body         { grid-template-columns: 180px 1fr; gap: 40px; }
-  .post-related      { padding: 64px 40px; }
-  .post-nav          { padding: 64px 40px; }
+  .post-related { padding: 56px 40px; }
 }
 
 @media (max-width: 768px) {
-  .post-hero         { padding: 56px 20px 40px; }
-  .post-hero__title  { max-width: 100%; }
-  .post-body         { grid-template-columns: 1fr; padding: 40px 20px 64px; }
-  .post-sidebar      { display: none; }
-  .post-related      { padding: 48px 20px; }
-  .post-related__grid { grid-template-columns: 1fr; }
-  .post-nav          { padding: 48px 20px; }
-  .post-nav__link--right { text-align: left; }
-}
-
-@media (max-width: 480px) {
-  .post-hero { padding: 48px 20px 32px; }
+  .post-related            { padding: 48px 20px; }
+  .post-related__grid      { grid-template-columns: 1fr; }
 }

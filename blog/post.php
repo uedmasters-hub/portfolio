@@ -1,30 +1,27 @@
 <?php
 /* =========================================
-   BLOG/POST.PHP — Universal Blog Post Template
-   Usage: blog/post.php?slug=the-redesign-nobody-asked-for
-   OR via .htaccess: /blog/the-redesign-nobody-asked-for
+   BLOG / POST.PHP — Universal blog post template
+   URL:  /blog/{slug}  (rewritten by .htaccess)
+   OR:   blog/post.php?slug=the-redesign-nobody-asked-for
    ========================================= */
 
 require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/blog.php";
+require_once __DIR__ . "/../data/case-studies.php";
 
-// ── GET SLUG ──────────────────────────────
+/* ── slug ────────────────────────────────── */
 $slug = isset($_GET['slug'])
   ? preg_replace('/[^a-z0-9\-]/', '', strtolower(trim($_GET['slug'])))
   : '';
 
-// ── FIND POST ─────────────────────────────
-$post = null;
+/* ── find post ───────────────────────────── */
+$post      = null;
 $postIndex = null;
 foreach ($posts as $i => $p) {
-  if ($p['slug'] === $slug) {
-    $post      = $p;
-    $postIndex = $i;
-    break;
-  }
+  if ($p['slug'] === $slug) { $post = $p; $postIndex = $i; break; }
 }
 
-// ── 404 if not found ──────────────────────
+/* ── 404 ─────────────────────────────────── */
 if (!$post) {
   http_response_code(404);
   require_once __DIR__ . "/../partials/header.php";
@@ -37,25 +34,31 @@ if (!$post) {
   exit;
 }
 
-// ── PREV / NEXT ───────────────────────────
-$prev = $postIndex > 0                   ? $posts[$postIndex - 1] : null;
-$next = $postIndex < count($posts) - 1  ? $posts[$postIndex + 1] : null;
+/* ── prev / next within all posts ───────── */
+$prev = $postIndex > 0                  ? $posts[$postIndex - 1] : null;
+$next = $postIndex < count($posts) - 1 ? $posts[$postIndex + 1] : null;
 
-// ── RELATED (same category, not self) ─────
+/* ── related same-category posts ────────── */
 $related = array_filter($posts, fn($p) =>
   $p['category'] === $post['category'] && $p['slug'] !== $post['slug']
 );
 $related = array_slice(array_values($related), 0, 2);
 
+/* ── "next case studies" — 2 published ──── */
+$nextStudies = array_values(array_filter($caseStudies,
+  fn($s) => ($s['status'] ?? '') === 'published'
+));
+$nextStudies = array_slice($nextStudies, 0, 2);
+
+/* ── reading time ────────────────────────── */
+$wordCount = array_sum(array_map('str_word_count', $post['body']));
+$readTime  = max(1, round($wordCount / 200)) . ' min read';
+
+/* ── page meta ───────────────────────────── */
 $currentKey = "blogs";
 $pageTitle  = htmlspecialchars($post['title']) . " — Field Notes";
 $pageDesc   = htmlspecialchars($post['excerpt']);
-
-// ── READING TIME from body ────────────────
-$wordCount = array_sum(array_map('str_word_count', $post['body']));
-$readTime  = max(1, round($wordCount / 200)) . ' min read';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +68,7 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
   <meta name="author"       content="Ramesh Mandal"/>
   <title><?= $pageTitle ?></title>
 
-  <!-- CANONICAL — clean URL (rewritten by .htaccess) -->
+  <!-- CANONICAL -->
   <link rel="canonical" href="https://6epixels.com/blog/<?= urlencode($post['slug']) ?>"/>
 
   <!-- OG / TWITTER -->
@@ -78,8 +81,8 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height"content="630"/>
   <meta property="og:locale"      content="en_IN"/>
-  <meta property="article:author"         content="Ramesh Mandal"/>
-  <meta property="article:section"        content="<?= htmlspecialchars($post['tag'] ?? 'UX Design') ?>"/>
+  <meta property="article:author"  content="Ramesh Mandal"/>
+  <meta property="article:section" content="<?= htmlspecialchars($post['tag'] ?? 'UX Design') ?>"/>
   <meta name="twitter:card"       content="summary_large_image"/>
   <meta name="twitter:site"       content="@ramsmandal"/>
   <meta name="twitter:title"      content="<?= htmlspecialchars($post['title']) ?>"/>
@@ -98,6 +101,7 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
 
+  <!-- CSS stack -->
   <link rel="stylesheet" href="../assets/css/preloader.css"/>
   <link rel="stylesheet" href="../assets/css/variables.css"/>
   <link rel="stylesheet" href="../assets/css/animations.css"/>
@@ -106,23 +110,26 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
   <link rel="stylesheet" href="../assets/css/navigation.css"/>
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
+  <!-- SHARED article layout — also used by case-study pages -->
+  <link rel="stylesheet" href="../assets/css/article.css"/>
+  <!-- post-specific extras -->
   <link rel="stylesheet" href="../assets/css/post.css"/>
 
-  <!-- JSON-LD STRUCTURED DATA -->
+  <!-- JSON-LD -->
   <?php
     require_once __DIR__ . "/../includes/schema.php";
     echo schema_article($post);
     echo schema_breadcrumb([
       ['Home',        'https://6epixels.com/'],
       ['Field Notes', 'https://6epixels.com/blog/'],
-      [$post['title'], 'https://6epixels.com/blog/post.php?slug=' . urlencode($post['slug'])],
+      [$post['title'], 'https://6epixels.com/blog/' . urlencode($post['slug'])],
     ]);
   ?>
 </head>
 <body>
 
   <!-- READING PROGRESS -->
-  <div class="post-progress" id="post-progress" role="progressbar" aria-label="Reading progress"></div>
+  <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
 
   <!-- PRELOADER -->
   <div class="preloader" id="preloader" aria-hidden="true">
@@ -148,106 +155,163 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
 <?php require_once __DIR__ . "/../partials/header.php"; ?>
 
   <div class="page-wrapper">
-
     <main id="main-content">
 
-      <!-- HERO -->
-      <header class="post-hero fade-in">
-        <a href="index.php" class="post-hero__back">
-          <span>←</span> Field Notes
-        </a>
+      <!-- ══════════════════════════════════════
+           HERO — full-bleed image + content
+      ══════════════════════════════════════ -->
+      <div class="art-hero fade-in">
+        <?php
+          /* Use post image if available, fallback to a curated Unsplash image by category */
+          $heroImages = [
+            'War Story'         => 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2400&auto=format&fit=crop',
+            'Quiet Win'         => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2400&auto=format&fit=crop',
+            'Unpopular Opinion' => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2400&auto=format&fit=crop',
+            'From the Field'    => 'https://images.unsplash.com/photo-1523800503107-5bc3ba2a6f81?q=80&w=2400&auto=format&fit=crop',
+          ];
+          $heroImg = $post['image'] ?? $heroImages[$post['tag']] ?? 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2400&auto=format&fit=crop';
+        ?>
+        <img
+          class="art-hero__img"
+          src="<?= htmlspecialchars($heroImg) ?>"
+          alt=""
+          loading="eager"
+        />
+        <div class="art-hero__overlay"></div>
 
-        <span class="post-hero__emoji" aria-hidden="true"><?= $post['emoji'] ?></span>
+        <div class="art-hero__content">
+          <a href="index.php" class="art-hero__back">← Field Notes</a>
 
-        <div class="post-hero__tag-wrap">
-          <span class="post-hero__tag"><?= htmlspecialchars($post['tag']) ?></span>
+          <div class="art-hero__kicker"><?= htmlspecialchars($post['tag']) ?></div>
+
+          <h1 class="art-hero__title"><?= htmlspecialchars($post['title']) ?></h1>
+
+          <?php if (!empty($post['subtitle'])): ?>
+            <p class="art-hero__subtitle"><?= htmlspecialchars($post['subtitle']) ?></p>
+          <?php endif; ?>
         </div>
+      </div>
 
-        <h1 class="post-hero__title"><?= htmlspecialchars($post['title']) ?></h1>
-        <p class="post-hero__subtitle"><?= htmlspecialchars($post['subtitle']) ?></p>
-
-        <div class="post-hero__meta">
-          <span><?= htmlspecialchars($post['date']) ?></span>
-          <span class="post-hero__dot" aria-hidden="true"></span>
-          <span><?= $readTime ?></span>
-          <span class="post-hero__dot" aria-hidden="true"></span>
-          <span>Ramesh Mandal</span>
+      <!-- ══════════════════════════════════════
+           META BAR — DATE / TIME / AUTHOR / ROLE
+      ══════════════════════════════════════ -->
+      <div class="art-meta-bar">
+        <div class="art-meta-item">
+          <span class="art-meta-item__label">Date</span>
+          <span class="art-meta-item__value"><?= htmlspecialchars($post['date']) ?></span>
         </div>
-      </header>
+        <div class="art-meta-item">
+          <span class="art-meta-item__label">Time</span>
+          <span class="art-meta-item__value"><?= $readTime ?></span>
+        </div>
+        <div class="art-meta-item">
+          <span class="art-meta-item__label">Author</span>
+          <span class="art-meta-item__value">Ramesh Mandal</span>
+        </div>
+        <div class="art-meta-item">
+          <span class="art-meta-item__label">Role</span>
+          <span class="art-meta-item__value">Sr. Manager UI/UX</span>
+        </div>
+      </div>
 
-      <!-- BODY -->
-      <div class="post-body">
+      <!-- ══════════════════════════════════════
+           BODY — sidebar TOC + article
+      ══════════════════════════════════════ -->
+      <div class="art-body">
 
-        <!-- SIDEBAR TOC -->
-        <aside class="post-sidebar" aria-label="Article contents">
-          <nav class="post-toc">
-            <span class="post-toc__label">In this note</span>
+        <!-- SIDEBAR -->
+        <aside class="art-sidebar" aria-label="Article contents">
+
+          <nav class="art-nav">
+            <span class="art-nav__label">In this note</span>
             <?php foreach ($post['body'] as $i => $para): ?>
               <a
                 href="#para-<?= $i ?>"
-                class="post-toc__item"
+                class="art-nav__item"
                 data-toc="para-<?= $i ?>"
-              >
-                <?= mb_strimwidth(strip_tags($para), 0, 42, '…') ?>
-              </a>
+              ><?= mb_strimwidth(strip_tags($para), 0, 44, '…') ?></a>
             <?php endforeach; ?>
-            <a href="#takeaway" class="post-toc__item" data-toc="takeaway">
-              ↳ Takeaway
-            </a>
+            <a href="#takeaway" class="art-nav__item" data-toc="takeaway">↳ Takeaway</a>
           </nav>
 
           <!-- SHARE -->
-          <div class="post-share">
-            <span class="post-toc__label">Share</span>
-            <div class="post-share__btns">
+          <div class="art-share">
+            <span class="art-nav__label">Share</span>
+            <div class="art-share__btns">
               <a
-                href="https://www.linkedin.com/sharing/share-offsite/?url=https://6epixels.com/blog/post.php?slug=<?= urlencode($post['slug']) ?>"
-                class="post-share__btn"
+                href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode('https://6epixels.com/blog/'.$post['slug']) ?>"
+                class="art-share__btn"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Share on LinkedIn"
-              >
-                LinkedIn ↗
-              </a>
+              >LinkedIn ↗</a>
               <a
-                href="https://twitter.com/intent/tweet?text=<?= urlencode($post['title']) ?>&url=<?= urlencode('https://6epixels.com/blog/post.php?slug='.$post['slug']) ?>"
-                class="post-share__btn"
+                href="https://twitter.com/intent/tweet?text=<?= urlencode($post['title']) ?>&url=<?= urlencode('https://6epixels.com/blog/'.$post['slug']) ?>"
+                class="art-share__btn"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Share on Twitter"
-              >
-                Twitter ↗
-              </a>
+                aria-label="Share on X / Twitter"
+              >Twitter ↗</a>
             </div>
           </div>
+
         </aside>
 
         <!-- ARTICLE -->
-        <article class="post-article" id="post-article">
+        <article class="art-article" id="art-article">
 
           <?php foreach ($post['body'] as $i => $para): ?>
             <p
               id="para-<?= $i ?>"
-              class="post-article__para<?= $i === 0 ? ' post-article__para--lead' : '' ?>"
-              style="scroll-margin-top:100px"
-            >
-              <?= htmlspecialchars($para) ?>
-            </p>
+              class="art-para<?= $i === 0 ? ' art-para--lead' : '' ?>"
+              style="scroll-margin-top:96px"
+            ><?= htmlspecialchars($para) ?></p>
           <?php endforeach; ?>
 
           <!-- TAKEAWAY -->
-          <div class="post-takeaway" id="takeaway" style="scroll-margin-top:100px">
-            <p class="post-takeaway__label">The Takeaway</p>
-            <p class="post-takeaway__text"><?= htmlspecialchars($post['takeaway']) ?></p>
+          <div class="art-takeaway" id="takeaway" style="scroll-margin-top:96px">
+            <span class="art-takeaway__label">The Takeaway</span>
+            <p class="art-takeaway__text"><?= htmlspecialchars($post['takeaway']) ?></p>
           </div>
 
         </article>
 
-      </div><!-- /.post-body -->
+      </div><!-- /.art-body -->
 
-    </main>
+    </main><!-- /#main-content -->
 
-    <!-- SAME-CATEGORY POSTS — full-bleed -->
+
+    <!-- ══════════════════════════════════════
+         NEXT CASE STUDY — 2-col cards
+         Matches mockup "NEXT CASE STUDY" section
+    ══════════════════════════════════════ -->
+    <?php if (!empty($nextStudies)): ?>
+    <section class="art-next" aria-label="Next case studies">
+      <?php foreach ($nextStudies as $cs): ?>
+        <a href="/case-study/<?= urlencode($cs['slug']) ?>" class="art-next__card">
+          <span class="art-next__arrow">↗</span>
+          <p class="art-next__label">NEXT CASE STUDY</p>
+          <p class="art-next__category"><?= htmlspecialchars($cs['category']) ?></p>
+          <h3 class="art-next__title"><?= htmlspecialchars($cs['title']) ?></h3>
+          <p class="art-next__tagline"><?= htmlspecialchars($cs['tagline']) ?></p>
+        </a>
+      <?php endforeach; ?>
+    </section>
+    <?php endif; ?>
+
+
+    <!-- ══════════════════════════════════════
+         MORE FROM PLATFORM — cross-content
+    ══════════════════════════════════════ -->
+    <?php
+      require_once __DIR__ . "/../partials/related-content.php";
+      render_related_content('blog', $post['slug']);
+    ?>
+
+
+    <!-- ══════════════════════════════════════
+         SAME-CATEGORY RELATED POSTS
+    ══════════════════════════════════════ -->
     <?php if (!empty($related)): ?>
     <section class="post-related">
       <?php
@@ -257,9 +321,9 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
           'Unpopular Opinion' => 'MORE UNPOPULAR OPINIONS',
           'From the Field'    => 'MORE FROM THE FIELD',
         ];
-        $label = $tagPlural[$post['tag']] ?? ('MORE ' . strtoupper($post['tag']) . 'S');
+        $relLabel = $tagPlural[$post['tag']] ?? ('MORE ' . strtoupper($post['tag']));
       ?>
-      <p class="post-related__label"><?= $label ?></p>
+      <span class="post-related__label"><?= $relLabel ?></span>
       <div class="post-related__grid">
         <?php foreach ($related as $r): ?>
           <a href="/blog/<?= urlencode($r['slug']) ?>" class="post-related__card fade-in">
@@ -275,68 +339,67 @@ $readTime  = max(1, round($wordCount / 200)) . ' min read';
     </section>
     <?php endif; ?>
 
-    <!-- PREV / NEXT — dark, full-bleed -->
+
+    <!-- ══════════════════════════════════════
+         PREV / NEXT DARK NAV
+    ══════════════════════════════════════ -->
     <?php if ($prev || $next): ?>
-    <nav class="post-nav" aria-label="Browse posts">
+    <nav class="art-nav-dark" aria-label="Browse posts">
       <?php if ($prev): ?>
-        <a href="/blog/<?= urlencode($prev['slug']) ?>" class="post-nav__link">
-          <p class="post-nav__dir">← Previous Note</p>
-          <p class="post-nav__meta"><?= htmlspecialchars($prev['tag']) ?></p>
-          <p class="post-nav__title"><?= htmlspecialchars($prev['title']) ?></p>
+        <a href="/blog/<?= urlencode($prev['slug']) ?>" class="art-navlink">
+          <p class="art-navlink__dir">← Previous Note</p>
+          <p class="art-navlink__tag"><?= htmlspecialchars($prev['tag']) ?></p>
+          <p class="art-navlink__title"><?= htmlspecialchars($prev['title']) ?></p>
         </a>
       <?php endif; ?>
       <?php if ($next): ?>
-        <a href="/blog/<?= urlencode($next['slug']) ?>" class="post-nav__link post-nav__link--right">
-          <p class="post-nav__dir">Next Note →</p>
-          <p class="post-nav__meta"><?= htmlspecialchars($next['tag']) ?></p>
-          <p class="post-nav__title"><?= htmlspecialchars($next['title']) ?></p>
+        <a href="/blog/<?= urlencode($next['slug']) ?>" class="art-navlink art-navlink--right">
+          <p class="art-navlink__dir">Next Note →</p>
+          <p class="art-navlink__tag"><?= htmlspecialchars($next['tag']) ?></p>
+          <p class="art-navlink__title"><?= htmlspecialchars($next['title']) ?></p>
         </a>
       <?php endif; ?>
     </nav>
     <?php endif; ?>
 
-    <!-- CROSS-CONTENT INTERNAL LINKS -->
-    <?php
-      require_once __DIR__ . "/../partials/related-content.php";
-      render_related_content('blog', $post['slug']);
-    ?>
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
 
-  </div>
+  </div><!-- /.page-wrapper -->
 
   <script src="../assets/js/preloader.js"></script>
   <script src="../assets/js/background.js" defer></script>
   <script src="../assets/js/animations.js" defer></script>
   <script src="../assets/js/app.js" defer></script>
+
   <script>
-  /* ── READING PROGRESS ── */
+  /* ── READING PROGRESS ─────────────────────── */
   (function(){
-    var bar  = document.getElementById("post-progress");
+    var bar  = document.getElementById("art-progress");
     var main = document.getElementById("main-content");
     if (!bar || !main) return;
     window.addEventListener("scroll", function(){
       var h   = main.scrollHeight - window.innerHeight;
-      var pct = Math.min(100, (window.scrollY / h) * 100);
+      var pct = h > 0 ? Math.min(100, (window.scrollY / h) * 100) : 0;
       bar.style.width = pct + "%";
     }, { passive: true });
   })();
 
-  /* ── ACTIVE TOC ── */
+  /* ── ACTIVE TOC ───────────────────────────── */
   (function(){
-    var items = document.querySelectorAll(".post-toc__item[data-toc]");
-    var secs  = document.querySelectorAll("[id]");
+    var items = document.querySelectorAll(".art-nav__item[data-toc]");
     if (!items.length) return;
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
-        if (e.isIntersecting){
-          items.forEach(function(n){ n.classList.remove("is-active"); });
-          var a = document.querySelector('.post-toc__item[data-toc="' + e.target.id + '"]');
-          if (a) a.classList.add("is-active");
-        }
+        if (!e.isIntersecting) return;
+        items.forEach(function(n){ n.classList.remove("is-active"); });
+        var a = document.querySelector('.art-nav__item[data-toc="' + e.target.id + '"]');
+        if (a) a.classList.add("is-active");
       });
-    }, { rootMargin: "-20% 0px -70% 0px" });
-    secs.forEach(function(s){ if (s.id) obs.observe(s); });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    document.querySelectorAll("[id]").forEach(function(el){
+      obs.observe(el);
+    });
   })();
   </script>
 

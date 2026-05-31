@@ -1,0 +1,721 @@
+/* =============================================
+   ARTICLE.CSS — Shared layout tokens for
+   blog/post.php  AND  case-study/*.php
+   Both templates import this file.
+   ============================================= */
+
+
+/* =============================================
+   READING PROGRESS BAR
+   ============================================= */
+
+.art-progress {
+  position:   fixed;
+  top:        0;
+  left:       0;
+  height:     2px;
+  width:      0%;
+  background: var(--blue);
+  z-index:    300;
+  transition: width 0.08s linear;
+  border-radius: 0 2px 2px 0;
+}
+
+
+/* =============================================
+   FULL-BLEED HERO  (image + overlay + content)
+   ============================================= */
+
+.art-hero {
+  position:    relative;
+  width:       100%;
+  height:      56vh;
+  min-height:  460px;
+  max-height:  640px;
+  overflow:    hidden;
+  display:     block;
+}
+
+.art-hero__img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+  transform:  scale(1.04);           /* slight overscan prevents white flash */
+}
+
+.art-hero__overlay {
+  position:   absolute;
+  inset:      0;
+  background: linear-gradient(
+    160deg,
+    rgba(0,0,0,0.20) 0%,
+    rgba(0,0,0,0.72) 100%
+  );
+}
+
+/* content sits bottom-left inside hero */
+.art-hero__content {
+  position: absolute;
+  bottom:   48px;
+  left:     50px;
+  right:    50px;
+  color:    #fff;
+  z-index:  2;
+}
+
+.art-hero__back {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             6px;
+  font-size:       12px;
+  letter-spacing:  0.08em;
+  text-transform:  uppercase;
+  color:           rgba(255,255,255,0.60);
+  text-decoration: none;
+  margin-bottom:   24px;
+  transition:      color var(--t-fast) ease;
+}
+
+.art-hero__back:hover { color: #fff; }
+
+.art-hero__kicker {
+  display:        flex;
+  align-items:    center;
+  gap:            10px;
+  font-size:      11px;
+  font-weight:    600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color:          rgba(255,255,255,0.55);
+  margin-bottom:  16px;
+}
+
+.art-hero__kicker::before {
+  content:    "";
+  width:      20px;
+  height:     1px;
+  background: rgba(255,255,255,0.55);
+}
+
+.art-hero__title {
+  font-size:      clamp(2rem, 4.5vw, 4rem);
+  font-weight:    300;
+  letter-spacing: -0.06em;
+  line-height:    0.96;
+  color:          #ffffff;
+  margin-bottom:  16px;
+  max-width:      18ch;
+}
+
+.art-hero__subtitle {
+  font-size:   17px;
+  line-height: 1.55;
+  color:       rgba(255,255,255,0.75);
+  max-width:   58ch;
+}
+
+/* emoji badge (blog only) */
+.art-hero__emoji {
+  font-size:     2.8rem;
+  line-height:   1;
+  display:       block;
+  margin-bottom: 16px;
+}
+
+
+/* =============================================
+   META BAR  — 4 columns, full-bleed
+   Matches mockup: DATE / TIME / AUTHOR / ROLE
+   ============================================= */
+
+.art-meta-bar {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom:         1px solid var(--border);
+  background:            rgba(255,255,255,0.75);
+  backdrop-filter:       blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.art-meta-item {
+  padding: 22px 28px;
+}
+
+.art-meta-item:not(:last-child) {
+  border-right: 1px solid var(--border);
+}
+
+.art-meta-item__label {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  margin-bottom:  6px;
+  display:        block;
+}
+
+.art-meta-item__value {
+  font-size:   14px;
+  font-weight: 500;
+  color:       var(--text-primary);
+  line-height: 1.3;
+}
+
+
+/* =============================================
+   BODY GRID  — sidebar + article
+   ============================================= */
+
+.art-body {
+  display:               grid;
+  grid-template-columns: 240px 1fr;
+  gap:                   0;
+  align-items:           start;
+  padding:               64px 50px 96px;
+  box-sizing:            border-box;
+  column-gap:            56px;
+}
+
+
+/* =============================================
+   SIDEBAR  (sticky)
+   ============================================= */
+
+.art-sidebar {
+  position:       sticky;
+  top:            96px;
+  display:        flex;
+  flex-direction: column;
+  gap:            36px;
+}
+
+/* TOC / section nav */
+
+.art-nav {
+  display:        flex;
+  flex-direction: column;
+  gap:            1px;
+}
+
+.art-nav__label {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  margin-bottom:  12px;
+  display:        block;
+}
+
+.art-nav__item {
+  display:         block;
+  font-size:       12px;
+  line-height:     1.55;
+  color:           var(--text-muted);
+  padding:         7px 0 7px 14px;
+  border-left:     2px solid var(--border);
+  text-decoration: none;
+  transition:
+    color        var(--t-fast) ease,
+    border-color var(--t-fast) ease;
+}
+
+.art-nav__item:hover,
+.art-nav__item.is-active {
+  color:        var(--blue);
+  border-color: var(--blue);
+}
+
+/* share block */
+
+.art-share {
+  display:        flex;
+  flex-direction: column;
+  gap:            10px;
+}
+
+.art-share__btns {
+  display:  flex;
+  gap:      8px;
+  flex-wrap: wrap;
+}
+
+.art-share__btn {
+  font-size:       12px;
+  padding:         6px 14px;
+  border-radius:   var(--radius-pill);
+  border:          1px solid var(--border);
+  color:           var(--text-muted);
+  text-decoration: none;
+  transition:
+    color        var(--t-fast) ease,
+    border-color var(--t-fast) ease;
+}
+
+.art-share__btn:hover {
+  color:        var(--blue);
+  border-color: var(--blue);
+}
+
+
+/* =============================================
+   ARTICLE  (right column)
+   ============================================= */
+
+.art-article {
+  min-width:      0;
+  display:        flex;
+  flex-direction: column;
+  gap:            56px;
+}
+
+/* ── plain paragraph body (blog) */
+
+.art-para {
+  font-size:     16px;
+  line-height:   1.88;
+  color:         var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.art-para:last-child { margin-bottom: 0; }
+
+.art-para--lead {
+  font-size:   1.1rem;
+  font-weight: 400;
+  color:       var(--text-primary);
+  line-height: 1.75;
+}
+
+/* ── section block (case study) */
+
+.art-section {
+  scroll-margin-top: 96px;
+}
+
+.art-section__kicker {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color:          var(--blue);
+  margin-bottom:  14px;
+  display:        block;
+}
+
+.art-section__title {
+  font-size:      clamp(1.5rem, 2.5vw, 2.2rem);
+  font-weight:    300;
+  letter-spacing: -0.05em;
+  color:          var(--text-primary);
+  line-height:    1.05;
+  margin-bottom:  20px;
+}
+
+.art-section__body {
+  font-size:   16px;
+  line-height: 1.85;
+  color:       var(--text-secondary);
+}
+
+.art-section__body p + p { margin-top: 16px; }
+
+.art-section__body strong {
+  font-weight: 600;
+  color:       var(--text-primary);
+}
+
+
+/* =============================================
+   TAKEAWAY BLOCK  (blog)
+   Dark card with blue glow
+   ============================================= */
+
+.art-takeaway {
+  padding:       28px 32px;
+  background:    var(--text-primary);
+  border-radius: var(--radius-lg);
+  position:      relative;
+  overflow:      hidden;
+}
+
+.art-takeaway::before {
+  content:       "";
+  position:      absolute;
+  top:           -40%;
+  left:          -10%;
+  width:         60%;
+  height:        200%;
+  background:    radial-gradient(ellipse, rgba(26,70,201,0.40) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.art-takeaway__label {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color:          rgba(255,255,255,0.38);
+  margin-bottom:  12px;
+  display:        block;
+  position:       relative;
+  z-index:        1;
+}
+
+.art-takeaway__text {
+  font-size:   15px;
+  line-height: 1.78;
+  color:       rgba(255,255,255,0.88);
+  font-style:  italic;
+  position:    relative;
+  z-index:     1;
+}
+
+
+/* =============================================
+   CALLOUT / BLOCKQUOTE  (case study)
+   ============================================= */
+
+.art-callout {
+  padding:       24px 28px;
+  background:    rgba(26,70,201,0.04);
+  border-left:   3px solid var(--blue);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size:     15px;
+  line-height:   1.75;
+  color:         var(--text-secondary);
+  font-style:    italic;
+  margin:        0;
+}
+
+.art-callout small {
+  display:     block;
+  margin-top:  8px;
+  font-size:   13px;
+  font-style:  normal;
+  color:       var(--text-muted);
+}
+
+
+/* =============================================
+   METRIC CARDS  (case study)
+   ============================================= */
+
+.art-metrics {
+  display:               grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:                   12px;
+  margin:                4px 0 0;
+}
+
+.art-metric {
+  padding:       24px;
+  background:    #ffffff;
+  border:        1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--t-fast) ease,
+    background   var(--t-fast) ease;
+}
+
+.art-metric:hover {
+  border-color: rgba(26,70,201,0.22);
+  background:   rgba(26,70,201,0.02);
+}
+
+.art-metric__value {
+  font-size:      2.4rem;
+  font-weight:    700;
+  letter-spacing: -0.05em;
+  color:          var(--blue);
+  line-height:    1;
+  margin-bottom:  6px;
+}
+
+.art-metric__label {
+  font-size:   13px;
+  color:       var(--text-muted);
+  line-height: 1.45;
+}
+
+
+/* =============================================
+   STEPS LIST  (case study)
+   ============================================= */
+
+.art-steps {
+  display:        flex;
+  flex-direction: column;
+  gap:            0;
+}
+
+.art-step {
+  display:               grid;
+  grid-template-columns: 36px 1fr;
+  gap:                   20px;
+  padding:               20px 0;
+  border-bottom:         1px solid var(--border);
+}
+
+.art-step:last-child { border-bottom: none; }
+
+.art-step__num {
+  width:            36px;
+  height:           36px;
+  border-radius:    50%;
+  border:           1.5px solid var(--border);
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
+  font-size:        12px;
+  font-weight:      600;
+  color:            var(--text-muted);
+  flex-shrink:      0;
+  margin-top:       2px;
+}
+
+.art-step__title {
+  font-size:     14px;
+  font-weight:   600;
+  color:         var(--text-primary);
+  margin-bottom: 6px;
+  line-height:   1.4;
+}
+
+.art-step__desc {
+  font-size:   14px;
+  line-height: 1.65;
+  color:       var(--text-secondary);
+}
+
+
+/* =============================================
+   INSIGHT TAGS  (case study — psychology)
+   ============================================= */
+
+.art-insights {
+  display:   flex;
+  gap:       8px;
+  flex-wrap: wrap;
+  margin:    16px 0 0;
+}
+
+.art-insight {
+  padding:        6px 12px;
+  background:     rgba(26,70,201,0.06);
+  border:         1px solid rgba(26,70,201,0.14);
+  border-radius:  var(--radius-pill);
+  font-size:      12px;
+  font-weight:    500;
+  color:          var(--blue);
+}
+
+
+/* =============================================
+   NEXT CASE STUDY / NEXT POST  — 2-col cards
+   Full-bleed, matches mockup light section
+   ============================================= */
+
+.art-next {
+  padding:               64px 50px;
+  display:               grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:                   1px;
+  background:            var(--border);
+  border-top:            1px solid var(--border);
+  box-sizing:            border-box;
+}
+
+.art-next__card {
+  position:        relative;
+  padding:         48px 40px;
+  background:      var(--bg-elevated);
+  text-decoration: none;
+  color:           inherit;
+  display:         flex;
+  flex-direction:  column;
+  justify-content: flex-end;
+  gap:             12px;
+  transition:      background var(--t-fast) ease;
+  min-height:      220px;
+}
+
+.art-next__card:hover { background: #fafafa; }
+
+.art-next__arrow {
+  position:  absolute;
+  top:       28px;
+  right:     28px;
+  font-size: 18px;
+  color:     #ccc;
+  transition: color var(--t-fast) ease, transform var(--t-fast) ease;
+}
+
+.art-next__card:hover .art-next__arrow {
+  color:     var(--blue);
+  transform: translate(3px, -3px);
+}
+
+.art-next__label {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+}
+
+.art-next__category {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--blue);
+}
+
+.art-next__title {
+  font-size:      clamp(1.6rem, 2.5vw, 2.4rem);
+  font-weight:    300;
+  letter-spacing: -0.05em;
+  line-height:    1.05;
+  color:          var(--text-primary);
+}
+
+.art-next__tagline {
+  font-size:   14px;
+  line-height: 1.55;
+  color:       var(--text-muted);
+}
+
+
+/* =============================================
+   PREV / NEXT NAV — dark, full-bleed
+   ============================================= */
+
+.art-nav-dark {
+  padding:               48px 50px;
+  display:               grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap:                   20px;
+  background:            #0a0a0a;
+  box-sizing:            border-box;
+}
+
+.art-navlink {
+  padding:         32px;
+  background:      #161616;
+  border:          1px solid rgba(255,255,255,0.08);
+  border-radius:   var(--radius-md);
+  text-decoration: none;
+  display:         block;
+  transition:
+    transform    var(--t-base) var(--ease-out),
+    box-shadow   var(--t-base) ease,
+    border-color var(--t-base) ease;
+}
+
+.art-navlink:hover {
+  transform:    translateY(-3px);
+  box-shadow:   0 12px 40px rgba(0,0,0,0.5);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.art-navlink--right { text-align: right; }
+
+.art-navlink__dir {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color:          rgba(255,255,255,0.32);
+  margin-bottom:  10px;
+}
+
+.art-navlink__tag {
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--blue-light);
+  margin-bottom:  8px;
+}
+
+.art-navlink__title {
+  font-size:      clamp(1.2rem, 2vw, 1.8rem);
+  font-weight:    300;
+  letter-spacing: -0.04em;
+  color:          rgba(255,255,255,0.85);
+  line-height:    1.15;
+  transition:     color var(--t-fast) ease;
+}
+
+.art-navlink:hover .art-navlink__title { color: #fff; }
+
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
+@media (max-width: 1024px) {
+
+  .art-body {
+    grid-template-columns: 200px 1fr;
+    column-gap:            40px;
+    padding:               56px 40px 80px;
+  }
+
+  .art-next {
+    padding: 56px 40px;
+  }
+
+  .art-meta-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .art-meta-item:nth-child(2) { border-right: none; }
+  .art-meta-item:nth-child(1),
+  .art-meta-item:nth-child(2) {
+    border-bottom: 1px solid var(--border);
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .art-hero          { height: 50vh; min-height: 400px; }
+  .art-hero__content { left: 20px; right: 20px; bottom: 28px; }
+  .art-hero__title   { font-size: clamp(1.8rem, 8vw, 2.6rem); max-width: 100%; }
+  .art-hero__subtitle{ font-size: 15px; }
+
+  .art-meta-bar     { grid-template-columns: repeat(2, 1fr); }
+
+  .art-body          {
+    grid-template-columns: 1fr;
+    padding:               40px 20px 64px;
+    gap:                   40px;
+  }
+
+  .art-sidebar       { position: static; top: auto; }
+
+  .art-next {
+    grid-template-columns: 1fr;
+    padding:               40px 20px;
+  }
+
+  .art-next__card    { min-height: 160px; padding: 32px 24px; }
+
+  .art-nav-dark      { padding: 40px 20px; }
+  .art-navlink--right{ text-align: left; }
+
+  .art-metrics       { grid-template-columns: 1fr; }
+
+}
+
+@media (max-width: 480px) {
+
+  .art-hero { min-height: 340px; }
+
+  .art-meta-bar { grid-template-columns: 1fr 1fr; }
+
+}
