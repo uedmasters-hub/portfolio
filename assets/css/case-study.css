@@ -699,29 +699,40 @@
 .cs-nav       { position: sticky; top: 96px; align-self: start; display: flex; flex-direction: column; gap: 1px; }
 .cs-nav__item { display: block; font-size: 12px; line-height: 1.55; color: var(--text-muted); padding: 7px 0 7px 14px; border-left: 2px solid var(--border); text-decoration: none; transition: color var(--t-fast) ease, border-color var(--t-fast) ease; }
 .cs-nav__item:hover, .cs-nav__item.is-active { color: var(--blue); border-color: var(--blue); }
-.cs-article   { min-width: 0; display: flex; flex-direction: column; gap: 56px; }
+.cs-article   { min-width: 0; display: flex; flex-direction: column; gap: 72px; }
 
 /* Section block */
 .cs-section         { scroll-margin-top: 96px; }
-.cs-section__label  { font-size: 10px; font-weight: 600; letter-spacing: 0.20em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; display: block; }
-.cs-section__title  { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 300; letter-spacing: -0.05em; color: var(--text-primary); line-height: 1.05; margin-bottom: 20px; }
+.cs-section__label  { font-size: 10px; font-weight: 600; letter-spacing: 0.20em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; display: block; }
+.cs-section__title  { font-size: clamp(1.5rem, 2.5vw, 2.2rem); font-weight: 300; letter-spacing: -0.05em; color: var(--text-primary); line-height: 1.05; margin-bottom: 24px; }
 .cs-section__body   { font-size: 16px; line-height: 1.85; color: var(--text-secondary); }
-.cs-section__body p + p  { margin-top: 16px; }
+.cs-section__body p + p  { margin-top: 18px; }
 .cs-section__body strong { font-weight: 600; color: var(--text-primary); }
+
+/* Space after body text before callout / steps / metrics */
+.cs-section__body + .cs-callout,
+.cs-section__body + .cs-steps,
+.cs-section__body + .cs-metrics-row,
+.cs-section__body + blockquote { margin-top: 28px; }
+
+/* Space between consecutive blocks within a section */
+.cs-callout + .cs-section__body,
+.cs-steps   + .cs-section__body,
+.cs-metrics-row + .cs-section__body { margin-top: 28px; }
 
 /* Callout */
 .cs-callout { padding: 24px 28px; background: rgba(26,70,201,0.04); border-left: 3px solid var(--blue); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 15px; line-height: 1.75; color: var(--text-secondary); font-style: italic; margin: 0; }
 .cs-callout small { display: block; margin-top: 8px; font-size: 13px; font-style: normal; color: var(--text-muted); }
 
 /* Metrics row */
-.cs-metrics-row       { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 4px 0 0; }
+.cs-metrics-row       { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 0; }
 .cs-metric-card       { padding: 24px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-md); transition: border-color var(--t-fast) ease, background var(--t-fast) ease; }
 .cs-metric-card:hover { border-color: rgba(26,70,201,0.22); background: rgba(26,70,201,0.02); }
 .cs-metric-card__value{ font-size: 2.4rem; font-weight: 700; letter-spacing: -0.05em; color: var(--blue); line-height: 1; margin-bottom: 6px; }
 .cs-metric-card__label{ font-size: 13px; color: var(--text-muted); line-height: 1.45; }
 
 /* Steps */
-.cs-steps          { display: flex; flex-direction: column; gap: 0; margin: 4px 0 0; }
+.cs-steps          { display: flex; flex-direction: column; gap: 0; margin: 0; }
 .cs-step           { display: grid; grid-template-columns: 36px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
 .cs-step:first-child{ border-top: 1px solid var(--border); }
 .cs-step:last-child { border-bottom: none; }
