@@ -177,6 +177,8 @@
   display:        flex;
   flex-direction: column;
   gap:            36px;
+  /* sticky requires the parent to have align-items: start — confirmed on art-body */
+  align-self:     start;
 }
 
 /* TOC / section nav */
@@ -514,10 +516,8 @@
   border-top:    1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background:    var(--bg-elevated);
-  padding:       0 0px;
+  padding:       0 64px;
   box-sizing:    border-box;
-  margin: 0 64px;
-  border-radius: 16px;
 }
 
 .art-next {
@@ -708,7 +708,7 @@
 
   .art-sidebar       { position: static; top: auto; }
 
-  .art-next-wrap         { padding: 0; margin: 0 20px; }
+  .art-next-wrap         { padding: 0 20px; }
   .art-next__card        { min-height: 120px; padding: 24px 20px; }
   .art-next__card:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
 
