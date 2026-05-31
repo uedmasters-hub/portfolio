@@ -35,29 +35,109 @@
   display: flex;
   flex-direction: column;
 
-  gap: 28px;
+  gap: 24px;
 
   margin-top: -20px;
 }
 
 /* =========================
+   EYEBROW — cognitive anchor
+   Reads first, sets context instantly
+   before title even registers
+========================= */
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  color: var(--blue);
+}
+
+.hero-eyebrow-dot {
+  display: inline-block;
+
+  width: 6px;
+  height: 6px;
+
+  background: var(--blue);
+  border-radius: 50%;
+
+  flex-shrink: 0;
+}
+
+/* =========================
    HERO TITLE
+   Line 1: "I design clarity" — static, complete thought
+   Line 2: "into [typewriter]" — supporting specificity
 ========================= */
 
 .hero-title {
-  font-size: clamp(4rem, 8vw, 6.5rem);
+  font-size: clamp(3.4rem, 7vw, 5.8rem);
 
-  line-height: 0.92;
+  line-height: 1.0;
 
-  letter-spacing: -0.08em;
+  letter-spacing: -0.06em;
 
   font-weight: 300;
 
-  max-width: 11ch;
+  max-width: 14ch;
+
+  margin: 0;
 }
 
-.hero-title span {
+/* =========================
+   TYPEWRITER WRAPPER
+   Fixed min-height prevents layout shift —
+   the block below never moves regardless
+   of how long the typed phrase is
+========================= */
+
+.hero-title-typewriter {
+  display: inline-block;
+
+  /* Reserve height for one line of typewriter text
+     at the current font-size — adjust if wrapping occurs */
+  min-height: 1.05em;
+
+  vertical-align: bottom;
+}
+
+/* =========================
+   TYPEWRITER SPAN
+========================= */
+
+#typewriter {
   color: var(--blue);
+  position: relative;
+  display: inline;
+}
+
+/* CURSOR */
+#typewriter::after {
+  content: "";
+
+  position: absolute;
+
+  right: -8px;
+  top: 8%;
+
+  width: 3px;
+  height: 84%;
+
+  background: var(--blue);
+
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 /* =========================
@@ -70,7 +150,7 @@
 
   gap: 14px;
 
-  font-size: 14px;
+  font-size: 13px;
 
   color: var(--muted);
 
@@ -83,12 +163,9 @@
 
 .hero-meta span:not(:last-child)::after {
   content: "·";
-
   position: absolute;
-
   right: -10px;
-
-  color: #999;
+  color: #bbb;
 }
 
 /* =========================
@@ -98,24 +175,21 @@
 .chips {
   display: flex;
   flex-wrap: wrap;
-
-  gap: 12px;
+  gap: 10px;
 }
 
-/* =========================
-   CHIP
-========================= */
-
 .chip {
-  padding: 10px 18px;
+  padding: 9px 16px;
 
   border: 1px solid #cccccc;
   border-radius: 999px;
 
   background: rgba(255,255,255,0.7);
 
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
+
+  letter-spacing: 0.03em;
 }
 
 .chip.blue {
@@ -124,233 +198,26 @@
 }
 
 /* =========================
-   TYPEWRITER
-========================= */
-
-#typewriter {
-  color: #2453d4;
-
-  position: relative;
-
-  display: inline-block;
-}
-
-/* CURSOR */
-
-#typewriter::after {
-  content: "";
-
-  position: absolute;
-
-  right: -10px;
-  top: 8%;
-
-  width: 4px;
-  height: 82%;
-
-  background: #2453d4;
-
-  animation: blink 1s infinite;
-}
-
-/* BLINK */
-
-@keyframes blink {
-
-  0%,
-  50% {
-    opacity: 1;
-  }
-
-  51%,
-  100% {
-    opacity: 0;
-  }
-
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stats {
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap: 20px;
-
-  align-items: end;
-
-  padding-top: 20px;
-
-  perspective: 1400px;
-}
-
-/* =========================
-   STAT
-========================= */
-
-.stat {
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 6px;
-
-  padding: 22px 22px 20px;
-
-  border-radius: 24px;
-
-  background: transparent;
-
-  border: 1px solid transparent;
-
-  backdrop-filter: blur(0px);
-
-  overflow: hidden;
-
-  transform-style: preserve-3d;
-
-  transition:
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.5s ease,
-    box-shadow 0.5s ease,
-    border-color 0.5s ease,
-    backdrop-filter 0.5s ease;
-}
-
-/* =========================
-   PASTEL LIGHT
-========================= */
-
-.stat::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(180,210,255,0.10),
-      rgba(240,220,255,0.10),
-      rgba(255,230,240,0.08)
-    );
-
-  opacity: 0;
-
-  transition: opacity 0.5s ease;
-
-  pointer-events: none;
-}
-
-/* =========================
-   HOVER
-========================= */
-
-.stat:hover {
-  transform:
-    perspective(1400px)
-    rotateX(5deg)
-    rotateY(-5deg)
-    translateY(-6px);
-
-  background: rgba(255,255,255,0.52);
-
-  border-color: rgba(255,255,255,0.75);
-
-  box-shadow:
-    0 24px 50px rgba(120,170,255,0.10),
-    0 10px 24px rgba(0,0,0,0.04);
-}
-
-.stat:hover::before {
-  opacity: 1;
-}
-
-/* =========================
-   DEPTH
-========================= */
-
-.stat > * {
-  position: relative;
-  z-index: 2;
-
-  transform: translateZ(28px);
-}
-
-/* =========================
-   STAT LABEL
-========================= */
-
-.stat-label {
-  font-size: 11px;
-
-  letter-spacing: 4px;
-
-  color: #444;
-
-  margin-bottom: 2px;
-}
-
-/* =========================
-   STAT VALUE
-========================= */
-
-.stat h2 {
-  font-size: 42px;
-
-  line-height: 1;
-
-  font-weight: 700;
-
-  letter-spacing: -2px;
-
-  color: #111;
-}
-
-/* =========================
-   STAT TEXT
-========================= */
-
-.stat span {
-  font-size: 15px;
-
-  line-height: 1.5;
-
-  color: #333;
-}
-
-
-/* ================================================
-   NEW ADDITIONS — UX Roadmap P1.2 · P2.1 · P2.2
-   ================================================ */
-
-
-/* =========================
-   SOCIAL PROOF QUOTE — P2.1
+   SOCIAL PROOF QUOTE
 ========================= */
 
 .hero-proof {
   margin: 0;
-  padding: 20px 24px;
+  padding: 18px 22px;
 
   background: rgba(26, 70, 201, 0.04);
   border-left: 2px solid var(--blue);
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 10px 10px 0;
 
-  max-width: 580px;
+  max-width: 560px;
 }
 
 .hero-proof p {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.65;
-  color: #333;
+  color: #444;
   font-style: italic;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
 }
 
 .hero-proof cite {
@@ -359,7 +226,7 @@
   gap: 10px;
 
   font-style: normal;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--muted);
   font-weight: 500;
 }
@@ -369,42 +236,39 @@
   align-items: center;
   justify-content: center;
 
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
 
   background: var(--blue);
   color: white;
 
   border-radius: 50%;
 
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.5px;
 
   flex-shrink: 0;
 }
 
-
 /* =========================
-   CTA BUTTONS — P1.2
+   CTA BUTTONS
 ========================= */
 
 .hero-cta {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 14px;
-
-  margin-top: 4px;
+  gap: 12px;
 }
 
-/* PRIMARY — filled blue */
+/* PRIMARY */
 .hero-cta-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 
-  padding: 14px 28px;
+  padding: 13px 26px;
 
   background: var(--blue);
   color: #fff;
@@ -439,7 +303,7 @@
 }
 
 .hero-cta-arrow {
-  font-size: 16px;
+  font-size: 15px;
   transition: transform 0.22s ease;
   display: inline-block;
 }
@@ -448,18 +312,18 @@
   transform: translateX(4px);
 }
 
-/* SECONDARY — ghost outline */
+/* SECONDARY */
 .hero-cta-secondary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 
-  padding: 14px 28px;
+  padding: 13px 26px;
 
   background: transparent;
   color: #222;
 
-  border: 1.5px solid rgba(0, 0, 0, 0.18);
+  border: 1.5px solid rgba(0, 0, 0, 0.16);
   border-radius: 999px;
 
   font-size: 14px;
@@ -476,7 +340,7 @@
 }
 
 .hero-cta-secondary:hover {
-  border-color: rgba(0, 0, 0, 0.38);
+  border-color: rgba(0, 0, 0, 0.35);
   background: rgba(0, 0, 0, 0.03);
   transform: translateY(-2px);
 }
@@ -487,7 +351,7 @@
 }
 
 .hero-cta-icon {
-  font-size: 14px;
+  font-size: 13px;
   transition: transform 0.22s ease;
   display: inline-block;
 }
@@ -496,73 +360,145 @@
   transform: translateY(2px);
 }
 
-
 /* =========================
-   AVAILABILITY SIGNAL — P2.2
+   AVAILABILITY SIGNAL
 ========================= */
 
 .hero-availability {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
 
-  font-size: 13px;
-  color: #555;
+  font-size: 12px;
+  color: #666;
   font-weight: 400;
 }
 
 .hero-availability-dot {
   display: inline-block;
 
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 
   background: #22c55e;
   border-radius: 50%;
 
   flex-shrink: 0;
-
   position: relative;
 }
 
 .hero-availability-dot::before {
   content: "";
-
   position: absolute;
   inset: -3px;
-
   border-radius: 50%;
-  background: rgba(34, 197, 94, 0.25);
-
+  background: rgba(34, 197, 94, 0.22);
   animation: availability-pulse 2s ease-out infinite;
 }
 
 @keyframes availability-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  70% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
+  0%   { transform: scale(1);   opacity: 0.8; }
+  70%  { transform: scale(2.2); opacity: 0;   }
+  100% { transform: scale(2.2); opacity: 0;   }
 }
 
+/* =========================
+   STATS
+========================= */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  align-items: end;
+  padding-top: 20px;
+  perspective: 1400px;
+}
+
+.stat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 22px 20px;
+  border-radius: 24px;
+  background: transparent;
+  border: 1px solid transparent;
+  backdrop-filter: blur(0px);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.5s ease,
+    box-shadow 0.5s ease,
+    border-color 0.5s ease,
+    backdrop-filter 0.5s ease;
+}
+
+.stat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(180,210,255,0.10),
+    rgba(240,220,255,0.10),
+    rgba(255,230,240,0.08)
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.stat:hover {
+  transform:
+    perspective(1400px)
+    rotateX(5deg)
+    rotateY(-5deg)
+    translateY(-6px);
+  background: rgba(255,255,255,0.52);
+  border-color: rgba(255,255,255,0.75);
+  box-shadow:
+    0 24px 50px rgba(120,170,255,0.10),
+    0 10px 24px rgba(0,0,0,0.04);
+}
+
+.stat:hover::before {
+  opacity: 1;
+}
+
+.stat > * {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(28px);
+}
+
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: #444;
+  margin-bottom: 2px;
+}
+
+.stat h2 {
+  font-size: 42px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: #111;
+}
+
+.stat span {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #333;
+}
 
 /* =========================
    TABLET
 ========================= */
 
 @media (max-width: 1024px) {
-
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 50px 30px;
-  }
 
   .hero-wrapper {
     padding: 0 40px 30px;
@@ -572,6 +508,11 @@
     max-width: 620px;
   }
 
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px 30px;
+  }
+
 }
 
 /* =========================
@@ -579,19 +520,6 @@
 ========================= */
 
 @media (max-width: 768px) {
-
-  .stats {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .stat {
-    padding: 20px;
-  }
-
-  .stat h2 {
-    font-size: 34px;
-  }
 
   .hero-wrapper {
     min-height: auto;
@@ -606,13 +534,18 @@
   .hero-content {
     max-width: 100%;
     margin-top: 0;
-    gap: 22px;
+    gap: 20px;
   }
 
   .hero-title {
+    font-size: clamp(2.6rem, 12vw, 4rem);
+    line-height: 1.02;
     max-width: 100%;
-    font-size: clamp(2.8rem, 13vw, 4.5rem);
-    line-height: 0.96;
+  }
+
+  /* On mobile the typewriter wraps — give more room */
+  .hero-title-typewriter {
+    min-height: 2.2em;
   }
 
   .hero-meta span::after {
@@ -620,16 +553,16 @@
   }
 
   .chips {
-    gap: 10px;
+    gap: 8px;
   }
 
   .hero-proof {
-    padding: 16px 18px;
+    padding: 14px 16px;
     max-width: 100%;
   }
 
   .hero-proof p {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .hero-cta {
@@ -642,11 +575,20 @@
   .hero-cta-secondary {
     width: 100%;
     justify-content: center;
-    padding: 15px 24px;
+    padding: 14px 20px;
   }
 
-  .hero-availability {
-    font-size: 12px;
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .stat {
+    padding: 20px;
+  }
+
+  .stat h2 {
+    font-size: 34px;
   }
 
 }
@@ -658,7 +600,11 @@
 @media (max-width: 480px) {
 
   .hero-title {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
+  }
+
+  .hero-title-typewriter {
+    min-height: 2.6em;
   }
 
   .chips {
@@ -673,11 +619,9 @@
   .hero-cta-primary,
   .hero-cta-secondary {
     font-size: 13px;
-    padding: 14px 20px;
   }
 
 }
-
 
 /* =========================
    REDUCED MOTION
@@ -690,10 +634,7 @@
   }
 
   .hero-cta-primary,
-  .hero-cta-secondary {
-    transition: none;
-  }
-
+  .hero-cta-secondary,
   .hero-cta-arrow,
   .hero-cta-icon {
     transition: none;
