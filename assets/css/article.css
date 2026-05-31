@@ -710,7 +710,7 @@
 
   .art-sidebar       { position: static; top: auto; }
 
-  .art-next-wrap         { padding: 0 20px; }
+  .art-next-wrap         { padding: 0; margin: 0 20px; border: 1px solid var(--border, rgba(0,0,0,.07));}
   .art-next__card        { min-height: 120px; padding: 24px 20px; }
   .art-next__card:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
 
