@@ -151,6 +151,7 @@ function render_related_content(string $type, string $slug): void {
   border-radius: 8px; text-align: center;
   background: var(--bg,#f5f5f3);
   transition: border-color .18s, background .18s;
+  box-sizing: border-box; width: 100%;
 }
 .rc-item__browse:hover { border-color: rgba(26,70,201,.3); background: rgba(26,70,201,.04); }
 
@@ -172,16 +173,24 @@ function render_related_content(string $type, string $slug): void {
     border:        1px solid var(--border, rgba(0,0,0,.07));
   }
   .rc-col {
-    padding:       20px;
+    padding:       20px 20px;
     background:    var(--bg-elevated, #fff);
     border-bottom: 1px solid var(--border, rgba(0,0,0,.07));
     border-right:  none !important;
   }
   .rc-col:last-child { border-bottom: none; }
+  .rc-col__items { width: 100%; box-sizing: border-box; }
 
-  /* Items: wrap titles, tighter thumbs */
+  /* Items: wrap titles, tighter thumbs, no overflow */
+  .rc-item {
+    box-sizing:  border-box;
+    width:       100%;
+    min-width:   0;
+  }
   .rc-item__title { white-space: normal; }
-  .rc-item__thumb { width: 48px; height: 32px; }
+  .rc-item__meta  { white-space: normal; }
+  .rc-item__thumb { width: 44px; height: 30px; flex-shrink: 0; }
+  .rc-item__body  { min-width: 0; overflow: hidden; }
 }
 </style>
 
