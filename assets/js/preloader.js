@@ -46,7 +46,7 @@
   function setProgress(val) {
     current = Math.min(val, 100);
     if (bar)     bar.style.width     = current + "%";
-    if (counter) counter.innerHTML = getPreloaderCopy(p);
+    if (counter) counter.textContent = Math.floor(current) + "%";
   }
 
   function tick() {
