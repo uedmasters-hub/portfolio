@@ -1,24 +1,34 @@
 /* =========================
    HERO WRAPPER
+   Full 100vh, vertically
+   distributed layout
 ========================= */
 
 .hero-wrapper {
-  min-height: calc(100vh - 76px);
+  min-height: 100vh;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 50px 32px;
+
+  /* Top padding = navbar height (82px) + breathing room */
+  padding: 82px 50px 40px;
 }
 
 /* =========================
    HERO
+   Takes remaining space,
+   centres content vertically
 ========================= */
 
 .hero {
   flex: 1;
+
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+
+  padding: 40px 0 20px;
 }
 
 /* =========================
@@ -27,11 +37,12 @@
 
 .hero-content {
   width: 100%;
-  max-width: 750px;
+  max-width: 720px;
+
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  margin-top: -20px;
+
+  gap: 22px;
 }
 
 /* =========================
@@ -42,10 +53,12 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
+
   color: var(--blue);
 }
 
@@ -60,32 +73,47 @@
 
 /* =========================
    HERO TITLE
-   Reduced from 6.5rem to 5rem
-   so longest phrase fits ≤2 lines
-   eliminating the 3-line jump
+
+   THE LAYOUT SHIFT FIX:
+   The title is split into two
+   visual lines via <br>.
+
+   Line 1: "I design clarity" — static
+   Line 2: the typewriter line
+
+   The typewriter LINE is given a
+   fixed height as a BLOCK element.
+   This means no matter what text
+   is typed (or not typed), the
+   line height never changes.
+   Nothing below ever moves.
 ========================= */
 
 .hero-title {
-  font-size: clamp(3rem, 6.5vw, 5rem);
-  line-height: 1.0;
-  letter-spacing: -0.06em;
+  font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+
+  line-height: 1.08;
+
+  letter-spacing: -0.05em;
+
   font-weight: 300;
-  max-width: 16ch;
+
   margin: 0;
 }
 
 /* =========================
-   TYPEWRITER WRAPPER
-   KEY LAYOUT SHIFT FIX:
-   min-height reserves space for
-   exactly 2 lines at current font-size.
-   Nothing below ever moves.
+   TYPEWRITER LINE
+   This is the KEY fix.
+   display: block gives it
+   its own stable line.
+   height is fixed — not min-height —
+   so it NEVER changes size.
 ========================= */
 
 .hero-title-typewriter {
-  display: inline-block;
-  min-height: 2.1em;       /* 2 lines × line-height 1.0 + buffer */
-  vertical-align: top;
+  display: block;               /* own line, not inline */
+  height: 1.2em;                /* exactly one line tall, always */
+  overflow: visible;
   position: relative;
 }
 
@@ -97,6 +125,8 @@
   color: var(--blue);
   position: relative;
   display: inline;
+
+  white-space: nowrap;          /* NEVER wraps — forces single line */
 }
 
 /* blinking cursor */
@@ -118,32 +148,37 @@
 
 /* =========================
    SKELETON LOADER
-   Shows on page load in place
-   of blank typewriter space.
-   Shimmer signals "loading"
-   so the eye doesn't fixate.
-   Fades out when first char types.
+   Sits in the same line as
+   typewriter, visible on load.
+   Shimmer = "something loading here"
+   Brain registers it, moves on.
 ========================= */
 
 .typewriter-skeleton {
   display: inline-block;
-  width: 280px;               /* approximate width of a phrase */
-  height: 0.85em;             /* matches text cap-height */
+
+  width: 260px;
+  height: 0.8em;
+
   background: linear-gradient(
     90deg,
-    rgba(26, 70, 201, 0.08) 25%,
-    rgba(26, 70, 201, 0.16) 50%,
-    rgba(26, 70, 201, 0.08) 75%
+    rgba(26, 70, 201, 0.07) 25%,
+    rgba(26, 70, 201, 0.15) 50%,
+    rgba(26, 70, 201, 0.07) 75%
   );
   background-size: 200% 100%;
-  border-radius: 6px;
+
+  border-radius: 8px;
+
   vertical-align: middle;
+
   animation: skeleton-shimmer 1.6s ease-in-out infinite;
 
-  /* Transition for fade-out when typing starts */
+  /* Transition for JS fade-out */
   transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
+    opacity 0.4s ease,
+    transform 0.4s ease;
+
   transform-origin: left center;
 }
 
@@ -159,10 +194,10 @@
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 6px 16px;
   font-size: 13px;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .hero-meta span {
@@ -173,7 +208,7 @@
   content: "·";
   position: absolute;
   right: -10px;
-  color: #bbb;
+  color: #ccc;
 }
 
 /* =========================
@@ -188,7 +223,7 @@
 
 .chip {
   padding: 9px 16px;
-  border: 1px solid #cccccc;
+  border: 1px solid #d0d0d0;
   border-radius: 999px;
   background: rgba(255,255,255,0.7);
   font-size: 12px;
@@ -198,7 +233,7 @@
 
 .chip.blue {
   color: var(--blue);
-  border-color: #b6c5ee;
+  border-color: #c0cef5;
 }
 
 /* =========================
@@ -223,20 +258,18 @@
   border-radius: 999px;
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.01em;
   text-decoration: none;
   transition:
     background 0.22s ease,
     transform 0.22s ease,
     box-shadow 0.22s ease;
-  will-change: transform;
 }
 
 .hero-cta-primary:hover {
   background: #1538a8;
   border-color: #1538a8;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(26, 70, 201, 0.28);
+  box-shadow: 0 8px 24px rgba(26,70,201,0.28);
 }
 
 .hero-cta-primary:focus-visible {
@@ -270,7 +303,6 @@
     border-color 0.22s ease,
     background 0.22s ease,
     transform 0.22s ease;
-  will-change: transform;
 }
 
 .hero-cta-secondary:hover {
@@ -340,7 +372,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   align-items: end;
-  padding-top: 20px;
+  padding-top: 0;
   perspective: 1400px;
 }
 
@@ -421,9 +453,6 @@
 
 /* ================================================
    FLOATING TESTIMONIAL BUBBLE
-   Fixed to bottom-right of viewport.
-   Slides in after 2s. Dismissable.
-   Doesn't scroll. Doesn't compete with title.
 ================================================ */
 
 .hero-bubble {
@@ -432,7 +461,7 @@
   right: 40px;
   z-index: 200;
 
-  width: 300px;
+  width: 296px;
 
   background: #ffffff;
   border: 1px solid rgba(0,0,0,0.08);
@@ -444,9 +473,8 @@
     0 4px 6px rgba(0,0,0,0.04),
     0 16px 40px rgba(0,0,0,0.10);
 
-  /* Hidden state — off screen bottom-right */
   opacity: 0;
-  transform: translateY(20px) scale(0.96);
+  transform: translateY(16px) scale(0.97);
   pointer-events: none;
 
   transition:
@@ -454,21 +482,18 @@
     transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Visible state — added by JS after 2s */
 .hero-bubble--visible {
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
-/* Dismissed state */
 .hero-bubble--dismissed {
   opacity: 0;
   transform: translateY(12px) scale(0.95);
   pointer-events: none;
 }
 
-/* Blue accent top bar */
 .hero-bubble::before {
   content: "";
   position: absolute;
@@ -480,16 +505,15 @@
   border-radius: 16px 16px 0 0;
 }
 
-/* Quote text */
 .hero-bubble-body p {
   font-size: 13px;
   line-height: 1.65;
   color: #333;
   font-style: italic;
   margin: 0 0 14px;
+  padding-right: 16px; /* space for close button */
 }
 
-/* Footer — avatar + name */
 .hero-bubble-footer {
   display: flex;
   align-items: center;
@@ -514,7 +538,7 @@
 .hero-bubble-meta {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 }
 
 .hero-bubble-meta strong {
@@ -530,35 +554,29 @@
   display: block;
 }
 
-/* Close button */
 .hero-bubble-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 22px;
-  height: 22px;
+  top: 14px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
   background: rgba(0,0,0,0.05);
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 9px;
   color: #888;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background 0.2s ease;
-  line-height: 1;
   padding: 0;
+  line-height: 1;
 }
 
 .hero-bubble-close:hover {
   background: rgba(0,0,0,0.10);
   color: #333;
-}
-
-.hero-bubble-close:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 2px;
 }
 
 /* =========================
@@ -568,22 +586,22 @@
 @media (max-width: 1024px) {
 
   .hero-wrapper {
-    padding: 0 40px 30px;
+    padding: 82px 40px 36px;
   }
 
   .hero-content {
-    max-width: 620px;
+    max-width: 600px;
   }
 
   .stats {
     grid-template-columns: repeat(2, 1fr);
-    gap: 50px 30px;
+    gap: 40px 24px;
   }
 
   .hero-bubble {
     right: 24px;
     bottom: 24px;
-    width: 270px;
+    width: 260px;
   }
 
 }
@@ -595,33 +613,42 @@
 @media (max-width: 768px) {
 
   .hero-wrapper {
-    min-height: auto;
-    padding: 50px 20px;
-    gap: 60px;
+    min-height: 100vh;
+    padding: 100px 20px 32px;
+    gap: 40px;
   }
 
   .hero {
-    justify-content: flex-start;
+    padding: 20px 0;
+    align-items: flex-start;
   }
 
   .hero-content {
     max-width: 100%;
-    margin-top: 0;
-    gap: 20px;
+    gap: 18px;
   }
 
   .hero-title {
-    font-size: clamp(2.4rem, 11vw, 3.6rem);
-    line-height: 1.02;
-    max-width: 100%;
+    font-size: clamp(2.2rem, 10vw, 3.2rem);
+    line-height: 1.08;
+  }
+
+  /* On mobile, nowrap can overflow — allow wrap
+     but keep height fixed at 2 lines */
+  #typewriter {
+    white-space: normal;
   }
 
   .hero-title-typewriter {
-    min-height: 2.2em;
+    height: 2.4em;    /* 2 lines on mobile */
   }
 
   .typewriter-skeleton {
-    width: 180px;
+    width: 160px;
+  }
+
+  .hero-meta {
+    gap: 4px 12px;
   }
 
   .hero-meta span::after {
@@ -632,32 +659,30 @@
 
   .hero-cta {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 10px;
   }
 
   .hero-cta-primary,
   .hero-cta-secondary {
-    width: 100%;
     justify-content: center;
     padding: 14px 20px;
   }
 
   .stats {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 24px;
   }
 
-  .stat { padding: 20px; }
+  .stat { padding: 18px; }
   .stat h2 { font-size: 34px; }
 
-  /* Bubble sits at bottom, narrower */
   .hero-bubble {
-    right: 16px;
-    left: 16px;
-    bottom: 16px;
+    right: 12px;
+    left: 12px;
+    bottom: 12px;
     width: auto;
-    border-radius: 16px;
+    border-radius: 14px;
   }
 
 }
@@ -668,13 +693,17 @@
 
 @media (max-width: 480px) {
 
-  .hero-title { font-size: 2.2rem; }
+  .hero-title {
+    font-size: 2rem;
+  }
 
-  .hero-title-typewriter { min-height: 2.6em; }
+  .hero-title-typewriter {
+    height: 2.6em;
+  }
 
-  .typewriter-skeleton { width: 140px; }
-
-  .chips { flex-direction: column; }
+  .chips {
+    flex-direction: column;
+  }
 
   .chip {
     width: 100%;
@@ -691,7 +720,7 @@
 
   .typewriter-skeleton {
     animation: none;
-    background: rgba(26, 70, 201, 0.08);
+    background: rgba(26,70,201,0.08);
   }
 
   .hero-availability-dot::before { animation: none; }
@@ -706,8 +735,6 @@
     opacity: 1;
   }
 
-  .hero-bubble {
-    transition: none;
-  }
+  .hero-bubble { transition: none; }
 
 }

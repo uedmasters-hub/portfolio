@@ -1,36 +1,21 @@
 <?php
 /**
  * sections/hero.php
- *
- * Changes:
- * - Skeleton element inside typewriter wrapper
- * - Floating testimonial bubble (fixed, bottom-right)
- * - Eyebrow identity line
- * - Shorter title: "I design clarity into"
- * - CTA buttons + availability signal
+ * FIXES:
+ * - Hero fills 100vh minus nav
+ * - Eyebrow no longer hidden under navbar (removed negative margin)
+ * - Title split into two explicit lines — static line + dedicated typewriter line
+ * - Typewriter line is fixed height block — zero layout shift guaranteed
+ * - Skeleton visible as block-level element matching typewriter line height
  */
 ?>
 
-<!-- ================================
-     FLOATING TESTIMONIAL BUBBLE
-     Fixed position, bottom-right
-     Appears after 2s delay
-================================ -->
+<!-- FLOATING TESTIMONIAL BUBBLE -->
 <div class="hero-bubble" id="heroBubble" role="complementary" aria-label="Peer testimonial">
-
-  <button
-    class="hero-bubble-close"
-    id="heroBubbleClose"
-    aria-label="Dismiss testimonial"
-  >✕</button>
-
+  <button class="hero-bubble-close" id="heroBubbleClose" aria-label="Dismiss testimonial">✕</button>
   <div class="hero-bubble-body">
-    <p>
-      "Ramesh has a rare ability to translate complex
-      business requirements into elegant, scalable UX systems."
-    </p>
+    <p>"Ramesh has a rare ability to translate complex business requirements into elegant, scalable UX systems."</p>
   </div>
-
   <div class="hero-bubble-footer">
     <span class="hero-bubble-avatar" aria-hidden="true">PS</span>
     <div class="hero-bubble-meta">
@@ -38,18 +23,10 @@
       <span>VP Product &middot; IndiGo Airlines</span>
     </div>
   </div>
-
-  <!-- Tail -->
-  <span class="hero-bubble-tail" aria-hidden="true"></span>
-
 </div>
 
-
-<!-- ================================
-     HERO SECTION
-================================ -->
+<!-- HERO SECTION -->
 <section class="hero">
-
   <div class="hero-content">
 
     <!-- EYEBROW -->
@@ -58,25 +35,19 @@
       UX Leader &amp; Product Strategist
     </div>
 
-    <!-- TITLE + TYPEWRITER -->
+    <!-- TITLE
+         Two explicit block lines.
+         Line 1: always "I design clarity into" — static, never moves
+         Line 2: fixed-height block — typewriter lives here alone
+                 height is locked regardless of text length/wrapping
+    -->
     <h1 class="hero-title">
-      I design clarity<br>
-      into <span class="hero-title-typewriter">
-
-        <!-- SKELETON — visible on load, hidden when typing starts -->
-        <span
-          class="typewriter-skeleton"
-          id="typewriter-skeleton"
-          aria-hidden="true"
-        ></span>
-
-        <!-- TYPEWRITER -->
-        <span
-          id="typewriter"
-          aria-live="polite"
-          aria-label="Specialisation area"
-        ></span>
-
+      <span class="hero-title-static">I design clarity into</span>
+      <span class="hero-title-dynamic">
+        <!-- Skeleton: block element, same height as typewriter line -->
+        <span class="typewriter-skeleton" id="typewriter-skeleton" aria-hidden="true"></span>
+        <!-- Typewriter text -->
+        <span id="typewriter" aria-live="polite"></span>
       </span>
     </h1>
 
@@ -99,12 +70,10 @@
     <!-- CTA -->
     <div class="hero-cta">
       <a href="/case-study/" class="hero-cta-primary">
-        View Case Studies
-        <span class="hero-cta-arrow" aria-hidden="true">→</span>
+        View Case Studies <span class="hero-cta-arrow" aria-hidden="true">→</span>
       </a>
       <a href="/assets/resume/Ramesh_Kumar_Mandal.pdf" class="hero-cta-secondary" download>
-        Download Resume
-        <span class="hero-cta-icon" aria-hidden="true">↓</span>
+        Download Resume <span class="hero-cta-icon" aria-hidden="true">↓</span>
       </a>
     </div>
 
@@ -115,41 +84,19 @@
     </div>
 
   </div>
-
 </section>
 
-
-<!-- ================================
-     BUBBLE SCRIPT (inline, minimal)
-     Handles show/dismiss only
-================================ -->
 <script>
 (function() {
-
-  var bubble    = document.getElementById("heroBubble");
-  var closeBtn  = document.getElementById("heroBubbleClose");
-
+  var bubble   = document.getElementById("heroBubble");
+  var closeBtn = document.getElementById("heroBubbleClose");
   if (!bubble) return;
-
-  // Show after 2s delay
-  setTimeout(function() {
-    bubble.classList.add("hero-bubble--visible");
-  }, 2000);
-
-  // Dismiss on close button
+  try { if (sessionStorage.getItem("bubbleDismissed") === "1") { bubble.style.display = "none"; return; } } catch(e) {}
+  setTimeout(function() { bubble.classList.add("hero-bubble--visible"); }, 2200);
   closeBtn.addEventListener("click", function() {
     bubble.classList.remove("hero-bubble--visible");
     bubble.classList.add("hero-bubble--dismissed");
-    // Remember dismissal for session
     try { sessionStorage.setItem("bubbleDismissed", "1"); } catch(e) {}
   });
-
-  // Don't show if already dismissed this session
-  try {
-    if (sessionStorage.getItem("bubbleDismissed") === "1") {
-      bubble.style.display = "none";
-    }
-  } catch(e) {}
-
 })();
 </script>

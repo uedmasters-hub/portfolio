@@ -1,102 +1,116 @@
 // =========================
-// TYPEWRITER TEXTS
-// Keep phrases SHORT — max 3 words
-// so they never wrap beyond 2 lines
+// TYPEWRITER + SKELETON
+// Wrapped in DOMContentLoaded
+// so elements are guaranteed
+// to exist before JS runs
 // =========================
 
-const texts = [
-  "complex systems.",
-  "AI-led workflows.",
-  "enterprise products.",
-  "design infrastructure.",
-  "scalable teams."
-];
+document.addEventListener("DOMContentLoaded", function () {
 
-// =========================
-// ELEMENTS
-// =========================
+  // =========================
+  // ELEMENTS
+  // =========================
 
-const typewriterEl  = document.getElementById("typewriter");
-const skeletonEl    = document.getElementById("typewriter-skeleton");
+  var typewriterEl = document.getElementById("typewriter");
+  var skeletonEl   = document.getElementById("typewriter-skeleton");
 
-// =========================
-// STATE
-// =========================
+  if (!typewriterEl) return; // guard — not on this page
 
-let textIndex   = 0;
-let charIndex   = 0;
-let isDeleting  = false;
-let hasStarted  = false; // tracks if first char ever typed
+  // =========================
+  // TEXTS
+  // Keep phrases short (2-3 words)
+  // white-space: nowrap on desktop
+  // means they must stay one line
+  // =========================
 
-// =========================
-// SKELETON — hide on first
-// character typed, never shown again
-// =========================
+  var texts = [
+    "complex systems.",
+    "AI-led workflows.",
+    "enterprise products.",
+    "design infrastructure.",
+    "scalable teams."
+  ];
 
-function hideSkeleton() {
-  if (!skeletonEl) return;
-  skeletonEl.style.opacity   = "0";
-  skeletonEl.style.transform = "scaleX(0.6)";
-  // remove from DOM after transition
-  setTimeout(() => {
-    if (skeletonEl) skeletonEl.style.display = "none";
-  }, 400);
-}
+  // =========================
+  // STATE
+  // =========================
 
-// =========================
-// TYPE FUNCTION
-// =========================
+  var textIndex  = 0;
+  var charIndex  = 0;
+  var isDeleting = false;
+  var hasStarted = false;
 
-function typeEffect() {
+  // =========================
+  // HIDE SKELETON
+  // Called once when first
+  // character is typed.
+  // Never called again.
+  // =========================
 
-  const currentText = texts[textIndex];
+  function hideSkeleton() {
+    if (!skeletonEl) return;
+    skeletonEl.style.opacity   = "0";
+    skeletonEl.style.transform = "scaleX(0.5)";
+    setTimeout(function () {
+      if (skeletonEl) skeletonEl.style.display = "none";
+    }, 400);
+  }
 
-  // TYPING
-  if (!isDeleting) {
+  // =========================
+  // TYPE FUNCTION
+  // =========================
 
-    typewriterEl.textContent =
-      currentText.substring(0, charIndex + 1);
+  function typeEffect() {
 
-    // Hide skeleton the moment first character appears
-    if (!hasStarted && charIndex === 0) {
-      hasStarted = true;
-      hideSkeleton();
+    var currentText = texts[textIndex];
+
+    if (!isDeleting) {
+
+      // Typing
+      typewriterEl.textContent =
+        currentText.substring(0, charIndex + 1);
+
+      // Hide skeleton on very first character
+      if (!hasStarted) {
+        hasStarted = true;
+        hideSkeleton();
+      }
+
+      charIndex++;
+
+      if (charIndex === currentText.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1800);
+        return;
+      }
+
+    } else {
+
+      // Deleting
+      typewriterEl.textContent =
+        currentText.substring(0, charIndex - 1);
+
+      charIndex--;
+
+      if (charIndex === 0) {
+        isDeleting = false;
+        textIndex++;
+        if (textIndex >= texts.length) textIndex = 0;
+      }
+
     }
 
-    charIndex++;
-
-    if (charIndex === currentText.length) {
-      isDeleting = true;
-      setTimeout(typeEffect, 1800);
-      return;
-    }
+    var speed = isDeleting ? 45 : 85;
+    setTimeout(typeEffect, speed);
 
   }
 
-  // DELETING
-  else {
+  // =========================
+  // START
+  // 700ms delay so skeleton
+  // is visible on load
+  // =========================
 
-    typewriterEl.textContent =
-      currentText.substring(0, charIndex - 1);
+  setTimeout(typeEffect, 700);
 
-    charIndex--;
-
-    if (charIndex === 0) {
-      isDeleting = false;
-      textIndex++;
-      if (textIndex >= texts.length) textIndex = 0;
-    }
-
-  }
-
-  const speed = isDeleting ? 45 : 85;
-  setTimeout(typeEffect, speed);
-
-}
-
-// =========================
-// START — small delay so
-// skeleton is visible briefly
-// =========================
-
-setTimeout(typeEffect, 600);
+});
