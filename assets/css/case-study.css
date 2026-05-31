@@ -758,7 +758,7 @@
 
 /* Body layout */
 .cs-content   { display: grid; grid-template-columns: 220px 1fr; gap: 0; padding: 64px 64px 96px; box-sizing: border-box; align-items: start; column-gap: 56px; max-width: 1280px; margin: 0 auto; width: 100%; }
-.cs-nav       { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 1px; }
+.cs-nav       { position: sticky; top: 96px; align-self: start; display: flex; flex-direction: column; gap: 1px; }
 .cs-nav__item { display: block; font-size: 12px; line-height: 1.55; color: var(--text-muted); padding: 7px 0 7px 14px; border-left: 2px solid var(--border); text-decoration: none; transition: color var(--t-fast) ease, border-color var(--t-fast) ease; }
 .cs-nav__item:hover, .cs-nav__item.is-active { color: var(--blue); border-color: var(--blue); }
 .cs-article   { min-width: 0; display: flex; flex-direction: column; gap: 56px; }
@@ -794,8 +794,7 @@
 /* Insight tags */
 .cs-insight        { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(26,70,201,0.06); border: 1px solid rgba(26,70,201,0.14); border-radius: var(--radius-pill); font-size: 12px; font-weight: 500; color: var(--blue); margin: 4px 4px 4px 0; }
 
-/* Bridge: .art-body used by case study too */
-.art-body .cs-nav { position: static; }
+/* Bridge: art-body + cs-nav sticky kept alive */
 
 @media (max-width: 1024px) {
   .cs-content { grid-template-columns: 1fr; padding: 48px 40px; }
@@ -804,6 +803,6 @@
 }
 
 @media (max-width: 768px) {
-  .cs-content      { padding: 40px 20px; }
-  .cs-metrics-row  { grid-template-columns: 1fr 1fr; }
+  .cs-content     { padding: 40px 20px; }
+  .cs-metrics-row { grid-template-columns: 1fr 1fr; }
 }

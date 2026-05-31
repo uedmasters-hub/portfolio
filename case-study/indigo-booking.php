@@ -427,7 +427,7 @@ $nav = [
   /* ── ACTIVE NAV HIGHLIGHT ── */
   (function(){
     const navItems = document.querySelectorAll(".art-nav__item[data-nav]");
-    const sections = document.querySelectorAll(".art-section[id]");
+    const sections = document.querySelectorAll(".cs-section[id], .art-section[id]");
     if (!navItems.length) return;
     const obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
