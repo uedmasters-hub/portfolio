@@ -513,13 +513,8 @@
    ============================================= */
 
 .art-next-wrap {
-  border-top:    1px solid var(--border);
-  border-bottom: 1px solid var(--border);
   background:    var(--bg-elevated);
-  padding:       0;
-  margin:        0 64px;
-  border-radius: var(--radius-md, 16px);
-  border:         1px solid var(--border, rgba(0,0,0,.07));
+  padding:       0 64px;
   box-sizing:    border-box;
 }
 
@@ -762,12 +757,12 @@
     width:           48px;
     height:          48px;
     border-radius:   50%;
-    background:      var(--text-primary);
-    border:          none;
+    background:      var(--bg-elevated);
+    border:          1px solid var(--border);
     cursor:          pointer;
     box-shadow:
-      0 4px 16px rgba(0,0,0,0.22),
-      0 1px 4px  rgba(0,0,0,0.12);
+      0 4px 16px rgba(0,0,0,0.10),
+      0 1px 4px  rgba(0,0,0,0.06);
     transition:
       transform    var(--t-fast) var(--ease-out),
       box-shadow   var(--t-fast) ease,
@@ -776,12 +771,14 @@
 
   .art-fab:hover {
     transform:  scale(1.06);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.30);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.14);
+    border-color: rgba(26,70,201,0.3);
   }
 
   .art-fab.is-open {
-    background: #222;
-    transform:  scale(0.94);
+    background:   var(--bg-elevated);
+    border-color: var(--blue);
+    transform:    scale(0.94);
   }
 
   /* Icon — 3 lines → X */
@@ -795,7 +792,7 @@
   .art-fab__icon span {
     display:       block;
     height:        1.5px;
-    background:    #ffffff;
+    background:    var(--text-primary);
     border-radius: 2px;
     transform-origin: center;
     transition:    transform 0.22s var(--ease-out), opacity 0.18s ease;
