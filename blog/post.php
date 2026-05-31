@@ -245,25 +245,6 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
       render_related_content('blog', $post['slug']);
     ?>
 
-    <!-- ③ PREV / NEXT DARK NAV -->
-    <?php if ($prev || $next): ?>
-    <nav class="art-nav-dark" aria-label="Browse posts">
-      <div class="art-nav-dark__inner">
-        <?php if ($prev): ?>
-          <a href="/blog/<?= urlencode($prev['slug']) ?>" class="art-navlink">
-            <p class="art-navlink__dir">← Previous Note</p>
-            <p class="art-navlink__title"><?= htmlspecialchars($prev['title']) ?></p>
-          </a>
-        <?php endif; ?>
-        <?php if ($next): ?>
-          <a href="/blog/<?= urlencode($next['slug']) ?>" class="art-navlink art-navlink--right">
-            <p class="art-navlink__dir">Next Note →</p>
-            <p class="art-navlink__title"><?= htmlspecialchars($next['title']) ?></p>
-          </a>
-        <?php endif; ?>
-      </div>
-    </nav>
-    <?php endif; ?>
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
 
