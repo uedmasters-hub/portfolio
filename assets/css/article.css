@@ -259,7 +259,7 @@
   max-width:      680px;
   display:        flex;
   flex-direction: column;
-  gap:            0;
+  gap:            20px;
 }
 
 /* ── plain paragraph body (blog) */
