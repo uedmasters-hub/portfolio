@@ -513,8 +513,11 @@
    ============================================= */
 
 .art-next-wrap {
-  background:    var(--bg-elevated);
-  padding:       0 64px;
+  padding:       0;
+  margin:        0 64px;
+  border:        1px solid var(--border, rgba(0,0,0,.07));
+  border-radius: var(--radius-md, 16px);
+  overflow:      hidden;
   box-sizing:    border-box;
 }
 
@@ -541,6 +544,13 @@
 
 .art-next__card:not(:last-child) {
   border-right: 1px solid var(--border);
+}
+
+/* Empty placeholder when only prev OR next exists */
+.art-next__card--empty {
+  background: var(--bg, #f5f5f5);
+  cursor:      default;
+  pointer-events: none;
 }
 
 .art-next__card:hover { background: rgba(0,0,0,0.015); }
@@ -666,7 +676,7 @@
     padding:               56px 40px 80px;
   }
 
-  .art-next-wrap { padding: 0 40px; }
+  .art-next-wrap { margin: 0 40px; }
 
   .art-next {
     grid-template-columns: 1fr;
@@ -706,7 +716,7 @@
 
   .art-sidebar       { position: static; top: auto; }
 
-  .art-next-wrap         { padding: 0; margin: 0 20px; }
+  .art-next-wrap         { margin: 0 20px; }
   .art-next__card        { min-height: 120px; padding: 24px 20px; }
   .art-next__card:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
 

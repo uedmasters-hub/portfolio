@@ -5,8 +5,6 @@
 
 require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/blog.php";
-require_once __DIR__ . "/../data/case-studies.php";
-
 /* ── slug ────────────────────────────────── */
 $slug = isset($_GET['slug'])
   ? preg_replace('/[^a-z0-9\-]/', '', strtolower(trim($_GET['slug'])))
@@ -35,12 +33,6 @@ if (!$post) {
 /* ── prev / next ─────────────────────────── */
 $prev = $postIndex > 0                  ? $posts[$postIndex - 1] : null;
 $next = $postIndex < count($posts) - 1 ? $posts[$postIndex + 1] : null;
-
-/* ── "next case studies" — 2 published ──── */
-$nextStudies = array_values(array_filter($caseStudies,
-  fn($s) => ($s['status'] ?? '') === 'published'
-));
-$nextStudies = array_slice($nextStudies, 0, 2);
 
 /* ── reading time ────────────────────────── */
 $wordCount = array_sum(array_map('str_word_count', $post['body']));
@@ -252,19 +244,32 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
 
     </main>
 
-    <!-- ① NEXT CASE STUDY — 2 cards -->
-    <?php if (!empty($nextStudies)): ?>
+    <!-- ① PREV / NEXT BLOG POST -->
+    <?php if ($prev || $next): ?>
     <div class="art-next-wrap">
-      <section class="art-next" aria-label="Next case studies">
-        <?php foreach ($nextStudies as $cs): ?>
-          <a href="/case-study/<?= urlencode($cs['slug']) ?>" class="art-next__card">
+      <section class="art-next" aria-label="More field notes">
+        <?php if ($prev): ?>
+          <a href="/blog/<?= urlencode($prev['slug']) ?>" class="art-next__card">
             <span class="art-next__arrow">↗</span>
-            <p class="art-next__label">NEXT CASE STUDY</p>
-            <p class="art-next__category"><?= htmlspecialchars($cs['category']) ?></p>
-            <h3 class="art-next__title"><?= htmlspecialchars($cs['title']) ?></h3>
-            <p class="art-next__tagline"><?= htmlspecialchars($cs['tagline']) ?></p>
+            <p class="art-next__label">PREVIOUS NOTE</p>
+            <p class="art-next__category"><?= htmlspecialchars($prev['tag']) ?></p>
+            <h3 class="art-next__title"><?= htmlspecialchars($prev['title']) ?></h3>
+            <p class="art-next__tagline"><?= htmlspecialchars($prev['excerpt']) ?></p>
           </a>
-        <?php endforeach; ?>
+        <?php else: ?>
+          <div class="art-next__card art-next__card--empty"></div>
+        <?php endif; ?>
+        <?php if ($next): ?>
+          <a href="/blog/<?= urlencode($next['slug']) ?>" class="art-next__card">
+            <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">NEXT NOTE</p>
+            <p class="art-next__category"><?= htmlspecialchars($next['tag']) ?></p>
+            <h3 class="art-next__title"><?= htmlspecialchars($next['title']) ?></h3>
+            <p class="art-next__tagline"><?= htmlspecialchars($next['excerpt']) ?></p>
+          </a>
+        <?php else: ?>
+          <div class="art-next__card art-next__card--empty"></div>
+        <?php endif; ?>
       </section>
     </div>
     <?php endif; ?>
