@@ -516,14 +516,14 @@
   background:    var(--bg-elevated);
   padding:       0 0px;
   box-sizing:    border-box;
-  margin: 0 45px;
-  border-radius: 16px;
+  /* margin: 0 45px;
+  border-radius: 16px; */
 }
 
 .art-next {
   display:               grid;
   grid-template-columns: repeat(2, 1fr);
-  width:                 100%;
+  width:                 95%;
   box-sizing:            border-box;
 }
 
