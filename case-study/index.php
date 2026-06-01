@@ -50,6 +50,7 @@ $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, desig
   <link rel="stylesheet" href="../assets/css/background.css"/>
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
 
@@ -73,7 +74,10 @@ $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, desig
     <div class="bg-mouse-glow"></div>
   </div>
 
-<?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <?php
+    $currentKey = "home"; // change per-page (see table below)
+    require_once __DIR__ . "/partials/navigation.php";
+  ?>
 
   <div class="page-wrapper">
 

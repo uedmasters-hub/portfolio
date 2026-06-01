@@ -62,6 +62,7 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/article.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
   <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
@@ -78,7 +79,10 @@ $nav = [
     </div>
   </div>
   <div class="bg-canvas" aria-hidden="true"><div class="bg-grid"></div><div class="bg-orb-1"></div><div class="bg-orb-2"></div></div>
-  <?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <?php
+    $currentKey = "home"; // change per-page (see table below)
+    require_once __DIR__ . "/partials/navigation.php";
+  ?>
   <div class="page-wrapper">
     <main id="main-content">
       <div class="cs-detail-hero fade-in">
