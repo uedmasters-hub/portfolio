@@ -152,6 +152,7 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <script src="assets/js/animations.js"  defer></script>
   <script src="assets/js/app.js"         defer></script>
   <script src="assets/js/popover.js"      defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
 </body>
 </html>
