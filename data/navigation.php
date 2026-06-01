@@ -495,7 +495,7 @@ function nav_active(string $key, string $current): string {
      MOBILE DRAWER
 ================================================== -->
 
-<div class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation" role="dialog" aria-modal="true" hidden>
+<div class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation" role="dialog" aria-modal="true">
 
     <!-- WORK -->
     <div class="mobile-nav-section">

@@ -1,7 +1,7 @@
 /* ==================================================
    NAVIGATION — MEGA MENU
-   Follows design system: Inter, #f5f5f3 bg,
-   #111111 text, #0d4fc9 blue, rgba(0,0,0,0.06) border
+   Design system: Inter · #f5f5f3 bg · #111111 text
+   #0d4fc9 blue · rgba(0,0,0,0.06) border
 ================================================== */
 
 
@@ -61,7 +61,7 @@
 
 
 /* ==================================================
-   NAV WRAPPER
+   NAV WRAPPER — desktop only
 ================================================== */
 
 .nav {
@@ -84,7 +84,7 @@
 
 
 /* ==================================================
-   NAV TRIGGER — buttons with chevron
+   NAV TRIGGER — mega menu buttons
 ================================================== */
 
 .nav-trigger {
@@ -108,12 +108,11 @@
 
   cursor: pointer;
 
+  line-height: 1;
+
   transition:
     background 0.15s ease,
     color 0.15s ease;
-
-  /* Match existing nav a padding rhythm */
-  line-height: 1;
 }
 
 .nav-trigger:hover,
@@ -124,7 +123,7 @@
 
 
 /* ==================================================
-   CHEVRON ICON
+   CHEVRON
 ================================================== */
 
 .nav-chevron {
@@ -133,11 +132,11 @@
 
   opacity: 0.4;
 
+  flex-shrink: 0;
+
   transition:
     transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.2s ease;
-
-  flex-shrink: 0;
+    opacity   0.2s ease;
 }
 
 .nav-trigger[aria-expanded="true"] .nav-chevron {
@@ -147,7 +146,7 @@
 
 
 /* ==================================================
-   NAV SIMPLE LINK — no mega menu
+   NAV SIMPLE LINK
 ================================================== */
 
 .nav-link {
@@ -171,17 +170,11 @@
 
   transition:
     background 0.15s ease,
-    color 0.15s ease;
+    color      0.15s ease;
 }
 
 .nav-link:hover {
   background: rgba(0,0,0,0.05);
-  color: var(--text);
-}
-
-/* Active state — underline matching existing pattern */
-.nav-link.active,
-.nav-trigger.active {
   color: var(--text);
 }
 
@@ -201,10 +194,13 @@
 
 
 /* ==================================================
-   CONNECT BUTTON
+   CONNECT BUTTON — desktop
 ================================================== */
 
 .nav-connect {
+  display: inline-flex;
+  align-items: center;
+
   margin-left: 20px;
 
   padding: 10px 22px;
@@ -222,6 +218,8 @@
 
   cursor: pointer;
 
+  text-decoration: none;
+
   flex-shrink: 0;
 
   transition: opacity 0.2s ease;
@@ -233,7 +231,67 @@
 
 
 /* ==================================================
-   MEGA MENU BACKDROP
+   HAMBURGER — hidden on desktop, shown on mobile
+================================================== */
+
+.nav-hamburger {
+  display: none;
+
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 5px;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 8px;
+
+  background: none;
+  border: none;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.nav-hamburger:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.nav-hamburger span {
+  display: block;
+
+  width: 100%;
+  height: 1.5px;
+
+  background: var(--text);
+
+  border-radius: 2px;
+
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   0.3s ease;
+}
+
+.nav-hamburger.is-open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.nav-hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-hamburger.is-open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+
+/* ==================================================
+   MEGA BACKDROP
 ================================================== */
 
 .mega-backdrop {
@@ -259,8 +317,7 @@
 
 
 /* ==================================================
-   MEGA MENU CONTAINER
-   Full-width panel below header
+   MEGA MENU — full-width fixed panel
 ================================================== */
 
 .mega-menu {
@@ -278,37 +335,37 @@
 
   box-shadow:
     0 20px 60px rgba(0,0,0,0.07),
-    0 6px 16px rgba(0,0,0,0.04);
+    0 6px  16px rgba(0,0,0,0.04);
 
-  /* HIDDEN STATE */
+  /* HIDDEN BY DEFAULT */
+  display: none;
   opacity: 0;
   transform: translateY(-8px);
-  pointer-events: none;
-  visibility: hidden;
-
-  transition:
-    opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-    visibility 0s linear 0.22s;
 }
 
 .mega-menu.is-open {
+  display: block;
   opacity: 1;
   transform: translateY(0);
-  pointer-events: all;
-  visibility: visible;
 
-  transition:
-    opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-    visibility 0s linear 0s;
+  animation: megaIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes megaIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
 /* ==================================================
-   MEGA PANEL — one per nav item
-   All panels live inside .mega-menu
-   Only .is-active panel is shown
+   MEGA PANEL — one per trigger
+   Only .is-active shown at a time
 ================================================== */
 
 .mega-panel {
@@ -321,7 +378,7 @@
 
 
 /* ==================================================
-   MEGA INNER — constrained max-width grid
+   MEGA INNER GRID
 ================================================== */
 
 .mega-inner {
@@ -336,19 +393,16 @@
   gap: 0;
 }
 
-/* WORK panel: intro | case studies | audits */
 .mega-inner--work {
   grid-template-columns: 220px 1fr 1fr;
   gap: 0 48px;
 }
 
-/* FIELD NOTES panel: intro | blog | psychology */
 .mega-inner--notes {
   grid-template-columns: 220px 1fr 1fr;
   gap: 0 48px;
 }
 
-/* LAB panel: intro | experiments */
 .mega-inner--lab {
   grid-template-columns: 220px 1fr;
   gap: 0 48px;
@@ -356,7 +410,7 @@
 
 
 /* ==================================================
-   MEGA INTRO COL — left column
+   MEGA INTRO COL
 ================================================== */
 
 .mega-intro {
@@ -377,7 +431,6 @@
 
   margin-bottom: 16px;
 
-  /* Matches kicker pattern from existing CSS */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -442,11 +495,11 @@
 
 
 /* ==================================================
-   MEGA COLUMN
+   MEGA COLUMNS
 ================================================== */
 
 .mega-col {
-  padding-left: 0;
+  min-width: 0;
 }
 
 .mega-col + .mega-col {
@@ -469,7 +522,7 @@
 
 
 /* ==================================================
-   MEGA LINK — individual item row
+   MEGA LINKS
 ================================================== */
 
 .mega-links {
@@ -490,8 +543,6 @@
   border-radius: 10px;
 
   text-decoration: none;
-
-  cursor: pointer;
 
   transition: background 0.15s ease;
 }
@@ -536,6 +587,8 @@
 ================================================== */
 
 .mega-link-title {
+  display: block;
+
   font-size: 14px;
   font-weight: 500;
 
@@ -549,6 +602,8 @@
 }
 
 .mega-link-desc {
+  display: block;
+
   font-size: 12px;
   font-weight: 400;
 
@@ -573,7 +628,6 @@
 
 /* ==================================================
    MEGA FEATURED CARD
-   Matches chip + card aesthetic from design system
 ================================================== */
 
 .mega-featured {
@@ -635,7 +689,6 @@
 
   color: var(--blue);
 
-  /* Matches .chip.blue */
   background: rgba(13,79,201,0.07);
   border: 1px solid #b6c5ee;
 
@@ -646,7 +699,7 @@
 
 
 /* ==================================================
-   MEGA FOOTER BAR
+   MEGA FOOTER
 ================================================== */
 
 .mega-footer {
@@ -695,7 +748,6 @@
   color: var(--muted);
 }
 
-/* Availability pulsing dot */
 .avail-dot {
   width: 7px;
   height: 7px;
@@ -716,70 +768,13 @@
 
 
 /* ==================================================
-   MOBILE HAMBURGER — hidden on desktop
-================================================== */
-
-.nav-hamburger {
-  display: none;
-
-  flex-direction: column;
-  justify-content: center;
-
-  gap: 5px;
-
-  width: 40px;
-  height: 40px;
-
-  background: none;
-  border: none;
-
-  cursor: pointer;
-
-  padding: 8px;
-
-  border-radius: 8px;
-
-  transition: background 0.15s ease;
-}
-
-.nav-hamburger:hover {
-  background: rgba(0,0,0,0.05);
-}
-
-.nav-hamburger span {
-  display: block;
-
-  width: 100%;
-  height: 1.5px;
-
-  background: var(--text);
-
-  border-radius: 2px;
-
-  transition:
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.3s ease;
-}
-
-.nav-hamburger.is-open span:nth-child(1) {
-  transform: translateY(6.5px) rotate(45deg);
-}
-
-.nav-hamburger.is-open span:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-.nav-hamburger.is-open span:nth-child(3) {
-  transform: translateY(-6.5px) rotate(-45deg);
-}
-
-
-/* ==================================================
    MOBILE DRAWER
+   display:none by default — JS adds is-open class
 ================================================== */
 
 .mobile-drawer {
+  display: none;
+
   position: fixed;
 
   top: 82px;
@@ -794,20 +789,18 @@
   overflow-y: auto;
 
   padding: 32px 24px 48px;
-
-  transform: translateX(100%);
-
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mobile-drawer.is-open {
-  transform: translateX(0);
+  display: block;
+
+  animation: drawerIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-
-/* ==================================================
-   MOBILE DRAWER NAV
-================================================== */
+@keyframes drawerIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
 
 .mobile-nav-section {
   margin-bottom: 36px;
@@ -898,6 +891,8 @@
 
   text-align: center;
 
+  text-decoration: none;
+
   transition: opacity 0.2s ease;
 }
 
@@ -921,7 +916,7 @@
 
 
 /* ==================================================
-   BODY OFFSET — push content below fixed header
+   BODY OFFSET — fixed header compensation
 ================================================== */
 
 body {
@@ -947,14 +942,13 @@ body {
     padding: 14px 40px;
   }
 
-  /* Hide middle col on tablet */
   .mega-inner--work,
   .mega-inner--notes {
     grid-template-columns: 200px 1fr;
   }
 
-  /* Hide third col — it stacks under */
-  .mega-col:nth-child(3) {
+  /* Hide third col on tablet */
+  .mega-col:last-child:nth-child(3) {
     display: none;
   }
 
@@ -971,16 +965,18 @@ body {
 
 /* ==================================================
    MOBILE — 768px
-   Hide desktop nav, show hamburger + drawer
+   Switch to hamburger + drawer
 ================================================== */
 
 @media (max-width: 768px) {
 
   .header {
+    height: 70px;
+
     padding: 0 20px;
   }
 
-  /* Hide desktop nav */
+  /* Hide desktop nav + connect */
   .nav {
     display: none;
   }
@@ -994,18 +990,19 @@ body {
     display: flex;
   }
 
-  /* Mega menu never shows on mobile */
+  /* Mega menu never renders on mobile */
   .mega-menu,
   .mega-backdrop {
     display: none !important;
   }
 
-  body {
-    padding-top: 70px;
+  /* Drawer top offset matches smaller header */
+  .mobile-drawer {
+    top: 70px;
   }
 
-  .header {
-    height: 70px;
+  body {
+    padding-top: 70px;
   }
 
 }
@@ -1031,10 +1028,12 @@ body {
 @media (prefers-reduced-motion: reduce) {
 
   .mega-menu,
+  .mega-menu.is-open,
+  .mobile-drawer.is-open,
   .mega-backdrop,
-  .mobile-drawer,
   .nav-chevron,
   .nav-hamburger span {
+    animation: none !important;
     transition: none !important;
   }
 

@@ -225,7 +225,6 @@
   function openMobileDrawer() {
     drawerOpen = true;
 
-    drawer.hidden = false;
     drawer.classList.add("is-open");
 
     hamburger.classList.add("is-open");
@@ -245,11 +244,6 @@
     hamburger.setAttribute("aria-label", "Open navigation menu");
 
     document.body.style.overflow = "";
-
-    // Wait for transition, then hide
-    setTimeout(function () {
-      drawer.hidden = true;
-    }, 350);
   }
 
   if (hamburger) {
