@@ -12,10 +12,20 @@ $currentKey = $currentKey ?? "home";
   </a>
 
   <!-- DESKTOP: NAV + CONNECT -->
-  <?php
-  $currentKey = "home"; // change per-page (see table below)
-  require_once __DIR__ . "/partials/navigation.php";
-  ?>
+  <div class="site-header__cta">
+    <nav class="site-nav" role="navigation" aria-label="Main navigation">
+      <?php foreach ($navLinks as $link): ?>
+        <a
+          href="<?= htmlspecialchars($link["href"]) ?>"
+          class="site-nav__link<?= ($currentKey === $link["key"]) ? " is-active" : "" ?>"
+          <?= ($currentKey === $link["key"]) ? 'aria-current="page"' : "" ?>
+        >
+          <?= htmlspecialchars($link["label"]) ?>
+        </a>
+      <?php endforeach; ?>
+    </nav>
+    <a href="/contact.php" class="btn-connect" aria-label="Connect">CONNECT</a>
+  </div>
 
   <!-- MOBILE: HAMBURGER -->
   <button
