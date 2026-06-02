@@ -91,7 +91,6 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/article.css"/>
   <link rel="stylesheet" href="../assets/css/post.css"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 
   <?php
     require_once __DIR__ . "/../includes/schema.php";
@@ -126,10 +125,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
     <div class="bg-orb-2"></div>
   </div>
 
-  <?php
-    $currentKey = "home"; // change per-page (see table below)
-    require_once __DIR__ . "/partials/navigation.php";
-  ?>
+<?php require_once __DIR__ . "/../partials/header.php"; ?>
 
   <div class="page-wrapper">
     <main id="main-content">
