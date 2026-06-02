@@ -15,7 +15,7 @@ if (empty($_SESSION["csrf_token"])) {
   $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
 }
 
-$currentKey = "contact";
+$currentKey = "";
 $pageTitle  = "Contact — Ramesh Mandal";
 $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior design leadership, product strategy, and enterprise UX roles.";
 ?>
@@ -93,7 +93,7 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
     <div class="bg-mouse-glow"></div>
   </div>
 
-  <?php require_once __DIR__ . "/partials/header.php"; ?>
+  <?php require __DIR__ . "/partials/navigation.php"; ?>
   <div class="page-wrapper">
 
 
@@ -308,7 +308,7 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
       </div>
     </div>
 
-    <?php require_once __DIR__ . "/partials/footer.php"; ?>
+    <?php require __DIR__ . "/partials/footer.php"; ?>
 
   </div>
 

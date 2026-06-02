@@ -98,7 +98,7 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
     <div class="bg-mouse-glow"></div>
   </div>
 
-  <?php require_once __DIR__ . "/partials/header.php"; ?>
+  <?php require __DIR__ . "/partials/navigation.php"; ?>
   <div class="page-wrapper">
 
 
@@ -492,7 +492,7 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
       </div>
     </div>
 
-    <?php require_once __DIR__ . "/partials/footer.php"; ?>
+    <?php require __DIR__ . "/partials/footer.php"; ?>
 
   </div>
 
