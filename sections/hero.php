@@ -12,7 +12,7 @@ require_once __DIR__ . "/../data/stats.php";
   <section class="hero" aria-label="Hero">
     <div class="hero__content">
 
-      <h1 class="hero__title">
+      <h1 class="hero-title" data-word-split data-split-stagger="70">
         Building scalable systems for
         <span id="typewriter" aria-live="polite"></span>
       </h1>
