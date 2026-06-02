@@ -85,10 +85,10 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
     <div class="chip-panel__body"></div>
   </aside>
 
-<?php
-  $currentKey = "field-notes"; // change per-page (see table below)
-  require_once __DIR__ . "/../partials/navigation.php";
-?>
+  <?php
+    $currentKey = "field-notes"; // change per-page (see table below)
+    require_once __DIR__ . "/../partials/navigation.php";
+  ?>
 
   <div class="page-wrapper">
 
