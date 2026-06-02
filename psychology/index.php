@@ -419,5 +419,8 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
     if (dismiss) dismiss.addEventListener("click", hide);
   })();
   </script>
+  
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
+
 </body>
 </html>

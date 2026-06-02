@@ -332,5 +332,7 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   });
   </script>
 
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
+
 </body>
 </html>

@@ -182,6 +182,7 @@ $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, desig
     });
   })();
   </script>
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
 </body>
 </html>

@@ -253,5 +253,7 @@ foreach ($categories as $cat) {
   }
   </script>
 
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
+
 </body>
 </html>

@@ -269,6 +269,7 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
   <script src="../assets/js/background.js" defer></script>
   <script src="../assets/js/animations.js" defer></script>
   <script src="../assets/js/app.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
 </body>
 </html>
