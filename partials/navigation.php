@@ -299,35 +299,35 @@ function nav_active(string $key, string $current): string {
 
                 <div class="mega-links">
 
-                    <a href="<?= BASE_PATH ?>/blog/post.php?slug=redesign-that-tanked-nps" class="mega-link">
+                    <a href="<?= BASE_PATH ?>/blog/post.php?slug=the-redesign-nobody-asked-for" class="mega-link">
                         <span class="mega-link-icon" aria-hidden="true">⚡</span>
                         <span>
-                            <span class="mega-link-title">The redesign that tanked NPS</span>
-                            <span class="mega-link-desc">War Stories · 6 min read</span>
+                            <span class="mega-link-title">The Redesign Nobody Asked For</span>
+                            <span class="mega-link-desc">War Story · 5 min read</span>
                         </span>
                     </a>
 
-                    <a href="<?= BASE_PATH ?>/blog/post.php?slug=44px-button" class="mega-link">
+                    <a href="<?= BASE_PATH ?>/blog/post.php?slug=the-44px-tap-target" class="mega-link">
                         <span class="mega-link-icon" aria-hidden="true">⚡</span>
                         <span>
-                            <span class="mega-link-title">The 44px button worth ₹2 crore</span>
-                            <span class="mega-link-desc">War Stories · 4 min read</span>
+                            <span class="mega-link-title">The 44px Tap Target That Cost ₹2 Crore</span>
+                            <span class="mega-link-desc">War Story · 5 min read</span>
                         </span>
                     </a>
 
-                    <a href="<?= BASE_PATH ?>/blog/post.php?slug=dark-patterns-work" class="mega-link">
+                    <a href="<?= BASE_PATH ?>/blog/post.php?slug=dark-patterns-are-a-short-term-win" class="mega-link">
                         <span class="mega-link-icon" aria-hidden="true">◈</span>
                         <span>
-                            <span class="mega-link-title">Dark patterns work — that's dangerous</span>
-                            <span class="mega-link-desc">Unpopular Opinions · 7 min read</span>
+                            <span class="mega-link-title">Dark Patterns Work. That's Why They're Dangerous.</span>
+                            <span class="mega-link-desc">Unpopular Opinion · 6 min read</span>
                         </span>
                     </a>
 
-                    <a href="<?= BASE_PATH ?>/blog/post.php?slug=one-word-conversion" class="mega-link">
+                    <a href="<?= BASE_PATH ?>/blog/post.php?slug=the-word-that-changed-conversion" class="mega-link">
                         <span class="mega-link-icon" aria-hidden="true">✦</span>
                         <span>
-                            <span class="mega-link-title">One word that moved conversion 8%</span>
-                            <span class="mega-link-desc">Quiet Wins · 3 min read</span>
+                            <span class="mega-link-title">The Single Word That Changed Conversion</span>
+                            <span class="mega-link-desc">Quiet Win · 4 min read</span>
                         </span>
                     </a>
 

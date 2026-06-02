@@ -78,7 +78,7 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
 
   <?php
     $currentKey = "work"; // change per-page (see table below)
-    require_once __DIR__ . "/partials/navigation.php";
+    require __DIR__ . "/../partials/navigation.php";
   ?>
 
   <div class="page-wrapper">
@@ -260,7 +260,7 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
 
     </main>
 
-    <?php require_once __DIR__ . "/../partials/footer.php"; ?>
+    <?php require __DIR__ . "/../partials/footer.php"; ?>
 
   </div>
 
