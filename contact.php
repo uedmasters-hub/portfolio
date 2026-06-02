@@ -66,6 +66,7 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
   <link rel="stylesheet" href="assets/css/footer.css" />
   <link rel="stylesheet" href="assets/css/testimonials.css" />
   <link rel="stylesheet" href="assets/css/contact.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 
 </head>
 <body>
@@ -93,7 +94,10 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
     <div class="bg-mouse-glow"></div>
   </div>
 
-  <?php require_once __DIR__ . "/partials/header.php"; ?>
+  <?php
+    $currentKey = "contact"; // change per-page (see table below)
+    require_once __DIR__ . "/partials/navigation.php";
+  ?>
   <div class="page-wrapper">
 
 
