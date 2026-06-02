@@ -74,7 +74,6 @@ $nav = [
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/case-study.css"/>
   <link rel="stylesheet" href="../assets/css/audit.css"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 
   <!-- JSON-LD STRUCTURED DATA -->
   <?php
@@ -112,10 +111,7 @@ $nav = [
     <div class="bg-orb-2"></div>
   </div>
 
-  <?php
-    $currentKey = "home"; // change per-page (see table below)
-    require_once __DIR__ . "/partials/navigation.php";
-  ?>
+<?php require_once __DIR__ . "/../partials/header.php"; ?>
 
   <div class="page-wrapper">
 

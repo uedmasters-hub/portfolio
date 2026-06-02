@@ -54,7 +54,6 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
   <link rel="icon" type="image/png" sizes="32x32"  href="/assets/icons/favicon-32x32.png"/>
   <link rel="icon" type="image/png" sizes="16x16"  href="/assets/icons/favicon-16x16.png"/>
   <link rel="apple-touch-icon" sizes="180x180"     href="/assets/icons/favicon-180x180.png"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
   <meta name="theme-color" content="#0f0f0f"/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -99,10 +98,7 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
     <div class="bg-mouse-glow"></div>
   </div>
 
-  <?php
-  $currentKey = "home"; // change per-page (see table below)
-  require_once __DIR__ . "/partials/navigation.php";
-  ?>
+  <?php require_once __DIR__ . "/partials/header.php"; ?>
   <div class="page-wrapper">
 
 

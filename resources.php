@@ -50,7 +50,6 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   <link rel="stylesheet" href="assets/css/background.css"/>
   <link rel="stylesheet" href="assets/css/footer.css"/>
   <link rel="stylesheet" href="assets/css/resources.css"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
 
@@ -74,10 +73,7 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
     <div class="bg-mouse-glow"></div>
   </div>
 
-  <?php
-    $currentKey = "resources"; // change per-page (see table below)
-    require_once __DIR__ . "/partials/navigation.php";
-  ?>
+  <?php require_once __DIR__ . "/partials/header.php"; ?>
   <div class="page-wrapper">
 
 

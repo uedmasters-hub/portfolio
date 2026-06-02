@@ -85,33 +85,17 @@ $nav = [
   <!-- READING PROGRESS -->
   <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
 
-    <div id="preloader" role="status" aria-label="Loading" aria-live="polite">
-  
-    <!-- LOGO MARK -->
-    <div class="preloader-logo" aria-hidden="true">
-      RM
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__grid"></div>
+    <div class="preloader__inner">
+      <div class="preloader__mark">RM</div>
+      <div class="preloader__name">
+        <span class="preloader__name-text">IndiGo Booking</span>
+        <span class="preloader__name-role">Case Study · Airline Commerce</span>
+      </div>
+      <div class="preloader__bar-wrap"><div class="preloader__bar" id="preloader-bar"></div></div>
+      <span class="preloader__counter" id="preloader-counter">0%</span>
     </div>
-  
-    <!-- PAGE TITLE — changes per page via PHP -->
-    <p class="preloader-title">
-      <?php echo isset($preloaderTitle) ? htmlspecialchars($preloaderTitle) : 'Loading'; ?>
-    </p>
-  
-    <!-- CATEGORY — optional per page -->
-    <?php if (!empty($preloaderCategory)): ?>
-    <p class="preloader-category">
-      <?php echo htmlspecialchars($preloaderCategory); ?>
-    </p>
-    <?php endif; ?>
-  
-    <!-- PROGRESS TRACK -->
-    <div id="preloader-track" aria-hidden="true">
-      <div id="preloader-bar"></div>
-    </div>
-  
-    <!-- COUNTER -->
-    <span id="preloader-counter" aria-hidden="true">0%</span>
-  
   </div>
 
   <div class="bg-canvas" aria-hidden="true">
