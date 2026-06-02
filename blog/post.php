@@ -20,7 +20,7 @@ foreach ($posts as $i => $p) {
 /* ── 404 ─────────────────────────────────── */
 if (!$post) {
   http_response_code(404);
-  require_once __DIR__ . "/../partials/header.php";
+  require_once __DIR__ . "/../partials/navigation.php";
   echo '<div style="padding:120px 48px;max-width:600px">';
   echo '<h1 style="font-size:3rem;font-weight:300;margin-bottom:16px">Post not found</h1>';
   echo '<p style="color:var(--text-muted);margin-bottom:32px">That note doesn\'t exist or may have moved.</p>';
@@ -91,6 +91,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
   <link rel="stylesheet" href="../assets/css/footer.css"/>
   <link rel="stylesheet" href="../assets/css/article.css"/>
   <link rel="stylesheet" href="../assets/css/post.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 
   <?php
     require_once __DIR__ . "/../includes/schema.php";
@@ -125,7 +126,10 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
     <div class="bg-orb-2"></div>
   </div>
 
-<?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <?php
+    $currentKey = "field-notes"; // this is header section
+    require_once __DIR__ . "/../partials/navigation.php";
+  ?>
 
   <div class="page-wrapper">
     <main id="main-content">
@@ -378,6 +382,8 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
     }
   })();
   </script>
+
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
 </body>
 </html>
