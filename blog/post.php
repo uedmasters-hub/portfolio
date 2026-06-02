@@ -20,13 +20,13 @@ foreach ($posts as $i => $p) {
 /* ── 404 ─────────────────────────────────── */
 if (!$post) {
   http_response_code(404);
-  require_once __DIR__ . "/../partials/navigation.php";
+  require __DIR__ . "/../partials/navigation.php";
   echo '<div style="padding:120px 48px;max-width:600px">';
   echo '<h1 style="font-size:3rem;font-weight:300;margin-bottom:16px">Post not found</h1>';
   echo '<p style="color:var(--text-muted);margin-bottom:32px">That note doesn\'t exist or may have moved.</p>';
   echo '<a href="<?= BASE_PATH ?>/blog/" style="color:var(--blue)">← Back to Field Notes</a>';
   echo '</div>';
-  require_once __DIR__ . "/../partials/footer.php";
+  require __DIR__ . "/../partials/footer.php";
   exit;
 }
 
@@ -127,7 +127,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
 
   <?php
     $currentKey = "field-notes"; // this is header section
-    require_once __DIR__ . "/../partials/navigation.php";
+    require __DIR__ . "/../partials/navigation.php";
   ?>
 
   <div class="page-wrapper">
@@ -279,12 +279,12 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
 
     <!-- ② MORE FROM THE PLATFORM — cross-content grid -->
     <?php
-      require_once __DIR__ . "/../partials/related-content.php";
+      require __DIR__ . "/../partials/related-content.php";
       render_related_content('blog', $post['slug']);
     ?>
 
 
-    <?php require_once __DIR__ . "/../partials/footer.php"; ?>
+    <?php require __DIR__ . "/../partials/footer.php"; ?>
 
   </div>
 

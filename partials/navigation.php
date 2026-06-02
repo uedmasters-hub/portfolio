@@ -19,8 +19,10 @@ if (!isset($currentKey)) {
 }
 
 // Helper — returns "active" class string if key matches
+if (!function_exists("nav_active")) {
 function nav_active(string $key, string $current): string {
     return $key === $current ? " active" : "";
+}
 }
 ?>
 
