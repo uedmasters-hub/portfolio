@@ -41,15 +41,16 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/css/preloader.css"/>
-  <link rel="stylesheet" href="assets/css/variables.css"/>
-  <link rel="stylesheet" href="assets/css/animations.css"/>
-  <link rel="stylesheet" href="assets/css/reset.css"/>
-  <link rel="stylesheet" href="assets/css/main.css"/>
-  <link rel="stylesheet" href="assets/css/navigation.css"/>
-  <link rel="stylesheet" href="assets/css/background.css"/>
-  <link rel="stylesheet" href="assets/css/footer.css"/>
-  <link rel="stylesheet" href="assets/css/resources.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/preloader.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/variables.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/resources.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
 
@@ -73,7 +74,10 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
     <div class="bg-mouse-glow"></div>
   </div>
 
-  <?php require_once __DIR__ . "/partials/header.php"; ?>
+  <?php
+    $currentKey = "field-notes"; // change per-page (see table below)
+    require_once __DIR__ . "/partials/navigation.php";
+  ?>
   <div class="page-wrapper">
 
 
