@@ -1,58 +1,77 @@
-/* =============================================================
-   BACKGROUND.JS — Full-page animated gradient
-   6epixels.com · Ramesh Mandal Portfolio
-
-   Approach: CSS-only animated gradient on <body> itself.
-   No canvas, no fixed div clipping issues.
-   Very subtle blue tints drifting slowly across #f5f5f3.
-   Covers 100% of every page, all sections, no white gaps.
-   ============================================================= */
+/* =========================================
+   BACKGROUND.JS
+   ========================================= */
 
 (function () {
+
   "use strict";
 
-  /* -------------------------------------------------------
-     REDUCED MOTION — static fallback, no animation
-  ------------------------------------------------------- */
-  var prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  /* ── THEMES ────────────────────────────── */
 
-  /* -------------------------------------------------------
-     MOUSE LIGHT — lerp follow (kept from original)
-  ------------------------------------------------------- */
-  var mouseLight = document.querySelector(".mouse-light");
+  const themes = [
 
-  if (mouseLight && !prefersReduced) {
-    var mlX  = window.innerWidth  / 2;
-    var mlY  = window.innerHeight / 2;
-    var mlCX = mlX;
-    var mlCY = mlY;
+    // Soft Blue — default
+    `radial-gradient(
+       ellipse 900px 700px at top left,
+       rgba(210,225,255,0.70),
+       #f5f5f3 55%
+     )`,
 
-    document.addEventListener("mousemove", function (e) {
-      mlX = e.clientX;
-      mlY = e.clientY;
-    });
+    // Soft Green
+    `radial-gradient(
+       ellipse 800px 600px at top right,
+       rgba(215,242,225,0.70),
+       #f5f5f3 55%
+     )`,
 
-    (function tick() {
-      mlCX += (mlX - mlCX) * 0.07;
-      mlCY += (mlY - mlCY) * 0.07;
-      mouseLight.style.left = mlCX + "px";
-      mouseLight.style.top  = mlCY + "px";
-      requestAnimationFrame(tick);
-    })();
+    // Soft Rose
+    `radial-gradient(
+       ellipse 800px 600px at bottom left,
+       rgba(250,220,228,0.65),
+       #f5f5f3 55%
+     )`,
+
+    // Soft Lavender
+    `radial-gradient(
+       ellipse 800px 600px at bottom right,
+       rgba(230,222,255,0.65),
+       #f5f5f3 55%
+     )`
+
+  ];
+
+  let current = 0;
+
+  /* ── APPLY THEME ───────────────────────── */
+
+  function applyTheme(index) {
+    document.body.style.background = themes[index];
   }
 
-  /* -------------------------------------------------------
-     OLD ORBS — hide them, background.css handles everything
-  ------------------------------------------------------- */
-  var orbs = document.querySelectorAll(".orb");
-  orbs.forEach(function (o) { o.style.display = "none"; });
+  /* ── CYCLE ─────────────────────────────── */
 
-  /* -------------------------------------------------------
-     CANVAS — remove if it exists from previous version
-  ------------------------------------------------------- */
-  var oldCanvas = document.getElementById("bg-canvas");
-  if (oldCanvas) oldCanvas.remove();
+  function nextTheme() {
+    current = (current + 1) % themes.length;
+    applyTheme(current);
+  }
+
+  /* ── INIT ──────────────────────────────── */
+
+  applyTheme(0);
+
+  setInterval(nextTheme, 10000);
+
+  /* ── MOUSE GLOW ────────────────────────── */
+
+  const glow = document.querySelector(".bg-mouse-glow");
+
+  if (glow && window.matchMedia("(pointer: fine)").matches) {
+
+    document.addEventListener("mousemove", function (e) {
+      glow.style.left = e.clientX + "px";
+      glow.style.top  = e.clientY + "px";
+    }, { passive: true });
+
+  }
 
 })();
