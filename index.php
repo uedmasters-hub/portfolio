@@ -63,22 +63,23 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   />
 
   <!-- ── CSS ── -->
-  <link rel="stylesheet" href="assets/css/preloader.css" />
-  <link rel="stylesheet" href="assets/css/variables.css" />
-  <link rel="stylesheet" href="assets/css/animations.css"/>
-  <link rel="stylesheet" href="assets/css/reset.css" />
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/navigation.css" />
-  <link rel="stylesheet" href="assets/css/background.css" />
-  <link rel="stylesheet" href="assets/css/hero.css" />
-  <link rel="stylesheet" href="assets/css/stats.css" />
-  <link rel="stylesheet" href="assets/css/transformations.css" />
-  <link rel="stylesheet" href="assets/css/components/popover.css" />
-  <link rel="stylesheet" href="assets/css/experience.css" />
-  <link rel="stylesheet" href="assets/css/philosophy.css" />
-  <link rel="stylesheet" href="assets/css/bento.css" />
-  <link rel="stylesheet" href="assets/css/testimonials.css" />
-  <link rel="stylesheet" href="assets/css/footer.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/preloader.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/variables.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/hero.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/stats.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/transformations.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/components/popover.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/experience.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/philosophy.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/bento.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/testimonials.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 
 </head>
 

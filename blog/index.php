@@ -53,15 +53,16 @@ foreach ($categories as $cat) {
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/preloader.css"/>
-  <link rel="stylesheet" href="../assets/css/variables.css"/>
-  <link rel="stylesheet" href="../assets/css/animations.css"/>
-  <link rel="stylesheet" href="../assets/css/reset.css"/>
-  <link rel="stylesheet" href="../assets/css/main.css"/>
-  <link rel="stylesheet" href="../assets/css/navigation.css"/>
-  <link rel="stylesheet" href="../assets/css/background.css"/>
-  <link rel="stylesheet" href="../assets/css/footer.css"/>
-  <link rel="stylesheet" href="../assets/css/blog.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/preloader.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/variables.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/blog.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
 
