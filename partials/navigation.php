@@ -110,10 +110,12 @@ function nav_active(string $key, string $current): string {
 
     </nav>
 
-    <!-- CONNECT BUTTON -->
-    <a href="<?= BASE_PATH ?>/contact.php" class="nav-connect" role="button">
-        Connect
-    </a>
+    <!-- RIGHT: CONNECT + HAMBURGER -->
+    <div class="nav-right">
+        <a href="<?= BASE_PATH ?>/contact.php" class="nav-connect">
+            Connect
+        </a>
+    </div>
 
     <!-- HAMBURGER — mobile only -->
     <button
@@ -494,78 +496,115 @@ function nav_active(string $key, string $current): string {
 
 
 <!-- ==================================================
+     MOBILE SCRIM (behind drawer)
+================================================== -->
+
+<div class="mobile-scrim" id="mobile-scrim" aria-hidden="true"></div>
+
+
+<!-- ==================================================
      MOBILE DRAWER
 ================================================== -->
 
 <div class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation" role="dialog" aria-modal="true">
 
-    <!-- WORK -->
-    <div class="mobile-nav-section">
-        <p class="mobile-nav-label">Work</p>
+    <!-- DRAWER HEADER -->
+    <div class="mobile-drawer__header">
+        <a href="<?= BASE_PATH ?>/" class="mobile-drawer__logo">
+            RAMESH MANDAL
+        </a>
+        <button
+            class="mobile-drawer__close"
+            id="drawer-close-btn"
+            aria-label="Close navigation"
+            type="button"
+        >✕</button>
+    </div>
+
+    <!-- DRAWER BODY -->
+    <div class="mobile-drawer__body">
+
+        <!-- WORK -->
+        <div class="mobile-nav-section">
+            <p class="mobile-nav-label">Work</p>
+            <div class="mobile-nav-links">
+                <a href="<?= BASE_PATH ?>/case-study/" class="mobile-nav-link">
+                    <span class="mobile-nav-link-icon" aria-hidden="true">✈</span>
+                    <span class="mobile-nav-link-text">
+                        Case Studies
+                        <span class="mobile-nav-link-desc">IndiGo, CrewPal, Design System</span>
+                    </span>
+                </a>
+                <a href="<?= BASE_PATH ?>/audit/" class="mobile-nav-link">
+                    <span class="mobile-nav-link-icon" aria-hidden="true">🔍</span>
+                    <span class="mobile-nav-link-text">
+                        UX Audits
+                        <span class="mobile-nav-link-desc">Zomato, Swiggy teardowns</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- FIELD NOTES -->
+        <div class="mobile-nav-section">
+            <p class="mobile-nav-label">Field Notes</p>
+            <div class="mobile-nav-links">
+                <a href="<?= BASE_PATH ?>/blog/" class="mobile-nav-link">
+                    <span class="mobile-nav-link-icon" aria-hidden="true">⚡</span>
+                    <span class="mobile-nav-link-text">
+                        Stories &amp; Essays
+                        <span class="mobile-nav-link-desc">War stories, quiet wins, opinions</span>
+                    </span>
+                </a>
+                <a href="<?= BASE_PATH ?>/psychology/" class="mobile-nav-link">
+                    <span class="mobile-nav-link-icon" aria-hidden="true">🧠</span>
+                    <span class="mobile-nav-link-text">
+                        Behavioral Design
+                        <span class="mobile-nav-link-desc">Psychology applied to product</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- LAB -->
+        <div class="mobile-nav-section">
+            <p class="mobile-nav-label">Lab</p>
+            <div class="mobile-nav-links">
+                <a href="<?= BASE_PATH ?>/audit/" class="mobile-nav-link">
+                    <span class="mobile-nav-link-icon" aria-hidden="true">🤖</span>
+                    <span class="mobile-nav-link-text">
+                        Experiments
+                        <span class="mobile-nav-link-desc">AI-UX, frameworks, prototypes</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="mobile-nav-divider"></div>
+
+        <!-- SECONDARY -->
         <div class="mobile-nav-links">
-            <a href="<?= BASE_PATH ?>/case-study/" class="mobile-nav-link">
-                <span class="mobile-nav-link-icon" aria-hidden="true">✈</span>
-                Case Studies
+            <a href="<?= BASE_PATH ?>/resources.php" class="mobile-nav-link">
+                <span class="mobile-nav-link-icon" aria-hidden="true">📦</span>
+                <span class="mobile-nav-link-text">Toolkit</span>
             </a>
-            <a href="<?= BASE_PATH ?>/audit/" class="mobile-nav-link">
-                <span class="mobile-nav-link-icon" aria-hidden="true">🔍</span>
-                UX Audits
+            <a href="<?= BASE_PATH ?>/about.php" class="mobile-nav-link">
+                <span class="mobile-nav-link-icon" aria-hidden="true">👤</span>
+                <span class="mobile-nav-link-text">About</span>
             </a>
         </div>
-    </div>
 
-    <!-- FIELD NOTES -->
-    <div class="mobile-nav-section">
-        <p class="mobile-nav-label">Field Notes</p>
-        <div class="mobile-nav-links">
-            <a href="<?= BASE_PATH ?>/blog/" class="mobile-nav-link">
-                <span class="mobile-nav-link-icon" aria-hidden="true">⚡</span>
-                Stories &amp; Essays
-            </a>
-            <a href="<?= BASE_PATH ?>/psychology/" class="mobile-nav-link">
-                <span class="mobile-nav-link-icon" aria-hidden="true">🧠</span>
-                Behavioral Design
-            </a>
+    </div><!-- /drawer body -->
+
+    <!-- DRAWER FOOTER -->
+    <div class="mobile-drawer__footer">
+        <a href="<?= BASE_PATH ?>/contact.php" class="mobile-connect-btn">
+            Connect ↗
+        </a>
+        <div class="mobile-avail">
+            <span class="avail-dot" aria-hidden="true"></span>
+            Available for senior UX leadership roles
         </div>
-    </div>
-
-    <!-- LAB -->
-    <div class="mobile-nav-section">
-        <p class="mobile-nav-label">Lab</p>
-        <div class="mobile-nav-links">
-            <a href="<?= BASE_PATH ?>/audit/" class="mobile-nav-link">
-                <span class="mobile-nav-link-icon" aria-hidden="true">🤖</span>
-                Experiments
-            </a>
-        </div>
-    </div>
-
-    <div class="mobile-nav-divider"></div>
-
-    <!-- TOOLKIT + ABOUT -->
-    <div class="mobile-nav-links" style="margin-bottom:32px;">
-        <a href="<?= BASE_PATH ?>/resources.php" class="mobile-nav-link">
-            <span class="mobile-nav-link-icon" aria-hidden="true">📦</span>
-            Toolkit
-        </a>
-        <a href="<?= BASE_PATH ?>/about.php" class="mobile-nav-link">
-            <span class="mobile-nav-link-icon" aria-hidden="true">👤</span>
-            About
-        </a>
-        <a href="<?= BASE_PATH ?>/contact.php" class="mobile-nav-link">
-            <span class="mobile-nav-link-icon" aria-hidden="true">✉</span>
-            Contact
-        </a>
-    </div>
-
-    <!-- CTA -->
-    <a href="<?= BASE_PATH ?>/contact.php" class="mobile-connect-btn">
-        Connect
-    </a>
-
-    <div class="mobile-avail">
-        <span class="avail-dot" aria-hidden="true"></span>
-        Available for senior UX leadership roles
     </div>
 
 </div><!-- /mobile-drawer -->
