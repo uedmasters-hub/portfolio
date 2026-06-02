@@ -110,7 +110,10 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   </div>
 
   <!-- ── PAGE ── -->
-  <?php require_once __DIR__ . "/partials/header.php"; ?>
+  <?php
+    $currentKey = "home"; // change per-page (see table below)
+    require_once __DIR__ . "/partials/navigation.php";
+  ?>
   <div class="page-wrapper">
 
     <!-- HEADER -->
