@@ -86,7 +86,10 @@ foreach ($categories as $cat) {
     <div class="bg-mouse-glow"></div>
   </div>
 
-<?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <?php
+    $currentKey = "field-notes"; // change per-page (see table below)
+    require_once __DIR__ . "/partials/navigation.php";
+  ?>
 
   <div class="page-wrapper">
 

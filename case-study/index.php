@@ -74,7 +74,10 @@ $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, desig
     <div class="bg-mouse-glow"></div>
   </div>
 
-<?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <?php
+    $currentKey = "work"; // change per-page (see table below)
+    require_once __DIR__ . "/../partials/navigation.php";
+  ?>
 
   <div class="page-wrapper">
 

@@ -77,7 +77,10 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
     <div class="bg-orb-2"></div>
   </div>
 
-<?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <?php
+    $currentKey = "work"; // change per-page (see table below)
+    require_once __DIR__ . "/partials/navigation.php";
+  ?>
 
   <div class="page-wrapper">
 
