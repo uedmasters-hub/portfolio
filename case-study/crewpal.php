@@ -62,7 +62,6 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
   <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
@@ -241,10 +240,10 @@ $nav = [
 
     <?php require_once __DIR__ . "/../partials/footer.php"; ?>
   </div>
-  <script src="../assets/js/preloader.js"></script>
-  <script src="../assets/js/background.js" defer></script>
-  <script src="../assets/js/animations.js" defer></script>
-  <script src="../assets/js/app.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/preloader.js"></script>
+  <script src="<?= BASE_PATH ?>/assets/js/background.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/animations.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/app.js" defer></script>
   <script>
   (function(){const bar=document.getElementById("art-progress"),main=document.getElementById("main-content");if(!bar||!main)return;window.addEventListener("scroll",function(){bar.style.width=Math.min(100,(window.scrollY/(main.scrollHeight-window.innerHeight))*100)+"%";},{passive:true});})();
   (function(){const items=document.querySelectorAll(".cs-nav__item[data-nav]"),secs=document.querySelectorAll(".cs-section[id]");if(!items.length)return;const obs=new IntersectionObserver(function(e){e.forEach(function(s){if(s.isIntersecting){items.forEach(function(n){n.classList.remove("is-active");});const a=document.querySelector('.cs-nav__item[data-nav="'+s.target.id+'"]');if(a)a.classList.add("is-active");}});},{rootMargin:"-20% 0px -70% 0px"});secs.forEach(function(s){obs.observe(s);});})();
