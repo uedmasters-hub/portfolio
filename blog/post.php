@@ -24,7 +24,7 @@ if (!$post) {
   echo '<div style="padding:120px 48px;max-width:600px">';
   echo '<h1 style="font-size:3rem;font-weight:300;margin-bottom:16px">Post not found</h1>';
   echo '<p style="color:var(--text-muted);margin-bottom:32px">That note doesn\'t exist or may have moved.</p>';
-  echo '<a href="index.php" style="color:var(--blue)">← Back to Field Notes</a>';
+  echo '<a href="<?= BASE_PATH ?>/blog/" style="color:var(--blue)">← Back to Field Notes</a>';
   echo '</div>';
   require_once __DIR__ . "/../partials/footer.php";
   exit;
@@ -252,7 +252,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
     <div class="art-next-wrap">
       <section class="art-next" aria-label="More field notes">
         <?php if ($prev): ?>
-          <a href="/blog/<?= urlencode($prev['slug']) ?>" class="art-next__card">
+          <a href="<?= BASE_PATH ?>/blog/<?= urlencode($prev['slug']) ?>" class="art-next__card">
             <span class="art-next__arrow">↗</span>
             <p class="art-next__label">PREVIOUS NOTE</p>
             <p class="art-next__category"><?= htmlspecialchars($prev['tag']) ?></p>
@@ -263,7 +263,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
           <div class="art-next__card art-next__card--empty"></div>
         <?php endif; ?>
         <?php if ($next): ?>
-          <a href="/blog/<?= urlencode($next['slug']) ?>" class="art-next__card">
+          <a href="<?= BASE_PATH ?>/blog/<?= urlencode($next['slug']) ?>" class="art-next__card">
             <span class="art-next__arrow">↗</span>
             <p class="art-next__label">NEXT NOTE</p>
             <p class="art-next__category"><?= htmlspecialchars($next['tag']) ?></p>

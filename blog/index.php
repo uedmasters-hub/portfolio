@@ -87,7 +87,7 @@ foreach ($categories as $cat) {
 
   <?php
     $currentKey = "field-notes"; // change per-page (see table below)
-    require_once __DIR__ . "/partials/navigation.php";
+    require_once __DIR__ . "/../partials/navigation.php";
   ?>
 
   <div class="page-wrapper">
@@ -118,7 +118,7 @@ foreach ($categories as $cat) {
       <!-- ══════════════ FEATURED PAIR ══════════════ -->
       <?php if (count($featured) >= 2): ?>
       <div class="blog-featured fade-in">
-        <a href="post.php?slug=<?= urlencode($featured[0]['slug']) ?>" class="blog-featured__link" aria-label="<?= htmlspecialchars($featured[0]['title']) ?>">
+        <a href="<?= BASE_PATH ?>/blog/post.php?slug=<?= urlencode($featured[0]['slug']) ?>" class="blog-featured__link" aria-label="<?= htmlspecialchars($featured[0]['title']) ?>">
 
           <!-- LEFT: DARK CARD -->
           <div class="blog-featured__card">
@@ -175,7 +175,7 @@ foreach ($categories as $cat) {
         <?php foreach ($regular as $i => $post): ?>
 
           <a
-            href="post.php?slug=<?= urlencode($post['slug']) ?>"
+            href="<?= BASE_PATH ?>/blog/post.php?slug=<?= urlencode($post['slug']) ?>"
             class="blog-card<?= $post['color'] === 'dark' ? ' blog-card--dark' : '' ?> tl-reveal"
             role="listitem"
             data-category="<?= htmlspecialchars($post['category']) ?>"
