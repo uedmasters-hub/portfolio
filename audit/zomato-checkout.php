@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../includes/config.php";
 
-$currentKey = "audit";
+$currentKey = "work";
 $pageTitle  = "Zomato Checkout UX Audit — Ramesh Mandal";
 $pageDesc   = "A heuristic audit of Zomato's checkout flow — 7 friction points mapped, psychology principles violated, and concrete redesign suggestions.";
 
@@ -112,7 +112,7 @@ $nav = [
     <div class="bg-orb-2"></div>
   </div>
 
-<?php require_once __DIR__ . "/../partials/header.php"; ?>
+<?php require __DIR__ . "/../partials/navigation.php"; ?>
 
   <div class="page-wrapper">
 
@@ -452,7 +452,7 @@ $nav = [
       <div class="cs-next">
         <div>
           <p class="cs-next__label">Next Audit</p>
-          <a href="swiggy-onboarding.php" class="cs-next__link">
+          <a href="<?= BASE_PATH ?>/audit/swiggy-onboarding.php" class="cs-next__link">
             <p class="cs-next__title">Swiggy Onboarding<br>& Home Screen</p>
             <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
               9 friction points. Information architecture breakdown.
@@ -462,7 +462,7 @@ $nav = [
         </div>
         <div>
           <p class="cs-next__label">Want Your Product Audited?</p>
-          <a href="/contact.php?type=Consulting" class="cs-next__link">
+          <a href="<?= BASE_PATH ?>/contact.php?type=Consulting" class="cs-next__link">
             <p class="cs-next__title">Request a UX<br>Audit</p>
             <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
               A structured audit with prioritised fixes and business impact estimates.
@@ -477,11 +477,11 @@ $nav = [
 
     <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
     <?php
-      require_once __DIR__ . "/../partials/related-content.php";
+      require __DIR__ . "/../partials/related-content.php";
       render_related_content("audit", "zomato-checkout");
     ?>
 
-    <?php require_once __DIR__ . "/../partials/footer.php"; ?>
+    <?php require __DIR__ . "/../partials/footer.php"; ?>
 
   </div>
 
