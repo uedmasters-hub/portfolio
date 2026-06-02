@@ -105,7 +105,7 @@ $nav = [
   </div>
 
   <?php
-    $currentKey = "field-notes"; // change per-page (see table below)
+    $currentKey = "work"; // change per-page (see table below)
     require_once __DIR__ . "/../partials/navigation.php";
   ?>
 
