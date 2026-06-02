@@ -1,114 +1,145 @@
-/* =========================================
-   PRELOADER.JS
-   ========================================= */
+/**
+ * assets/js/preloader.js
+ *
+ * Two-phase preloader:
+ *   Phase 1 — animates quickly to 70% on DOMContentLoaded
+ *   Phase 2 — completes to 100% on window.load
+ *
+ * SAFETY NET: If window.load never fires (broken image,
+ * blocked resource, slow CDN), a 4s hard timeout forces
+ * completion so the user is never stuck.
+ */
 
 (function () {
+
   "use strict";
 
-  var preloader = document.getElementById("preloader");
-  var bar       = document.getElementById("preloader-bar");
-  var counter   = document.getElementById("preloader-counter");
-  var page      = document.querySelector(".page-wrapper");
+  /* ==================================================
+     ELEMENTS
+  ================================================== */
 
+  const preloader = document.getElementById("preloader");
+  const bar       = document.getElementById("preloader-bar");
+  const counter   = document.getElementById("preloader-counter");
+
+  // Guard — if preloader HTML doesn't exist, bail silently
   if (!preloader) return;
 
-  /* ── SCROLL LOCK — Android-safe ──────────
-     Store scrollY → position:fixed the body →
-     restore scrollY on unlock.
-     This is the ONLY approach that reliably
-     prevents scroll-behind on Android Chrome.
-  ──────────────────────────────────────── */
+  /* ==================================================
+     STATE
+  ================================================== */
 
-  var savedScrollY = 0;
+  let current     = 0;      // current displayed %
+  let target      = 0;      // target %
+  let rafId       = null;   // requestAnimationFrame id
+  let completed   = false;  // prevent double-completion
+  let safetyTimer = null;   // hard timeout handle
 
-  function lockScroll() {
-    savedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-    document.body.style.top = "-" + savedScrollY + "px";
-    document.body.classList.add("is-loading");
+  /* ==================================================
+     UPDATE DISPLAY
+  ================================================== */
+
+  function setProgress(pct) {
+    if (bar)     bar.style.width = pct + "%";
+    if (counter) counter.textContent = Math.round(pct) + "%";
   }
 
-  function unlockScroll() {
-    document.body.classList.remove("is-loading");
-    document.body.style.top = "";
-    window.scrollTo(0, savedScrollY);
-  }
-
-  /* Lock immediately before anything renders */
-  lockScroll();
-
-  /* ── PROGRESS ─────────────────────────── */
-
-  var current = 0;
-  var target  = 0;
-  var raf     = null;
-  var done    = false;
-
-  function setProgress(val) {
-    current = Math.min(val, 100);
-    if (bar)     bar.style.width     = current + "%";
-    if (counter) counter.textContent = Math.floor(current) + "%";
-  }
+  /* ==================================================
+     SMOOTH TICK — lerp current toward target
+  ================================================== */
 
   function tick() {
+    if (completed) return;
+
+    const diff = target - current;
+
+    if (Math.abs(diff) < 0.4) {
+      current = target;
+    } else {
+      // Ease: faster when far, slower near target
+      current += diff * 0.07;
+    }
+
+    setProgress(current);
+
     if (current < target) {
-      current += (target - current) * 0.08 + 0.3;
-      setProgress(current);
+      rafId = requestAnimationFrame(tick);
     }
-    if (!done || current < 100) {
-      raf = requestAnimationFrame(tick);
+
+    // If we've reached 100, dismiss
+    if (current >= 100) {
+      dismiss();
     }
   }
 
-  function phase1() {
-    target = 70;
-    raf = requestAnimationFrame(tick);
+  function animateTo(pct) {
+    target = pct;
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(tick);
   }
 
-  function phase2() {
-    target = 100;
-    done   = true;
-    setTimeout(dismiss, 500);
-  }
+  /* ==================================================
+     DISMISS — fade out preloader, reveal page
+  ================================================== */
 
   function dismiss() {
-    cancelAnimationFrame(raf);
+    if (completed) return;
+    completed = true;
+
+    clearTimeout(safetyTimer);
+    cancelAnimationFrame(rafId);
+
+    // Snap to 100% visually
     setProgress(100);
 
+    // Short pause at 100% so user sees it complete
     setTimeout(function () {
-      /* Unlock scroll FIRST — avoids one-frame body height flash */
-      unlockScroll();
 
-      /* Then hide preloader */
-      preloader.classList.add("is-done");
+      preloader.style.transition = "opacity 0.5s ease";
+      preloader.style.opacity    = "0";
 
-      /* Then reveal page */
-      if (page) {
-        setTimeout(function () {
-          page.classList.add("is-revealed");
-        }, 80);
-      }
-    }, 280);
+      setTimeout(function () {
+
+        preloader.style.display = "none";
+
+        // Unlock scroll
+        document.body.classList.remove("is-loading");
+        document.body.classList.add("is-revealed");
+
+      }, 500);
+
+    }, 200);
   }
 
-  /* ── START ─────────────────────────────── */
+  /* ==================================================
+     LOCK SCROLL during preload
+  ================================================== */
 
-  setTimeout(phase1, 650);
+  document.body.classList.add("is-loading");
 
-  if (document.readyState === "complete") {
-    setTimeout(phase2, 900);
-  } else {
-    window.addEventListener("load", function () {
-      var elapsed = performance.now();
-      var minTime = 1400;
-      var wait    = Math.max(0, minTime - elapsed);
-      setTimeout(phase2, wait);
-    });
-  }
+  /* ==================================================
+     PHASE 1 — DOM ready → animate to 70%
+  ================================================== */
 
-  /* Safety net */
-  setTimeout(function () {
-    if (!preloader.classList.contains("is-done")) {
-      phase2();
+  // Start immediately (DOM is already parsed when this runs)
+  animateTo(70);
+
+  /* ==================================================
+     PHASE 2 — window.load → complete to 100%
+  ================================================== */
+
+  window.addEventListener("load", function () {
+    animateTo(100);
+  });
+
+  /* ==================================================
+     SAFETY NET — force complete after 4 seconds
+     Catches: broken images, slow CDN, blocked scripts
+  ================================================== */
+
+  safetyTimer = setTimeout(function () {
+    if (!completed) {
+      animateTo(100);
     }
   }, 4000);
 

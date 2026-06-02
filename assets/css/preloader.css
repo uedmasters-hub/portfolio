@@ -171,3 +171,97 @@ body.is-loading {
   .preloader__counter { animation: none; opacity: 1; }
   .page-wrapper       { opacity: 1; transition: none; }
 }
+
+/* ==================================================
+   ADD THESE RULES TO assets/css/preloader.css
+   (or wherever your preloader styles live)
+================================================== */
+
+
+/* ==================================================
+   BODY STATES
+   is-loading  — locks scroll while preloader runs
+   is-revealed — unlocks, triggers any reveal animations
+================================================== */
+
+body.is-loading {
+  overflow: hidden;
+}
+
+body.is-revealed {
+  overflow: auto;
+}
+
+
+/* ==================================================
+   PRELOADER WRAPPER
+   Full-screen, above everything
+================================================== */
+
+#preloader {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  background: var(--bg, #f5f5f3);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 0;
+}
+
+
+/* ==================================================
+   PROGRESS BAR TRACK
+================================================== */
+
+#preloader-track {
+  width: 180px;
+  height: 1px;
+
+  background: rgba(0,0,0,0.10);
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  margin-bottom: 20px;
+}
+
+
+/* ==================================================
+   PROGRESS BAR FILL
+================================================== */
+
+#preloader-bar {
+  height: 100%;
+  width: 0%;
+
+  background: #111111;
+
+  border-radius: 999px;
+
+  /* No CSS transition — JS lerp handles smoothing */
+  transition: none;
+}
+
+
+/* ==================================================
+   COUNTER
+================================================== */
+
+#preloader-counter {
+  font-family: "Inter", sans-serif;
+
+  font-size: 12px;
+  font-weight: 400;
+
+  letter-spacing: 2px;
+
+  color: rgba(0,0,0,0.35);
+}
