@@ -59,16 +59,16 @@ $nav = [
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700&display=swap" rel="stylesheet"/>
 
-  <link rel="stylesheet" href="../assets/css/preloader.css"/>
-  <link rel="stylesheet" href="../assets/css/variables.css"/>
-  <link rel="stylesheet" href="../assets/css/animations.css"/>
-  <link rel="stylesheet" href="../assets/css/reset.css"/>
-  <link rel="stylesheet" href="../assets/css/main.css"/>
-  <link rel="stylesheet" href="../assets/css/navigation.css"/>
-  <link rel="stylesheet" href="../assets/css/background.css"/>
-  <link rel="stylesheet" href="../assets/css/footer.css"/>
-  <link rel="stylesheet" href="../assets/css/article.css"/>
-  <link rel="stylesheet" href="../assets/css/case-study.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/preloader.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/variables.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
 </head>
 <body>
 
@@ -426,10 +426,10 @@ $nav = [
 
   </div>
 
-  <script src="../assets/js/preloader.js"></script>
-  <script src="../assets/js/background.js" defer></script>
-  <script src="../assets/js/animations.js" defer></script>
-  <script src="../assets/js/app.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/preloader.js"></script>
+  <script src="<?= BASE_PATH ?>/assets/js/background.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/animations.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/app.js" defer></script>
   <script>
   /* ── READING PROGRESS ── */
   (function(){
@@ -481,5 +481,6 @@ $nav = [
     if(fi.length){var o=new IntersectionObserver(function(en){en.forEach(function(e){if(!e.isIntersecting)return;fi.forEach(function(n){n.classList.remove("is-active");});var a=drawer.querySelector('.art-fab-drawer__item[data-fab-toc="'+e.target.id+'"]');if(a)a.classList.add("is-active");});},{rootMargin:"-15% 0px -70% 0px"});document.querySelectorAll("[id]").forEach(function(el){o.observe(el);});}
   })();
   </script>
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 </body>
 </html>
