@@ -81,7 +81,7 @@ $nav = [
   <div class="bg-canvas" aria-hidden="true"><div class="bg-grid"></div><div class="bg-orb-1"></div><div class="bg-orb-2"></div></div>
   
   <?php
-    $currentKey = "field-notes"; // this is header section
+    $currentKey = "work"; // this is header section
     require_once __DIR__ . "/../partials/navigation.php";
   ?>
 

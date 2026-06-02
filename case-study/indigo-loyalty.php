@@ -96,7 +96,10 @@ $nav = [
     <div class="bg-orb-2"></div>
   </div>
 
-<?php require_once __DIR__ . "/../partials/header.php"; ?>
+  <?php
+    $currentKey = "work"; // this is header section
+    require_once __DIR__ . "/../partials/navigation.php";
+  ?>
 
   <div class="page-wrapper">
 
@@ -474,5 +477,8 @@ $nav = [
     if(fi.length){var o=new IntersectionObserver(function(en){en.forEach(function(e){if(!e.isIntersecting)return;fi.forEach(function(n){n.classList.remove("is-active");});var a=drawer.querySelector('.art-fab-drawer__item[data-fab-toc="'+e.target.id+'"]');if(a)a.classList.add("is-active");});},{rootMargin:"-15% 0px -70% 0px"});document.querySelectorAll("[id]").forEach(function(el){o.observe(el);});}
   })();
   </script>
+
+  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
+
 </body>
 </html>
