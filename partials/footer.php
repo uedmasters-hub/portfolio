@@ -1,4 +1,13 @@
 <?php
+/**
+ * partials/footer.php
+ *
+ * Site-wide footer.
+ * Include at the bottom of every page, before </body>.
+ *
+ * NOTE: Script tags are handled per-page, not here,
+ * so each page controls its own JS load order.
+ */
 require_once __DIR__ . "/../data/navigation.php";
 ?>
 
@@ -6,7 +15,7 @@ require_once __DIR__ . "/../data/navigation.php";
 
   <div class="footer-top">
 
-    <!-- LEFT: BRAND + TAGLINE -->
+    <!-- BRAND -->
     <div class="footer-brand">
       <div class="footer-logo">
         <span class="footer-logo__mark" aria-hidden="true">RM</span>
@@ -22,37 +31,37 @@ require_once __DIR__ . "/../data/navigation.php";
         <a href="mailto:ramsmandal@icloud.com" class="footer-social__link" aria-label="Email">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         </a>
-        <a href="tel:+919538000060" class="footer-social__link" aria-label="Phone">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.09 6.09l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </a>
       </div>
     </div>
 
-    <!-- CENTER + RIGHT: NAV + EXPERTISE (2-col on mobile) -->
+    <!-- NAV + EXPERTISE -->
     <div class="footer-middle">
 
-    <nav class="footer-nav" aria-label="Footer navigation">
-      <p class="footer-nav__heading">Navigation</p>
-      <?php foreach ($navLinks as $link): ?>
-        <a href="<?= htmlspecialchars($link['href']) ?>" class="footer-nav__link">
-          <?= htmlspecialchars($link['label']) ?>
-        </a>
-      <?php endforeach; ?>
-    </nav>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <p class="footer-nav__heading">Navigation</p>
+        <a href="<?= BASE_PATH ?>/"               class="footer-nav__link">Home</a>
+        <a href="<?= BASE_PATH ?>/about.php"      class="footer-nav__link">About</a>
+        <a href="<?= BASE_PATH ?>/case-study/"    class="footer-nav__link">Work</a>
+        <a href="<?= BASE_PATH ?>/blog/"          class="footer-nav__link">Field Notes</a>
+        <a href="<?= BASE_PATH ?>/audit/"         class="footer-nav__link">Lab</a>
+        <a href="<?= BASE_PATH ?>/resources.php"  class="footer-nav__link">Toolkit</a>
+        <a href="<?= BASE_PATH ?>/contact.php"    class="footer-nav__link">Contact</a>
+      </nav>
 
-    <!-- RIGHT: EXPERTISE -->
-    <div class="footer-expertise">
-      <p class="footer-nav__heading">Expertise</p>
-      <?php
-      $skills = ["UX Strategy","Design Systems","AI-Enabled Workflows","Enterprise UX","Product Thinking","CRO & Growth","UX Research","Design Leadership"];
-      foreach ($skills as $s): ?>
-        <span class="footer-expertise__item"><?= htmlspecialchars($s) ?></span>
-      <?php endforeach; ?>
+      <div class="footer-expertise">
+        <p class="footer-nav__heading">Expertise</p>
+        <?php
+        $skills = ["UX Strategy","Design Systems","AI-Enabled Workflows",
+                   "Enterprise UX","Product Thinking","CRO & Growth",
+                   "UX Research","Design Leadership"];
+        foreach ($skills as $s): ?>
+          <span class="footer-expertise__item"><?= htmlspecialchars($s) ?></span>
+        <?php endforeach; ?>
+      </div>
+
     </div>
 
-    </div><!-- /footer-middle -->
-
-    <!-- FAR RIGHT: CTA -->
+    <!-- CTA -->
     <div class="footer-cta">
       <p class="footer-nav__heading">Let's Connect</p>
       <p class="footer-cta__text">
@@ -68,7 +77,7 @@ require_once __DIR__ . "/../data/navigation.php";
 
   </div>
 
-  <!-- BOTTOM BAR -->
+  <!-- BOTTOM -->
   <div class="footer-bottom">
     <p class="footer-bottom__copy">
       © <?= date('Y') ?> Ramesh Mandal. Built with systems thinking.
