@@ -75,6 +75,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/audit.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
 
   <!-- JSON-LD STRUCTURED DATA -->
   <?php
@@ -448,32 +449,33 @@ $nav = [
         </article>
       </div>
 
-      <!-- NEXT AUDIT -->
-      <div class="cs-next">
-        <div>
-          <p class="cs-next__label">Next Audit</p>
-          <a href="<?= BASE_PATH ?>/audit/swiggy-onboarding.php" class="cs-next__link">
-            <p class="cs-next__title">Swiggy Onboarding<br>& Home Screen</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
-              9 friction points. Information architecture breakdown.
-            </p>
-            <span class="cs-next__arrow">↗</span>
-          </a>
-        </div>
-        <div>
-          <p class="cs-next__label">Want Your Product Audited?</p>
-          <a href="<?= BASE_PATH ?>/contact.php?type=Consulting" class="cs-next__link">
-            <p class="cs-next__title">Request a UX<br>Audit</p>
-            <p style="font-size:14px;color:var(--text-muted);margin-bottom:8px">
-              A structured audit with prioritised fixes and business impact estimates.
-            </p>
-            <span class="cs-next__arrow">↗</span>
-          </a>
-        </div>
-      </div>
-
-
     </main>
+
+    <!-- NEXT / CTA -->
+    <div class="art-next-wrap">
+      <section class="art-next" aria-label="More audits">
+
+        <a href="<?= BASE_PATH ?>/audit/swiggy-onboarding.php" class="art-next__card">
+          <span class="art-next__arrow">↗</span>
+          <p class="art-next__label">NEXT AUDIT</p>
+          <p class="art-next__category">UX Audit · Food Delivery</p>
+          <h3 class="art-next__title">Swiggy Onboarding &amp; Home Screen</h3>
+          <p class="art-next__tagline">9 friction points. Information architecture breakdown.</p>
+        </a>
+
+        <a href="<?= BASE_PATH ?>/contact.php?type=Consulting" class="art-next__card">
+          <span class="art-next__arrow">↗</span>
+          <p class="art-next__label">WANT YOUR PRODUCT AUDITED?</p>
+          <p class="art-next__category">Consulting · UX Audit</p>
+          <h3 class="art-next__title">Request a UX Audit</h3>
+          <p class="art-next__tagline">A structured audit with prioritised fixes and business impact estimates.</p>
+        </a>
+
+      </section>
+    </div>
+
+    <div style="display:none"><!-- placeholder closing main --></div>
+
 
     <!-- CROSS-CONTENT INTERNAL LINKS — outside main, full width -->
     <?php
