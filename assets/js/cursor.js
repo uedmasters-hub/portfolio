@@ -1,183 +1,119 @@
-/* =============================================================
+/* =========================================
    CURSOR.JS
-   Custom cursor — dot + ring + label state machine
-   States: default · hover · click · text · card · label · drag · hidden
-   ============================================================= */
-
+   ========================================= */
 (function () {
   "use strict";
 
-  /* -------------------------------------------------------
-     GUARD: touch / reduced motion — skip entirely
-  ------------------------------------------------------- */
-  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  /* Skip touch devices */
+  if (window.matchMedia("(hover: none)").matches) return;
 
-  /* -------------------------------------------------------
-     ELEMENTS
-  ------------------------------------------------------- */
-  var dot   = document.createElement("div");
-  var ring  = document.createElement("div");
-  var label = document.createElement("span");
+  var dot  = document.createElement("div");
+  var ring = document.createElement("div");
 
-  dot.className   = "cursor-dot";
-  ring.className  = "cursor-ring";
-  label.className = "cursor-label-text";
+  /* Absolute minimal inline styles — no classes, no CSS file */
+  dot.style.cssText = [
+    "position:fixed",
+    "width:14px",
+    "height:14px",
+    "background:#000000",
+    "border-radius:50%",
+    "pointer-events:none",
+    "z-index:999999",
+    "top:0",
+    "left:0",
+    "transform:translate(-50%,-50%)",
+    "opacity:1",
+    "display:block",
+  ].join(";");
 
-  ring.appendChild(label);
-  document.body.appendChild(dot);
+  ring.style.cssText = [
+    "position:fixed",
+    "width:42px",
+    "height:42px",
+    "border:2.5px solid #000000",
+    "border-radius:50%",
+    "pointer-events:none",
+    "z-index:999998",
+    "top:0",
+    "left:0",
+    "transform:translate(-50%,-50%)",
+    "opacity:0.7",
+    "display:block",
+    "background:transparent",
+  ].join(";");
+
   document.body.appendChild(ring);
-  document.body.classList.add("cursor-ready");
+  document.body.appendChild(dot);
 
-  /* -------------------------------------------------------
-     POSITION STATE
-  ------------------------------------------------------- */
-  var mx = -200;  /* start off-screen */
-  var my = -200;
-  var rx = mx;
-  var ry = my;
-  var isRunning = false;
+  /* Kill native cursor */
+  document.head.insertAdjacentHTML("beforeend",
+    "<style>*{cursor:none!important}</style>"
+  );
 
-  /* Lerp factor for ring */
-  var LERP = 0.12;
+  var mx = -300, my = -300;
+  var rx = -300, ry = -300;
+  var going = false;
 
-  /* -------------------------------------------------------
-     CURRENT STATE
-  ------------------------------------------------------- */
-  var currentState = "default";
-
-  function setState(state, labelText) {
-    if (state === currentState && !labelText) return;
-    currentState = state;
-
-    /* Remove all state classes */
-    document.body.classList.remove(
-      "cursor-hover",
-      "cursor-click",
-      "cursor-text",
-      "cursor-card",
-      "cursor-label",
-      "cursor-drag",
-      "cursor-hidden"
-    );
-
-    if (state !== "default") {
-      document.body.classList.add("cursor-" + state);
-    }
-
-    if (state === "label" && labelText) {
-      label.textContent = labelText;
-    } else {
-      label.textContent = "";
-    }
+  function loop() {
+    rx += (mx - rx) * 0.13;
+    ry += (my - ry) * 0.13;
+    dot.style.left  = mx + "px";
+    dot.style.top   = my + "px";
+    ring.style.left = Math.round(rx) + "px";
+    ring.style.top  = Math.round(ry) + "px";
+    requestAnimationFrame(loop);
   }
 
-  /* -------------------------------------------------------
-     RAF LOOP — dot snaps, ring lerps
-  ------------------------------------------------------- */
-  function tick() {
-    /* Dot — instant */
-    dot.style.transform  = "translate(calc(" + mx + "px - 50%), calc(" + my + "px - 50%))";
-
-    /* Ring — lerp */
-    rx += (mx - rx) * LERP;
-    ry += (my - ry) * LERP;
-    ring.style.transform = "translate(calc(" + rx + "px - 50%), calc(" + ry + "px - 50%))";
-
-    requestAnimationFrame(tick);
-  }
-
-  document.addEventListener("mousemove", function (e) {
+  window.addEventListener("mousemove", function (e) {
     mx = e.clientX;
     my = e.clientY;
+    if (!going) { going = true; loop(); }
+  }, { passive: true });
 
-    if (!isRunning) {
-      isRunning = true;
-      requestAnimationFrame(tick);
-    }
+  window.addEventListener("mouseleave", function () {
+    dot.style.opacity  = "0";
+    ring.style.opacity = "0";
   });
 
-  /* -------------------------------------------------------
-     ELEMENT DETECTION — determine cursor state from target
-  ------------------------------------------------------- */
-  function getStateFromTarget(target) {
-    if (!target) return "default";
-
-    /* Label-carrying elements */
-    if (target.closest("[data-cursor-label]")) {
-      return "label";
-    }
-
-    /* Cards */
-    if (target.closest(".bento-card, .transform-featured, .transform-card")) {
-      return "card";
-    }
-
-    /* Draggable */
-    if (target.closest("[data-cursor-drag]")) {
-      return "drag";
-    }
-
-    /* Interactive */
-    if (target.closest("a, button, .chip, .stat, [role='button'], .enquiry-pill, .nav a, .toc-item")) {
-      return "hover";
-    }
-
-    /* Text content */
-    if (target.closest("p, blockquote, li, .prose, .case-study-body, .blog-body, article")) {
-      return "text";
-    }
-
-    /* Input elements — hide cursor so native cursor shows */
-    if (target.closest("input, textarea, select")) {
-      return "hidden";
-    }
-
-    return "default";
-  }
-
-  function getLabelFromTarget(target) {
-    var el = target.closest("[data-cursor-label]");
-    return el ? el.dataset.cursorLabel : "";
-  }
-
-  /* -------------------------------------------------------
-     EVENT LISTENERS
-  ------------------------------------------------------- */
-
-  /* Mousemove — state detection */
-  document.addEventListener("mousemove", function (e) {
-    var state = getStateFromTarget(e.target);
-    var lbl   = state === "label" ? getLabelFromTarget(e.target) : "";
-    setState(state, lbl);
+  window.addEventListener("mouseenter", function () {
+    dot.style.opacity  = "1";
+    ring.style.opacity = "0.7";
   });
 
-  /* Mousedown / up — click state */
+  /* Hover state */
+  document.addEventListener("mouseover", function (e) {
+    var el = e.target;
+    var hoverable = el && el.closest &&
+      (el.closest("a") || el.closest("button") || el.closest(".chip") ||
+       el.closest(".bento-card") || el.closest(".blog-card") ||
+       el.closest(".audit-card") || el.closest(".stat-card"));
+
+    if (hoverable) {
+      dot.style.background    = "#1a46c9";
+      dot.style.width         = "16px";
+      dot.style.height        = "16px";
+      ring.style.borderColor  = "rgba(26,70,201,0.6)";
+      ring.style.width        = "56px";
+      ring.style.height       = "56px";
+    } else {
+      dot.style.background    = "#000000";
+      dot.style.width         = "14px";
+      dot.style.height        = "14px";
+      ring.style.borderColor  = "#000000";
+      ring.style.width        = "42px";
+      ring.style.height       = "42px";
+    }
+  }, { passive: true });
+
   document.addEventListener("mousedown", function () {
-    setState("click");
+    dot.style.width  = "8px";
+    dot.style.height = "8px";
+    dot.style.background = "#1a46c9";
   });
 
-  document.addEventListener("mouseup", function (e) {
-    var state = getStateFromTarget(e.target);
-    setState(state);
+  document.addEventListener("mouseup", function () {
+    dot.style.width  = "14px";
+    dot.style.height = "14px";
   });
-
-  /* Off screen */
-  document.addEventListener("mouseleave", function () {
-    setState("hidden");
-  });
-
-  document.addEventListener("mouseenter", function () {
-    setState("default");
-  });
-
-  /* -------------------------------------------------------
-     DATA-CURSOR-LABEL attribute usage (HTML):
-     Add to any element:
-       data-cursor-label="VIEW"
-       data-cursor-label="EXPLORE"
-       data-cursor-label="PLAY"
-       data-cursor-label="OPEN"
-  ------------------------------------------------------- */
 
 })();
