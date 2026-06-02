@@ -67,18 +67,45 @@
 ================================================== */
 
 .logo {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--text-primary, #0f0f0f);
+  display: flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
   transition: opacity 0.2s ease;
 }
 
 .logo:hover {
-  opacity: 0.7;
+  opacity: 0.75;
+}
+
+/* RM badge — matches existing preloader mark style */
+.logo__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  background: #111111;
+  color: #ffffff;
+
+  border-radius: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+
+  flex-shrink: 0;
+}
+
+.logo__text {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text-primary, #0f0f0f);
 }
 
 
@@ -194,14 +221,23 @@
   color: var(--text-primary, #0f0f0f);
 }
 
+.nav-link.active {
+  color: var(--blue, #1a46c9);
+}
+
 .nav-link.active::after {
   content: "";
   position: absolute;
   left: 13px;
   bottom: 1px;
   width: calc(100% - 26px);
-  height: 1px;
-  background: #111;
+  height: 1.5px;
+  background: var(--blue, #1a46c9);
+}
+
+/* Active trigger (mega menu items) */
+.nav-trigger.active {
+  color: var(--blue, #1a46c9);
 }
 
 

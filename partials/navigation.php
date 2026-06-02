@@ -34,7 +34,8 @@ function nav_active(string $key, string $current): string {
 
     <!-- LOGO -->
     <a href="<?= BASE_PATH ?>/" class="logo" aria-label="Ramesh Mandal — Home">
-        RAMESH MANDAL
+        <span class="logo__mark" aria-hidden="true">RM</span>
+        <span class="logo__text">RAMESH MANDAL</span>
     </a>
 
     <!-- DESKTOP NAV -->
