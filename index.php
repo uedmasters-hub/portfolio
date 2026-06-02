@@ -50,7 +50,6 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <link rel="icon" type="image/png" sizes="32x32"  href="/assets/icons/favicon-32x32.png"/>
   <link rel="icon" type="image/png" sizes="16x16"  href="/assets/icons/favicon-16x16.png"/>
   <link rel="apple-touch-icon" sizes="180x180"     href="/assets/icons/favicon-180x180.png"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
   <meta name="theme-color" content="#0f0f0f"/>
 
   <!-- PRECONNECT -->
@@ -110,10 +109,7 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   </div>
 
   <!-- ── PAGE ── -->
-  <?php
-  $currentKey = "home"; // change per-page (see table below)
-  require_once __DIR__ . "/partials/navigation.php";
-  ?>
+  <?php require_once __DIR__ . "/partials/header.php"; ?>
   <div class="page-wrapper">
 
     <!-- HEADER -->
@@ -152,7 +148,6 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <script src="assets/js/animations.js"  defer></script>
   <script src="assets/js/app.js"         defer></script>
   <script src="assets/js/popover.js"      defer></script>
-  <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
 </body>
 </html>
