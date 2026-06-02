@@ -52,7 +52,6 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/audit.css"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
 
@@ -265,10 +264,10 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
 
   </div>
 
-  <script src="../assets/js/preloader.js"></script>
-  <script src="../assets/js/background.js" defer></script>
-  <script src="../assets/js/animations.js" defer></script>
-  <script src="../assets/js/app.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/preloader.js"></script>
+  <script src="<?= BASE_PATH ?>/assets/js/background.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/animations.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/app.js" defer></script>
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
 </body>

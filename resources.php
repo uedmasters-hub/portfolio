@@ -50,7 +50,6 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/resources.css"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
 
@@ -296,10 +295,10 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
 
   </div>
 
-  <script src="assets/js/preloader.js"></script>
-  <script src="assets/js/background.js" defer></script>
-  <script src="assets/js/animations.js" defer></script>
-  <script src="assets/js/app.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/preloader.js"></script>
+  <script src="<?= BASE_PATH ?>/assets/js/background.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/animations.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/app.js" defer></script>
   <script>
   /* ── FRAMEWORK ACCORDION ── */
   function toggleFramework(header) {

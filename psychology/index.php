@@ -51,7 +51,6 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/components/popover.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/psychology.css"/>
-  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
 </head>
 <body>
 
@@ -233,10 +232,10 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
 
   </div>
 
-  <script src="../assets/js/preloader.js"></script>
-  <script src="../assets/js/background.js" defer></script>
-  <script src="../assets/js/animations.js" defer></script>
-  <script src="../assets/js/app.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/preloader.js"></script>
+  <script src="<?= BASE_PATH ?>/assets/js/background.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/animations.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/app.js" defer></script>
 
   <script>
   /* ── PSYCHOLOGY PRINCIPLES DATA ─────────── */
