@@ -184,7 +184,7 @@
   }
 
   .hero__title {
-    font-size:      clamp(1.9rem, 8vw, 3.4rem);
+    font-size:      clamp(3rem, 8vw, 3.4rem);
     line-height:    1.08;
     letter-spacing: -0.04em;   /* reduce from -0.06em — less overflow risk */
     max-width:      100%;
@@ -239,12 +239,12 @@
 @media (max-width: 480px) {
 
   .hero__title {
-    font-size:      clamp(1.6rem, 9vw, 2.4rem);
+    font-size: clamp(3rem, 9vw, 2.4rem);
     letter-spacing: -0.03em;
-    overflow-wrap:  break-word;
-    word-break:     break-word;
-    overflow:       hidden;
-    width:          100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    overflow: hidden;
+    width: 100%;
   }
 
   .hero__chips {
