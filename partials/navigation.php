@@ -38,8 +38,7 @@ function nav_active(string $key, string $current): string {
         <span class="logo__text">RAMESH MANDAL</span>
     </a>
 
-    <!-- RIGHT: NAV + CTA grouped together -->
-    <div class="header-right">
+    <!-- DESKTOP NAV -->
     <nav class="nav" aria-label="Primary navigation" role="navigation">
 
         <!-- WORK — mega menu trigger -->
@@ -117,8 +116,7 @@ function nav_active(string $key, string $current): string {
         <a href="<?= BASE_PATH ?>/contact.php" class="nav-connect">
             Connect
         </a>
-    </div><!-- /nav-right -->
-    </div><!-- /header-right -->
+    </div>
 
     <!-- HAMBURGER — mobile only -->
     <button
