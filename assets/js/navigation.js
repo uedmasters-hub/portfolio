@@ -32,54 +32,64 @@
      SCROLL — hide/show + glassmorphism
   ================================================== */
 
-  const SCROLL_THRESHOLD  = 40;   // px before glass activates
-  const HIDE_THRESHOLD    = 80;   // px scrolled before auto-hide kicks in
-  const HIDE_DELTA        = 6;    // px of downward scroll to trigger hide
+  const GLASS_THRESHOLD = 40;    // px — glass activates after this
+  const HIDE_THRESHOLD  = 100;   // px — hide only kicks in past this point
+  const HIDE_DELTA      = 8;     // px of upward scroll (increasing Y) to trigger hide
+  const SHOW_DELTA      = 6;     // px of downward scroll (decreasing Y) to show
 
-  let lastScrollY   = 0;
-  let ticking       = false;
-  let isHidden      = false;
-  let isGlass       = false;
+  let lastScrollY  = 0;
+  let ticking      = false;
+  let isHidden     = false;
+  let isGlass      = false;
+  let idleTimer    = null;
+
+  function showHeader() {
+    if (isHidden) {
+      header.classList.remove("is-hidden");
+      isHidden = false;
+    }
+  }
+
+  function hideHeader() {
+    if (!isHidden) {
+      header.classList.add("is-hidden");
+      isHidden = true;
+      if (activePanel) closeAll(true);
+    }
+  }
 
   function handleScroll() {
 
     const y    = window.scrollY;
-    const diff = y - lastScrollY;
+    const diff = y - lastScrollY;   // positive = scrolling UP page (Y increases)
+                                     // negative = scrolling DOWN page (Y decreases)
 
     /* ── Glassmorphism ── */
-    if (y > SCROLL_THRESHOLD && !isGlass) {
+    if (y > GLASS_THRESHOLD && !isGlass) {
       header.classList.add("is-scrolled");
       isGlass = true;
-    } else if (y <= SCROLL_THRESHOLD && isGlass) {
+    } else if (y <= GLASS_THRESHOLD && isGlass) {
       header.classList.remove("is-scrolled");
       isGlass = false;
     }
 
     /* ── Hide / show ── */
-    // Only engage hide behaviour after scrolling past threshold
-    if (y > HIDE_THRESHOLD) {
-
-      if (diff > HIDE_DELTA && !isHidden) {
-        // Scrolling DOWN — hide
-        header.classList.add("is-hidden");
-        isHidden = true;
-
-        // Close mega if open
-        if (activePanel) closeAll(true);
-
-      } else if (diff < -HIDE_DELTA && isHidden) {
-        // Scrolling UP — show immediately
-        header.classList.remove("is-hidden");
-        isHidden = false;
-      }
-
-    } else {
-      // Near top — always show
-      if (isHidden) {
-        header.classList.remove("is-hidden");
-        isHidden = false;
-      }
+    if (y <= HIDE_THRESHOLD) {
+      // Near top — always visible, no hide logic
+      showHeader();
+    } else if (diff > HIDE_DELTA) {
+      // User scrolling UP the page (Y increasing) — hide header
+      hideHeader();
+    } else if (diff < -SHOW_DELTA) {
+      // User scrolling DOWN the page (Y decreasing) — show header
+      showHeader();
     }
+
+    /* ── Idle reveal — show after 2s of no scrolling ── */
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function () {
+      showHeader();
+    }, 2000);
 
     lastScrollY = y;
     ticking     = false;
