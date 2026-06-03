@@ -127,22 +127,29 @@
 
 @media (max-width: 768px) {
 
-  /* .phil-grow-wrap injected by JS — owns layout height.
-     Overflow visible so sticky section can extend beyond it.   */
-  .phil-grow-wrap {
-    overflow: visible;
+  /* .phil-spacer is injected by JS — it owns the layout height.
+     The section becomes absolute inside it.
+     We only need to ensure no clipping breaks the visual.       */
+  .phil-spacer {
+    overflow: visible !important;
   }
 
-  /* Section is sticky inside the wrap.
-     JS sets position:sticky, height:100%, display:flex.
-     CSS just ensures no conflicting overflow.                  */
   .philosophy-section {
-    padding:    64px 20px;
-    overflow:   visible;
-    box-sizing: border-box;
+    padding:          64px 20px;
+    /* GSAP sets position:absolute + scaleY on this element.
+       transform-origin ensures expansion is from the centre.    */
+    transform-origin: center center;
+    overflow:         visible;
+    box-sizing:       border-box;
   }
 
-  .philosophy-mark   { font-size: 3.6rem; }
+  .philosophy-inner {
+    transform-origin: center center;  /* counter-scale anchor */
+  }
+
+  .philosophy-mark {
+    font-size: 3.6rem;
+  }
 
   .philosophy-quote {
     font-size:  clamp(1.4rem, 6vw, 2rem);
