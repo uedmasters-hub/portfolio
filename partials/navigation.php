@@ -548,7 +548,7 @@ function nav_active(string $key, string $current): string {
             </span>
             <span class="mobile-nav-link-text">
                 <span class="mobile-nav-link-title">Case Studies</span>
-                <span class="mobile-nav-link-desc">IndiGo, CrewPal, Design System</span>
+                <!-- <span class="mobile-nav-link-desc">IndiGo, CrewPal, Design System</span> -->
             </span>
         </a>
 
@@ -559,7 +559,7 @@ function nav_active(string $key, string $current): string {
             </span>
             <span class="mobile-nav-link-text">
                 <span class="mobile-nav-link-title">UX Audits</span>
-                <span class="mobile-nav-link-desc">Zomato, Swiggy teardowns</span>
+                <!-- <span class="mobile-nav-link-desc">Zomato, Swiggy teardowns</span> -->
             </span>
         </a>
 
@@ -573,7 +573,7 @@ function nav_active(string $key, string $current): string {
             </span>
             <span class="mobile-nav-link-text">
                 <span class="mobile-nav-link-title">Stories &amp; Essays</span>
-                <span class="mobile-nav-link-desc">War stories, quiet wins, opinions</span>
+                <!-- <span class="mobile-nav-link-desc">War stories, quiet wins, opinions</span> -->
             </span>
         </a>
 
@@ -584,7 +584,7 @@ function nav_active(string $key, string $current): string {
             </span>
             <span class="mobile-nav-link-text">
                 <span class="mobile-nav-link-title">Behavioural Design</span>
-                <span class="mobile-nav-link-desc">Psychology applied to product</span>
+                <!-- <span class="mobile-nav-link-desc">Psychology applied to product</span> -->
             </span>
         </a>
 
@@ -598,7 +598,7 @@ function nav_active(string $key, string $current): string {
             </span>
             <span class="mobile-nav-link-text">
                 <span class="mobile-nav-link-title">Experiments</span>
-                <span class="mobile-nav-link-desc">AI-UX, frameworks, prototypes</span>
+                <!-- <span class="mobile-nav-link-desc">AI-UX, frameworks, prototypes</span> -->
             </span>
         </a>
 
