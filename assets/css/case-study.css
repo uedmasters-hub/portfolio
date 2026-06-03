@@ -663,13 +663,13 @@
   .cs-content { grid-template-columns: 1fr; padding: 48px 40px; }
   .cs-nav     { display: none; }
   .cs-filter-bar { padding: 20px 40px; }
-  .cs-index-hero { padding: 64px 40px 52px; }
+  .cs-index-hero { padding: 64px 40px 52px; margin-top: -16px; }
 
 }
 
 @media (max-width: 768px) {
 
-  .cs-index-hero  { padding: 48px 20px 40px; }
+  .cs-index-hero  { padding: 48px 20px 40px; margin-top: -16px; }
   .cs-filter-bar  { padding: 16px 20px; gap: 6px; }
   .cs-grid        { grid-template-columns: 1fr; padding: 24px 20px 64px; gap: 16px; }
   .cs-card--featured { grid-column: span 1; }
