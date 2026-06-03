@@ -415,29 +415,22 @@
     quote.classList.add("is-visible");
     if (attr) attr.classList.add("is-visible");
 
-    /* ── MOBILE: SCALEY EXPAND FROM CENTRE + HIGHLIGHT ───────────
-       Technique: scaleY transform — NOT position:fixed, NOT min-height
-       ─────────────────────────────────────────────────────────────
-       Why scaleY:
-         • It's a GPU transform — zero layout impact, never pushes
-           content, no jumps on pin or unpin
-         • transformOrigin:"center center" makes it expand equally
-           upward and downward from the section's own centre
-         • Counter-scale the inner div so text stays normal size
-           while the blue shell grows around it
-         • GSAP's native pin handles sticky behaviour cleanly —
-           no onEnter/onLeave position hacks needed
+    /* ── MOBILE: LAYOUT-AWARE EXPAND + HIGHLIGHT ─────────────────
+       Strategy: wrap the section in a spacer div that grows its
+       actual layout height (pushing content down), while the
+       section itself uses scaleY from transformOrigin:center so
+       the expansion is visually symmetric (grows up AND down).
 
-       Sequence:
-         1. Section scrolls naturally into view
-         2. Pin fires when section centre = viewport centre
-            (section is already where it belongs — no snap)
-         3. Timeline phase 1: scaleY grows section → full screen
-            simultaneously counter-scales inner div → text stays
-         4. Timeline phase 2: words highlight left-to-right
-         5. Timeline phase 3: attribution fades in
-         6. Pin releases — scaleY value stays, section scrolls away
-            No clearProps, no jump, no reposition              */
+       Two things run in sync:
+         A. spacer div height: naturalH → 100vh   (layout push)
+         B. section scaleY:    1       → ratio     (visual expand)
+
+       The spacer owns the layout space. The section is absolute
+       inside the spacer, centred, so it visually expands from
+       the middle while the spacer below it grows the page height.
+
+       Pump effect is preserved — GSAP's anticipatePin creates it.
+       No position:fixed, no clearProps, no onLeave jump.         */
 
     if (window.matchMedia("(max-width: 768px)").matches) {
 
@@ -458,42 +451,71 @@
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
       if (mark) gsap.set(mark, { autoAlpha: 0.25 });
 
-      /* Section: set transformOrigin so scaleY expands from centre */
-      gsap.set(section, { transformOrigin: "center center" });
+      /* ── WRAP SECTION IN A LAYOUT SPACER ────────────────────── */
+      /* The spacer stays in normal flow and grows the layout.
+         The section becomes absolute inside it — centred — so
+         scaleY expands it symmetrically without pushing anything. */
 
-      /* Inner div: inverse transformOrigin so counter-scale works */
+      var naturalH = section.getBoundingClientRect().height;
+
+      /* Create spacer */
+      var spacer = document.createElement("div");
+      spacer.className = "phil-spacer";
+      spacer.style.cssText = [
+        "width:100%",
+        "height:" + naturalH + "px",
+        "position:relative",
+        "overflow:visible",
+      ].join(";");
+
+      /* Inject spacer: insert before section, move section inside */
+      section.parentNode.insertBefore(spacer, section);
+      spacer.appendChild(section);
+
+      /* Section: absolute inside spacer, centred vertically */
+      gsap.set(section, {
+        position:        "absolute",
+        top:             "50%",
+        left:            0,
+        width:           "100%",
+        yPercent:        -50,
+        transformOrigin: "center center",
+      });
+
+      /* Inner: counter-scale origin */
       if (inner) gsap.set(inner, { transformOrigin: "center center" });
 
-      /* ── BUILD TIMELINE ─────────────────────────────────────── */
-      var tlM = gsap.timeline();
-
-      /* PHASE 1 — Section grows to fill viewport height.
-         Calculate scale ratio right before pin fires — at this
-         point layout is settled and getBoundingClientRect is exact.
-         scaleY ratio = vh / section's natural rendered height.
-         Counter-scale inner so text stays 1:1 while shell grows. */
-
+      /* ── SCALE RATIO CALC ───────────────────────────────────── */
       var scaleRatio   = 1;
       var scaleInverse = 1;
 
       function calcScale() {
-        var h      = section.getBoundingClientRect().height;
-        if (h > 0) {
-          scaleRatio   = window.innerHeight / h;
-          scaleInverse = 1 / scaleRatio;
-        }
+        /* Use naturalH (fixed) not getBCR (changes as we scale) */
+        scaleRatio   = window.innerHeight / naturalH;
+        scaleInverse = 1 / scaleRatio;
       }
-
-      /* Calculate once now, recalculate on resize via invalidate */
       calcScale();
+
+      /* ── MASTER TIMELINE ────────────────────────────────────── */
+      var tlM = gsap.timeline();
+
+      /* PHASE 1 — Spacer height grows (layout push) AND
+                   section scaleY grows (visual symmetric expand)
+         Both tween simultaneously with identical ease + duration  */
+
+      tlM.to(spacer, {
+        height:   window.innerHeight,
+        duration: 1,
+        ease:     "power2.inOut",
+      });
 
       tlM.to(section, {
         scaleY:   function () { calcScale(); return scaleRatio; },
         duration: 1,
         ease:     "power2.inOut",
-      });
+      }, "<"); /* exact sync with spacer */
 
-      /* Counter-scale: runs in exact sync with section scale */
+      /* Counter-scale inner so text stays 1:1 */
       if (inner) {
         tlM.to(inner, {
           scaleY:   function () { return scaleInverse; },
@@ -502,7 +524,7 @@
         }, "<");
       }
 
-      /* Quote mark fully visible */
+      /* Quote mark brightens during expand */
       if (mark) {
         tlM.to(mark, {
           autoAlpha: 1,
@@ -511,7 +533,7 @@
         }, "-=0.5");
       }
 
-      /* PHASE 2 — Words highlight left-to-right */
+      /* PHASE 2 — Words highlight */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
@@ -530,35 +552,20 @@
       }
 
       /* ── SCROLLTRIGGER ──────────────────────────────────────── */
+      /* We pin the SPACER (layout owner), not the section.
+         The spacer stays in flow. The section is absolute inside.
+         Pin fires when spacer centre = viewport centre.           */
       ScrollTrigger.create({
-        trigger:   section,
+        trigger:   spacer,
         animation: tlM,
-
-        /*
-          Pin fires ONLY when section centre = viewport centre.
-          Section has scrolled naturally to this point — no snap.
-        */
         start:     "center center",
-
-        /*
-          Scroll distance while pinned:
-          Phase 1 (expand) + Phase 2 (31 words) + Phase 3 (attr)
-          2.4× viewport = comfortable reading pace on mobile.
-        */
         end: function () {
           return "+=" + Math.round(window.innerHeight * 2.4);
         },
-
         pin:                 true,
         scrub:               1.2,
         anticipatePin:       1,
         invalidateOnRefresh: true,
-
-        /*
-          NO onEnter, NO onLeave, NO clearProps.
-          When pin releases, scaleY is at its final value and
-          the section scrolls away — no jump, no reposition.
-        */
       });
 
       return; /* mobile handled — skip desktop block */

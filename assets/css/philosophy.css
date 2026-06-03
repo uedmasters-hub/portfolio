@@ -127,10 +127,20 @@
 
 @media (max-width: 768px) {
 
+  /* .phil-spacer is injected by JS — it owns the layout height.
+     The section becomes absolute inside it.
+     We only need to ensure no clipping breaks the visual.       */
+  .phil-spacer {
+    overflow: visible !important;
+  }
+
   .philosophy-section {
     padding:          64px 20px;
-    transform-origin: center center;  /* GSAP scaleY expands from here */
-    overflow:         visible;        /* allow scaled section to exceed bounds */
+    /* GSAP sets position:absolute + scaleY on this element.
+       transform-origin ensures expansion is from the centre.    */
+    transform-origin: center center;
+    overflow:         visible;
+    box-sizing:       border-box;
   }
 
   .philosophy-inner {
