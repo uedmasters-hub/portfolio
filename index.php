@@ -152,6 +152,10 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <script src="<?= BASE_PATH ?>/assets/js/app.js"         defer></script>
   <script src="<?= BASE_PATH ?>/assets/js/popover.js"      defer></script>
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
+  <!-- GSAP — loaded after all existing scripts, never blocks render -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/gsap-effects.js" defer></script>
 
 </body>
 </html>
