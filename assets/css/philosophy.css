@@ -128,22 +128,10 @@
 @media (max-width: 768px) {
 
   .philosophy-section {
-    /*
-      TRUE FULL-SCREEN BREAKOUT:
-      width:100vw + left:50% + translateX(-50%) breaks out of
-      any parent padding so the section is exactly viewport-wide.
-      clip-path percentages are then relative to 100vw, so
-      inset(8% 5%) = 8vw top/bottom, 5vw left/right — a genuine
-      viewport-centred card that expands to true full bleed.
-    */
-    width:       100vw;
-    position:    relative;
-    left:        50%;
-    transform:   translateX(-50%);
-    padding:     64px 24px;
-    overflow:    visible;
-    will-change: clip-path;
-    box-sizing:  border-box;
+    padding:    64px 20px;
+    /* GSAP will add min-height + flex-centre via JS.
+       No overflow, no clip-path, no width changes.
+       Section stays at natural document width.      */
   }
 
   .philosophy-mark {
@@ -152,6 +140,7 @@
 
   .philosophy-quote {
     font-size:  clamp(1.4rem, 6vw, 2rem);
+    /* GSAP owns all colour/opacity on mobile */
     transition: none !important;
     opacity:    1    !important;
     transform:  none !important;
@@ -199,29 +188,4 @@
   z-index: 50;
   width:   100% !important;
   left:    0   !important;
-}
-/* ── MOBILE CLIP-PATH EXPAND ─────────────────
-   GSAP sets clip-path: inset(5% 6%... round 24px)
-   on mobile as initial state. Ensure the section
-   itself and its immediate parent don't have
-   overflow:hidden which would fight the clip.   */
-
-@media (max-width: 768px) {
-
-  /* Phil-word: same as desktop */
-  .phil-word {
-    display:     inline;
-    white-space: normal;
-    will-change: color;
-  }
-
-  .philosophy-quote.is-visible .phil-word {
-    color: inherit;
-  }
-
-  /* While GSAP animates clip-path, no overflow clipping on parent */
-  .philosophy-section {
-    overflow: visible;
-  }
-
 }

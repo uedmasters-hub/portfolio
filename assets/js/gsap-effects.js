@@ -415,28 +415,21 @@
     quote.classList.add("is-visible");
     if (attr) attr.classList.add("is-visible");
 
-    /* ── MOBILE: SINGLE PIN — expand + highlight + release ────────
-       One ScrollTrigger pins the section when its centre hits
-       the viewport centre. While pinned, a scrubbed timeline runs:
-         Phase 1: clip-path shrinks from inset-card → full bleed
-         Phase 2: words highlight one by one
-         Phase 3: attribution fades in
-       Pin releases after all words are lit. Section stays full-bleed
-       and scrolls away naturally — it never shrinks back.          */
+    /* ── MOBILE: HEIGHT-ONLY EXPAND + HIGHLIGHT ──────────────────
+       Exact behaviour:
+       1. Section scrolls in normally at natural width + height
+       2. Section centre hits viewport centre → PIN
+       3. While pinned: min-height grows → 100vh (height only,
+          width is never touched, no clip-path, no scale)
+       4. Content stays vertically centred via flexbox
+       5. Words highlight left-to-right on scroll progress
+       6. Attribution fades in after last word
+       7. Pin releases → section (now full-height) scrolls away
+          naturally. No exit animation. No size reversal.         */
 
     if (window.matchMedia("(max-width: 768px)").matches) {
 
-      /* ── FORCE TRUE FULL WIDTH ────────────────────────────────
-         Override any CSS constraints so the section is exactly
-         100vw. We do this in JS so GSAP pin doesn't fight a
-         CSS transform: translateX(-50%) on the same element.     */
-      section.style.width     = "100vw";
-      section.style.position  = "relative";
-      section.style.left      = "50%";
-      section.style.transform = "translateX(-50%)";
-      section.style.boxSizing = "border-box";
-
-      /* ── WORD SPLIT ───────────────────────────────────────── */
+      /* ── WORD SPLIT ─────────────────────────────────────────── */
       var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
       var wordsM   = rawTextM.split(" ").filter(Boolean);
 
@@ -446,47 +439,50 @@
 
       var wordElsM = Array.from(quote.querySelectorAll(".phil-word"));
 
-      /* ── INITIAL STATES ───────────────────────────────────── */
+      /* ── CAPTURE NATURAL HEIGHT before GSAP touches anything ── */
+      var naturalH = section.getBoundingClientRect().height;
 
-      /* Start as inset rounded card — percentages now relative
-         to 100vw so this is a genuine viewport-centred card     */
+      /* ── INITIAL STATES ─────────────────────────────────────── */
+
+      /* Section: keep natural height, enable flex-centre for content */
       gsap.set(section, {
-        clipPath:   "inset(10% 6% 10% 6% round 20px)",
-        willChange: "clip-path",
-        /* Clear the transform so GSAP pin can manage position  */
-        clearProps: "transform",
+        minHeight:      naturalH + "px",
+        display:        "flex",
+        flexDirection:  "column",
+        justifyContent: "center",
       });
 
-      /* After clearProps removes translateX, re-centre with margin */
-      section.style.transform  = "";
-      section.style.marginLeft = "calc(50% - 50vw)";
-      section.style.left       = "0";
-
+      /* Words: all dim */
       gsap.set(wordElsM, { color: "rgba(255,255,255,0.15)" });
-      if (attr) gsap.set(attr, { autoAlpha: 0, y: 12 });
-      if (mark) gsap.set(mark, { autoAlpha: 0.2 });
 
-      /* ── MASTER TIMELINE ──────────────────────────────────── */
+      /* Attribution: hidden */
+      if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
 
+      /* Quote mark: dim */
+      if (mark) gsap.set(mark, { autoAlpha: 0.25 });
+
+      /* ── MASTER TIMELINE ────────────────────────────────────── */
       var tlM = gsap.timeline();
 
-      /* PHASE 1 — Box expands to full bleed */
+      /* PHASE 1 — Height expands from natural → 100vh
+         Only min-height changes. Width: 100%, untouched.
+         Content stays centred because justifyContent: center.   */
       tlM.to(section, {
-        clipPath:  "inset(0% 0% 0% 0% round 0px)",
+        minHeight: window.innerHeight + "px",
         duration:  1,
         ease:      "power2.inOut",
       });
 
-      /* Quote mark fades in (overlaps end of expand) */
+      /* Quote mark fully visible during expand */
       if (mark) {
         tlM.to(mark, {
           autoAlpha: 1,
           duration:  0.4,
           ease:      "power2.out",
-        }, "-=0.3");
+        }, "-=0.5");
       }
 
-      /* PHASE 2 — Words highlight left to right */
+      /* PHASE 2 — 31 words light up sequentially */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
@@ -494,42 +490,41 @@
         ease:     "power1.inOut",
       }, "-=0.1");
 
-      /* PHASE 3 — Attribution appears */
+      /* PHASE 3 — Attribution slides up */
       if (attr) {
         tlM.to(attr, {
           autoAlpha: 1,
           y:         0,
           duration:  0.5,
           ease:      "power2.out",
-        }, "-=0.15");
+        }, "-=0.2");
       }
 
-      /* ── SINGLE PINNED SCROLLTRIGGER ─────────────────────── */
+      /* ── SCROLLTRIGGER ──────────────────────────────────────── */
       ScrollTrigger.create({
         trigger:   section,
         animation: tlM,
 
-        /* Pin when section centre hits viewport centre */
+        /* Pin when section centre aligns with viewport centre */
         start:     "center center",
 
-        /* 2× viewport height = comfortable scroll pace */
-        end:       () => "+=" + Math.round(window.innerHeight * 2),
+        /* Scroll distance while pinned.
+           expand(1) + 31 words(~2.5) + attribution(0.5) = ~4 units
+           2.4× viewport gives a comfortable unhurried pace.     */
+        end:       function () {
+          return "+=" + Math.round(window.innerHeight * 2.4);
+        },
 
-        pin:       true,
-        scrub:     1.4,
+        pin:                 true,
+        scrub:               1.2,
         anticipatePin:       1,
         invalidateOnRefresh: true,
 
-        onLeave: function () {
-          /* Permanently full-bleed after pin releases */
-          gsap.set(section, {
-            clipPath:   "none",
-            clearProps: "willChange",
-          });
-        },
+        /* No onLeave cleanup needed — min-height stays at 100vh
+           and section just scrolls away naturally full-height.  */
       });
 
-      return; /* mobile done — skip desktop block below */
+      return; /* mobile handled — skip desktop block */
     }
 
     /* ── SPLIT QUOTE INTO WORD SPANS ───────────────────────────
