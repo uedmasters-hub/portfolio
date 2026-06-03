@@ -415,26 +415,37 @@
     quote.classList.add("is-visible");
     if (attr) attr.classList.add("is-visible");
 
-    /* ── MOBILE: LAYOUT-AWARE EXPAND + HIGHLIGHT ─────────────────
-       Strategy: wrap the section in a spacer div that grows its
-       actual layout height (pushing content down), while the
-       section itself uses scaleY from transformOrigin:center so
-       the expansion is visually symmetric (grows up AND down).
+    /* ── MOBILE: STICKY + REAL HEIGHT GROWTH + HIGHLIGHT ─────────
+       Core insight: GSAP pin freezes layout at pin-moment.
+       Solution: NO pin. Instead use position:sticky on the section
+       so it sticks naturally, while a REAL height change on a
+       wrapper div drives genuine document reflow.
 
-       Two things run in sync:
-         A. spacer div height: naturalH → 100vh   (layout push)
-         B. section scaleY:    1       → ratio     (visual expand)
+       Architecture:
+       ┌─ .phil-grow-wrap ─────────────────────────────────────┐
+       │  height tweens naturalH → 100vh  ← REAL layout height │
+       │  (pushes all content below down as it grows)          │
+       │                                                        │
+       │  ┌─ .philosophy-section ──────────────────────────┐   │
+       │  │  position: sticky; top: 0                       │   │
+       │  │  height: 100% (fills whatever wrap is)          │   │
+       │  │  content centred via flex                       │   │
+       │  └─────────────────────────────────────────────────┘   │
+       └────────────────────────────────────────────────────────┘
 
-       The spacer owns the layout space. The section is absolute
-       inside the spacer, centred, so it visually expands from
-       the middle while the spacer below it grows the page height.
-
-       Pump effect is preserved — GSAP's anticipatePin creates it.
-       No position:fixed, no clearProps, no onLeave jump.         */
+       Sequence:
+       1. wrap + section scroll normally into view
+       2. section hits top of viewport → sticky kicks in
+          (section sticks, wrap continues growing)
+       3. ScrollTrigger scrubs a timeline tied to wrap scroll:
+          - wrap height: naturalH → 100vh  (layout grows → push)
+          - section height: 100% of wrap   (fills it visually)
+          - words highlight
+       4. When wrap height = 100vh, section fills screen
+       5. User keeps scrolling, wrap scrolls away, section unsticks
+       6. Everything below was already pushed — no jump             */
 
     if (window.matchMedia("(max-width: 768px)").matches) {
-
-      var inner = section.querySelector(".philosophy-inner");
 
       /* ── WORD SPLIT ─────────────────────────────────────────── */
       var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
@@ -451,89 +462,57 @@
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
       if (mark) gsap.set(mark, { autoAlpha: 0.25 });
 
-      /* ── WRAP SECTION IN A LAYOUT SPACER ────────────────────── */
-      /* The spacer stays in normal flow and grows the layout.
-         The section becomes absolute inside it — centred — so
-         scaleY expands it symmetrically without pushing anything. */
+      /* ── MEASURE NATURAL HEIGHT ─────────────────────────────── */
+      var naturalH = Math.round(section.getBoundingClientRect().height);
+      var vh       = window.innerHeight;
 
-      var naturalH = section.getBoundingClientRect().height;
+      /* ── BUILD GROW WRAPPER ─────────────────────────────────── */
+      /* Wrapper lives in normal flow and owns the real height.
+         Its height growing is what pushes content below down.    */
+      var wrap = document.createElement("div");
+      wrap.className        = "phil-grow-wrap";
+      wrap.style.width      = "100%";
+      wrap.style.height     = naturalH + "px";
+      wrap.style.position   = "relative";
 
-      /* Create spacer */
-      var spacer = document.createElement("div");
-      spacer.className = "phil-spacer";
-      spacer.style.cssText = [
-        "width:100%",
-        "height:" + naturalH + "px",
-        "position:relative",
-        "overflow:visible",
-      ].join(";");
+      /* Insert wrap before section, move section inside */
+      section.parentNode.insertBefore(wrap, section);
+      wrap.appendChild(section);
 
-      /* Inject spacer: insert before section, move section inside */
-      section.parentNode.insertBefore(spacer, section);
-      spacer.appendChild(section);
+      /* ── MAKE SECTION STICKY INSIDE WRAPPER ─────────────────── */
+      /* Section sticks to top of viewport as user scrolls.
+         height:100% makes it fill however tall the wrap is.      */
+      section.style.position = "sticky";
+      section.style.top      = "0";
+      section.style.height   = "100%";
+      section.style.width    = "100%";
+      section.style.display  = "flex";
+      section.style.flexDirection  = "column";
+      section.style.justifyContent = "center";
+      section.style.boxSizing      = "border-box";
 
-      /* Section: absolute inside spacer, centred vertically */
-      gsap.set(section, {
-        position:        "absolute",
-        top:             "50%",
-        left:            0,
-        width:           "100%",
-        yPercent:        -50,
-        transformOrigin: "center center",
-      });
-
-      /* Inner: counter-scale origin */
-      if (inner) gsap.set(inner, { transformOrigin: "center center" });
-
-      /* ── SCALE RATIO CALC ───────────────────────────────────── */
-      var scaleRatio   = 1;
-      var scaleInverse = 1;
-
-      function calcScale() {
-        /* Use naturalH (fixed) not getBCR (changes as we scale) */
-        scaleRatio   = window.innerHeight / naturalH;
-        scaleInverse = 1 / scaleRatio;
-      }
-      calcScale();
-
-      /* ── MASTER TIMELINE ────────────────────────────────────── */
+      /* ── TIMELINE ───────────────────────────────────────────── */
       var tlM = gsap.timeline();
 
-      /* PHASE 1 — Spacer height grows (layout push) AND
-                   section scaleY grows (visual symmetric expand)
-         Both tween simultaneously with identical ease + duration  */
-
-      tlM.to(spacer, {
-        height:   window.innerHeight,
+      /* PHASE 1 — Wrap height grows: naturalH → vh
+         This is the ONLY height change. Section fills it via 100%.
+         Everything below wrap is pushed down in real time.        */
+      tlM.to(wrap, {
+        height:   vh,
         duration: 1,
         ease:     "power2.inOut",
       });
-
-      tlM.to(section, {
-        scaleY:   function () { calcScale(); return scaleRatio; },
-        duration: 1,
-        ease:     "power2.inOut",
-      }, "<"); /* exact sync with spacer */
-
-      /* Counter-scale inner so text stays 1:1 */
-      if (inner) {
-        tlM.to(inner, {
-          scaleY:   function () { return scaleInverse; },
-          duration: 1,
-          ease:     "power2.inOut",
-        }, "<");
-      }
 
       /* Quote mark brightens during expand */
       if (mark) {
         tlM.to(mark, {
           autoAlpha: 1,
-          duration:  0.4,
+          duration:  0.5,
           ease:      "power2.out",
-        }, "-=0.5");
+        }, "-=0.6");
       }
 
-      /* PHASE 2 — Words highlight */
+      /* PHASE 2 — Words highlight left-to-right */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
@@ -551,20 +530,22 @@
         }, "-=0.2");
       }
 
-      /* ── SCROLLTRIGGER ──────────────────────────────────────── */
-      /* We pin the SPACER (layout owner), not the section.
-         The spacer stays in flow. The section is absolute inside.
-         Pin fires when spacer centre = viewport centre.           */
+      /* ── SCROLLTRIGGER — NO PIN ─────────────────────────────── */
+      /* Trigger on the WRAP (layout owner).
+         start: top of wrap hits top of viewport = same moment
+         section becomes sticky.
+         end: enough scroll distance for all phases.
+         NO pin — the wrap scrolls normally, section sticks via CSS.
+         scrub drives the timeline against scroll position.        */
       ScrollTrigger.create({
-        trigger:   spacer,
+        trigger:   wrap,
         animation: tlM,
-        start:     "center center",
+        start:     "top top",
         end: function () {
-          return "+=" + Math.round(window.innerHeight * 2.4);
+          /* Distance = grow phase + highlight phase + attribution */
+          return "+=" + Math.round(vh * 2.4);
         },
-        pin:                 true,
         scrub:               1.2,
-        anticipatePin:       1,
         invalidateOnRefresh: true,
       });
 
