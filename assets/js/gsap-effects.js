@@ -415,23 +415,33 @@
     quote.classList.add("is-visible");
     if (attr) attr.classList.add("is-visible");
 
-    /* ── MOBILE: CENTRE-ANCHOR EXPAND + HIGHLIGHT ────────────────
-       How it works:
-       ─ Section scrolls normally until its centre = viewport centre
-       ─ ScrollTrigger pins the section (GSAP handles the spacer so
-         the next section does NOT jump)
-       ─ While pinned we use position:fixed + top/bottom to stretch
-         the section equally up and down from its locked centre,
-         completely outside normal flow → zero layout push
-       ─ We tween top from centreY → 0  and bottom from centreY → 0
-         simultaneously so expansion is symmetric
-       ─ Words highlight once section is full-screen
-       ─ On unpin: restore position:relative, let section scroll away
-         at full height (next section was never pushed, so no jump)
+    /* ── MOBILE: SCALEY EXPAND FROM CENTRE + HIGHLIGHT ───────────
+       Technique: scaleY transform — NOT position:fixed, NOT min-height
+       ─────────────────────────────────────────────────────────────
+       Why scaleY:
+         • It's a GPU transform — zero layout impact, never pushes
+           content, no jumps on pin or unpin
+         • transformOrigin:"center center" makes it expand equally
+           upward and downward from the section's own centre
+         • Counter-scale the inner div so text stays normal size
+           while the blue shell grows around it
+         • GSAP's native pin handles sticky behaviour cleanly —
+           no onEnter/onLeave position hacks needed
 
-       Width: NEVER touched. Only top/bottom/height change.         */
+       Sequence:
+         1. Section scrolls naturally into view
+         2. Pin fires when section centre = viewport centre
+            (section is already where it belongs — no snap)
+         3. Timeline phase 1: scaleY grows section → full screen
+            simultaneously counter-scales inner div → text stays
+         4. Timeline phase 2: words highlight left-to-right
+         5. Timeline phase 3: attribution fades in
+         6. Pin releases — scaleY value stays, section scrolls away
+            No clearProps, no jump, no reposition              */
 
     if (window.matchMedia("(max-width: 768px)").matches) {
+
+      var inner = section.querySelector(".philosophy-inner");
 
       /* ── WORD SPLIT ─────────────────────────────────────────── */
       var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
@@ -448,19 +458,66 @@
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
       if (mark) gsap.set(mark, { autoAlpha: 0.25 });
 
-      /* ── MASTER TIMELINE ────────────────────────────────────── */
+      /* Section: set transformOrigin so scaleY expands from centre */
+      gsap.set(section, { transformOrigin: "center center" });
+
+      /* Inner div: inverse transformOrigin so counter-scale works */
+      if (inner) gsap.set(inner, { transformOrigin: "center center" });
+
+      /* ── BUILD TIMELINE ─────────────────────────────────────── */
       var tlM = gsap.timeline();
 
-      /* We'll populate the timeline in onEnter once we know the
-         section's real position — see ScrollTrigger callbacks.   */
+      /* PHASE 1 — Section grows to fill viewport height.
+         Calculate scale ratio right before pin fires — at this
+         point layout is settled and getBoundingClientRect is exact.
+         scaleY ratio = vh / section's natural rendered height.
+         Counter-scale inner so text stays 1:1 while shell grows. */
 
-      /* PHASE 2 — Words light up after expand */
+      var scaleRatio   = 1;
+      var scaleInverse = 1;
+
+      function calcScale() {
+        var h      = section.getBoundingClientRect().height;
+        if (h > 0) {
+          scaleRatio   = window.innerHeight / h;
+          scaleInverse = 1 / scaleRatio;
+        }
+      }
+
+      /* Calculate once now, recalculate on resize via invalidate */
+      calcScale();
+
+      tlM.to(section, {
+        scaleY:   function () { calcScale(); return scaleRatio; },
+        duration: 1,
+        ease:     "power2.inOut",
+      });
+
+      /* Counter-scale: runs in exact sync with section scale */
+      if (inner) {
+        tlM.to(inner, {
+          scaleY:   function () { return scaleInverse; },
+          duration: 1,
+          ease:     "power2.inOut",
+        }, "<");
+      }
+
+      /* Quote mark fully visible */
+      if (mark) {
+        tlM.to(mark, {
+          autoAlpha: 1,
+          duration:  0.4,
+          ease:      "power2.out",
+        }, "-=0.5");
+      }
+
+      /* PHASE 2 — Words highlight left-to-right */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
         stagger:  { each: 0.07, from: "start", ease: "none" },
         ease:     "power1.inOut",
-      });
+      }, "-=0.1");
 
       /* PHASE 3 — Attribution */
       if (attr) {
@@ -474,64 +531,34 @@
 
       /* ── SCROLLTRIGGER ──────────────────────────────────────── */
       ScrollTrigger.create({
-        trigger: section,
-        start:   "center center",
-        end:     function () {
+        trigger:   section,
+        animation: tlM,
+
+        /*
+          Pin fires ONLY when section centre = viewport centre.
+          Section has scrolled naturally to this point — no snap.
+        */
+        start:     "center center",
+
+        /*
+          Scroll distance while pinned:
+          Phase 1 (expand) + Phase 2 (31 words) + Phase 3 (attr)
+          2.4× viewport = comfortable reading pace on mobile.
+        */
+        end: function () {
           return "+=" + Math.round(window.innerHeight * 2.4);
         },
+
         pin:                 true,
         scrub:               1.2,
         anticipatePin:       1,
         invalidateOnRefresh: true,
 
-        /* ── ON PIN: switch to fixed + expand from centre ──────── */
-        onEnter: function (self) {
-          /* Measure where section sits in viewport right now */
-          var rect    = section.getBoundingClientRect();
-          var centreY = rect.top + rect.height / 2;   /* px from viewport top */
-
-          /* Switch to fixed so section leaves flow entirely */
-          gsap.set(section, {
-            position: "fixed",
-            top:      centreY - rect.height / 2,
-            left:     rect.left,
-            width:    rect.width,
-            height:   rect.height,
-            margin:   0,
-          });
-
-          /* Animate top → 0 and height → 100vh simultaneously
-             so it expands equally upward and downward from centre */
-          gsap.to(section, {
-            top:      0,
-            height:   window.innerHeight,
-            duration: 0.7,
-            ease:     "power2.inOut",
-            onComplete: function () {
-              /* Snap width to 100% now it's at full height */
-              gsap.set(section, { width: "100%" });
-            }
-          });
-
-          /* Quote mark brightens during expand */
-          if (mark) {
-            gsap.to(mark, {
-              autoAlpha: 1,
-              duration:  0.5,
-              ease:      "power2.out",
-            });
-          }
-        },
-
-        /* ── ON RELEASE: restore section to normal flow ─────────── */
-        onLeave: function () {
-          gsap.set(section, {
-            clearProps: "position,top,left,width,height,margin",
-          });
-        },
-
-        /* ── WHILE PINNED: drive word highlight ─────────────────── */
-        animation: tlM,
+        /*
+          NO onEnter, NO onLeave, NO clearProps.
+          When pin releases, scaleY is at its final value and
+          the section scrolls away — no jump, no reposition.
+        */
       });
 
       return; /* mobile handled — skip desktop block */

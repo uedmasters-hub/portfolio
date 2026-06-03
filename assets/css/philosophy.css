@@ -128,9 +128,13 @@
 @media (max-width: 768px) {
 
   .philosophy-section {
-    padding:    64px 20px;
-    /* GSAP switches to position:fixed during the expand.
-       No overflow/clip/width changes needed here.         */
+    padding:          64px 20px;
+    transform-origin: center center;  /* GSAP scaleY expands from here */
+    overflow:         visible;        /* allow scaled section to exceed bounds */
+  }
+
+  .philosophy-inner {
+    transform-origin: center center;  /* counter-scale anchor */
   }
 
   .philosophy-mark {
