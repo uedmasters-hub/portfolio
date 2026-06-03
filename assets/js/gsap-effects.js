@@ -370,4 +370,147 @@
 
   })();
 
+  /* =============================================================
+     EFFECT 5 — PHILOSOPHY QUOTE WORD HIGHLIGHT
+     ─────────────────────────────────────────────────────────────
+     The blue philosophy section PINS to the top of the viewport.
+     While pinned, each word in the blockquote illuminates
+     one-by-one from dim → full white as the user scrolls.
+     After the final word lights up and the attribution appears,
+     the pin releases and normal scroll resumes.
+
+     How it works:
+       1. JS splits blockquote text into <span class="phil-word">
+       2. All words start at rgba(255,255,255,0.15) — almost invisible
+       3. A GSAP timeline tweens each word to rgba(255,255,255,1)
+          with a 0.09s stagger between words
+       4. ScrollTrigger pins the section and scrubs that timeline
+          directly against scroll position (scrub: 1.8)
+       5. Pin duration = 180% of viewport height — enough for
+          31 words × stagger to feel deliberate, not rushed
+       6. Attribution slides up after last word
+
+     Desktop only — mobile gets CSS fade (pinned scroll = bad UX
+     on touch, causes momentum conflicts on iOS/Android)
+
+     Ownership: removes .philosophy-quote from animations.js IO
+     so both systems don't fight over opacity/transform.
+  ============================================================= */
+
+  (function initPhilosophyHighlight() {
+
+    var section = document.querySelector(".philosophy-section");
+    var quote   = document.querySelector(".philosophy-quote");
+    var attr    = document.querySelector(".philosophy-attr");
+
+    if (!section || !quote) return;
+
+    /* ── TAKE OWNERSHIP from animations.js ────────────────────
+       animations.js uses an IntersectionObserver that adds
+       .is-visible to .philosophy-quote and .philosophy-attr.
+       We need to intercept before that fires, or neutralise it.
+       Strategy: add is-visible immediately (removes opacity:0
+       from CSS) then let GSAP re-set opacity per word.          */
+
+    quote.classList.add("is-visible");
+    if (attr) attr.classList.add("is-visible");
+
+    /* ── MOBILE FALLBACK — skip pin, let CSS handle it ────────── */
+    if (window.matchMedia("(max-width: 768px)").matches) return;
+
+    /* ── SPLIT QUOTE INTO WORD SPANS ───────────────────────────
+       Preserves the exact text including em-dashes and commas.
+       Words are separated by whitespace; punctuation stays
+       attached to its word (e.g. "systems —" stays as one token
+       split into "systems" and "—" naturally).                  */
+
+    var rawText  = quote.textContent.trim()
+                       .replace(/\s+/g, " ");       /* normalise whitespace */
+    var words    = rawText.split(" ").filter(Boolean);
+
+    quote.innerHTML = words.map(function (w) {
+      return '<span class="phil-word">' + w + "</span>";
+    }).join(" ");                                    /* space between spans */
+
+    var wordEls = Array.from(quote.querySelectorAll(".phil-word"));
+
+    /* ── INITIAL STATES ─────────────────────────────────────── */
+
+    /* Words: all dim */
+    gsap.set(wordEls, {
+      color:           "rgba(255,255,255,0.15)",
+      display:         "inline",
+    });
+
+    /* Attribution: hidden, slightly below */
+    if (attr) {
+      gsap.set(attr, { autoAlpha: 0, y: 14 });
+    }
+
+    /* Quote mark: dim */
+    var mark = section.querySelector(".philosophy-mark");
+    if (mark) {
+      gsap.set(mark, { autoAlpha: 0.2 });
+    }
+
+    /* ── SCRUB TIMELINE ─────────────────────────────────────── */
+
+    var tl = gsap.timeline();
+
+    /* 1. Quote mark fades up */
+    if (mark) {
+      tl.to(mark, {
+        autoAlpha: 1,
+        duration:  0.3,
+        ease:      "power2.out",
+      });
+    }
+
+    /* 2. Words light up one by one — 31 words × 0.09s stagger */
+    tl.to(wordEls, {
+      color:    "rgba(255,255,255,1)",
+      duration: 0.5,
+      stagger:  {
+        each:   0.09,      /* 90ms between each word start */
+        from:   "start",
+        ease:   "none",
+      },
+      ease: "power1.inOut",
+    }, mark ? "-=0.1" : "0");
+
+    /* 3. Attribution slides up after last word */
+    if (attr) {
+      tl.to(attr, {
+        autoAlpha: 1,
+        y:         0,
+        duration:  0.5,
+        ease:      "power2.out",
+      }, "-=0.2");          /* overlap slightly with last word */
+    }
+
+    /* ── SCROLLTRIGGER — PIN + SCRUB ────────────────────────── */
+
+    ScrollTrigger.create({
+      trigger:       section,
+      animation:     tl,
+
+      /* Pin starts when section top hits viewport top */
+      start:         "top top",
+
+      /* Pin duration:
+         31 words × 90ms stagger + durations + attribution ≈ 4.5s of timeline.
+         At scrub 1.8, scroll distance ≈ viewport × 1.8.
+         We use 190vh which gives comfortable reading pace.      */
+      end:           () => "+=" + Math.round(window.innerHeight * 1.9),
+
+      pin:           true,
+      scrub:         1.8,        /* lag smooths jerky scroll wheel */
+      anticipatePin: 1,          /* prevents layout jump on pin entry */
+
+      /* Refresh on resize so pin duration recalculates */
+      invalidateOnRefresh: true,
+    });
+
+  })();
+
 })();
