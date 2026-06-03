@@ -753,12 +753,12 @@
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           38px;
-  height:          38px;
-  border-radius:   9px;
+  width:           32px;
+  height:          32px;
+  border-radius:   8px;
   background:      #111;
   color:           #fff;
-  font-size:       13px;
+  font-size:       11px;
   font-weight:     700;
   letter-spacing:  0.02em;
   line-height:     1;
@@ -766,44 +766,36 @@
 }
 
 .mobile-drawer__logo-text {
-  font-size:      14px;
+  font-size:      15px;
   font-weight:    700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color:          #111;
   line-height:    1;
 }
 
-/* Close button — full circle */
+/* Close button — grey filled circle, elegant × */
 .mobile-drawer__close {
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           44px;
-  height:          44px;
+  width:           36px;
+  height:          36px;
   border-radius:   50%;
-  border:          1px solid rgba(0, 0, 0, 0.14);
-  background:      transparent;
-  color:           #333;
+  border:          none;
+  background:      rgba(0, 0, 0, 0.07);
+  color:           #444;
   cursor:          pointer;
   flex-shrink:     0;
-  font-size:       16px;
-  transition:      background 0.15s ease, border-color 0.15s ease,
-                   color 0.15s ease, transform 0.15s ease;
+  font-size:       14px;
+  transition:      background 0.15s ease, color 0.15s ease;
 }
 
 .mobile-drawer__close:hover {
-  background:   rgba(0, 0, 0, 0.06);
-  border-color: rgba(0, 0, 0, 0.22);
-  color:        #111;
-  transform:    scale(1.05);
+  background: rgba(0, 0, 0, 0.12);
+  color:      #111;
 }
 
 .mobile-drawer__close:active { transform: scale(0.95); }
-
-.mobile-drawer__close svg {
-  width:  20px;
-  height: 20px;
-}
 
 
 /* ── DRAWER BODY ── */
