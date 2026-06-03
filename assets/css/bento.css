@@ -341,6 +341,7 @@
 
   .bento-section {
     padding: 80px 40px 100px;
+    margin-top: 198px; /* Adjusting according to the featured card height */
   }
 
   /* reset ALL grid placement — stack as 2 cols */
@@ -373,6 +374,7 @@
 
   .bento-section {
     padding: 64px 20px 80px;
+    margin-top: 198px; /* Adjusting according to the featured card height */
   }
 
   /* single column — everything stacks */
