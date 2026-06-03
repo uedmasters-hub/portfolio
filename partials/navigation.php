@@ -528,8 +528,8 @@ function nav_active(string $key, string $current): string {
 
         <button class="mobile-drawer__close" id="drawer-close-btn"
             aria-label="Close navigation" type="button">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <path d="M2 2l16 16M18 2L2 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
             </svg>
         </button>
 
