@@ -415,41 +415,18 @@
     quote.classList.add("is-visible");
     if (attr) attr.classList.add("is-visible");
 
-    /* ── MOBILE ANIMATION ──────────────────────────────────────
-       Instead of skipping, mobile gets its own sequence:
-       1. Section scales up from a pill/card → full-screen fill
-          using clip-path: inset() shrinking to 0% border-radius
-          collapsing to 0 — the blue box "opens" as user scrolls in
-       2. Words then highlight word-by-word (no pin on mobile —
-          standard ScrollTrigger trigger, not scrubbed)
-       3. Attribution fades in after last word
-       Gives the "fill the page" feel you described.             */
+    /* ── MOBILE: SINGLE PIN — expand + highlight + release ────────
+       One ScrollTrigger pins the section when its centre hits
+       the viewport centre. While pinned, a scrubbed timeline runs:
+         Phase 1: clip-path shrinks from inset-card → full bleed
+         Phase 2: words highlight one by one
+         Phase 3: attribution fades in
+       Pin releases after all words are lit. Section stays full-bleed
+       and scrolls away naturally — it never shrinks back.          */
 
     if (window.matchMedia("(max-width: 768px)").matches) {
 
-      /* ── STEP 1: BOX EXPAND ──────────────────────────────────
-         Section starts as a rounded inset card, expands to fill */
-
-      gsap.set(section, {
-        clipPath:     "inset(5% 6% 5% 6% round 24px)",
-        willChange:   "clip-path",
-      });
-
-      /* Expand to full bleed as section scrolls into view */
-      gsap.to(section, {
-        clipPath: "inset(0% 0% 0% 0% round 0px)",
-        ease:     "power2.inOut",
-        scrollTrigger: {
-          trigger:  section,
-          start:    "top 90%",
-          end:      "top 20%",
-          scrub:    1.2,
-          invalidateOnRefresh: true,
-        }
-      });
-
-      /* ── STEP 2: WORD SPLIT ───────────────────────────────── */
-
+      /* ── WORD SPLIT ───────────────────────────────────────── */
       var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
       var wordsM   = rawTextM.split(" ").filter(Boolean);
 
@@ -459,47 +436,84 @@
 
       var wordElsM = Array.from(quote.querySelectorAll(".phil-word"));
 
-      /* All words start dim */
-      gsap.set(wordElsM, { color: "rgba(255,255,255,0.15)" });
-      if (attr)  gsap.set(attr,  { autoAlpha: 0, y: 10 });
-      if (mark)  gsap.set(mark,  { autoAlpha: 0.25 });
+      /* ── INITIAL STATES ───────────────────────────────────── */
 
-      /* ── STEP 3: HIGHLIGHT TIMELINE ──────────────────────── */
-
-      var tlM = gsap.timeline({
-        scrollTrigger: {
-          trigger:  section,
-          start:    "top 15%",   /* fires after box is fully expanded */
-          end:      "bottom 20%",
-          scrub:    1.5,
-          invalidateOnRefresh: true,
-        }
+      /* Section starts as a centred card — pin will hold it here */
+      gsap.set(section, {
+        clipPath:   "inset(8% 5% 8% 5% round 20px)",
+        willChange: "clip-path",
       });
 
-      /* Quote mark */
+      gsap.set(wordElsM, { color: "rgba(255,255,255,0.15)" });
+      if (attr) gsap.set(attr, { autoAlpha: 0, y: 12 });
+      if (mark) gsap.set(mark, { autoAlpha: 0.2 });
+
+      /* ── MASTER TIMELINE ──────────────────────────────────── */
+      /* Everything that happens while pinned lives here.
+         Timeline duration = scroll distance = pin length.        */
+
+      var tlM = gsap.timeline();
+
+      /* PHASE 1 — Box expands to full bleed (20% of timeline) */
+      tlM.to(section, {
+        clipPath:  "inset(0% 0% 0% 0% round 0px)",
+        duration:  1,
+        ease:      "power2.inOut",
+      });
+
+      /* Quote mark fades in (overlaps with end of expand) */
       if (mark) {
-        tlM.to(mark, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+        tlM.to(mark, {
+          autoAlpha: 1,
+          duration:  0.4,
+          ease:      "power2.out",
+        }, "-=0.3");
       }
 
-      /* Words light up */
+      /* PHASE 2 — Words highlight (60% of timeline) */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
-        stagger:  { each: 0.08, from: "start", ease: "none" },
+        stagger:  { each: 0.07, from: "start", ease: "none" },
         ease:     "power1.inOut",
-      }, mark ? "-=0.1" : "0");
+      }, "-=0.1");
 
-      /* Attribution */
+      /* PHASE 3 — Attribution appears (last 20%) */
       if (attr) {
         tlM.to(attr, {
           autoAlpha: 1,
           y:         0,
           duration:  0.5,
           ease:      "power2.out",
-        }, "-=0.2");
+        }, "-=0.15");
       }
 
-      return; /* mobile handled — skip desktop block below */
+      /* ── SINGLE PINNED SCROLLTRIGGER ─────────────────────── */
+      ScrollTrigger.create({
+        trigger:   section,
+        animation: tlM,
+
+        /* Pin fires when section CENTRE hits viewport CENTRE */
+        start:     "center center",
+
+        /* Pin long enough for expand + 31 words + attribution.
+           2× viewport = comfortable scroll pace on mobile.       */
+        end:       () => "+=" + Math.round(window.innerHeight * 2),
+
+        pin:       true,          /* section locks at centre */
+        scrub:     1.4,           /* smooth lag follows thumb */
+        anticipatePin:       1,
+        invalidateOnRefresh: true,
+
+        /* Once pin releases, section is full-bleed and just
+           scrolls away upward — no clip-path reversal.           */
+        onLeave: function () {
+          /* Ensure final state is clean full bleed */
+          gsap.set(section, { clipPath: "none", clearProps: "willChange" });
+        },
+      });
+
+      return; /* mobile done — skip desktop block below */
     }
 
     /* ── SPLIT QUOTE INTO WORD SPANS ───────────────────────────

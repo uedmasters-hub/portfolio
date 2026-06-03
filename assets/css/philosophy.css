@@ -128,13 +128,8 @@
 @media (max-width: 768px) {
 
   .philosophy-section {
-    padding:    64px 20px;
-    /* Prevent clipped corners causing overflow on parent */
-    overflow:   visible;
-  }
-
-  /* Ensure parent doesn't clip the expanding box */
-  .philosophy-section {
+    padding:     64px 20px;
+    overflow:    visible;    /* clip-path expand must not be clipped */
     will-change: clip-path;
   }
 
@@ -143,18 +138,17 @@
   }
 
   .philosophy-quote {
-    font-size: clamp(1.4rem, 6vw, 2rem);
-    /* Remove CSS transition — GSAP owns opacity/color on mobile */
-    transition: none !important;
+    font-size:  clamp(1.4rem, 6vw, 2rem);
+    transition: none !important;  /* GSAP owns all transitions */
+    opacity:    1    !important;
+    transform:  none !important;
   }
 
   .philosophy-attr {
     font-size:  13px;
     flex-wrap:  wrap;
     gap:        6px;
-    /* Remove CSS transition — GSAP owns this on mobile */
     transition: none !important;
-  }
   }
 
 }
