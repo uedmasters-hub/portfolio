@@ -115,11 +115,9 @@
 .nav {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 2px;
   list-style: none;
-
-  /* Grid col 2 — naturally centred */
+  /* Sits in grid col-2 (auto width) — centred by the 1fr|auto|1fr grid */
 }
 
 
@@ -861,8 +859,8 @@
   font-size: 15px;
   font-weight: 500;
   color: #ffffff;
-  background: #111111;
-  border: 1.5px solid #111111;
+  background: var(--blue, #1a46c9);
+  border: 1.5px solid var(--blue, #1a46c9);
   border-radius: 999px;
   cursor: pointer;
   text-align: center;
@@ -875,7 +873,7 @@
 
 .mobile-connect-btn:hover {
   background: transparent;
-  color: var(--text-primary, #0f0f0f);
+  color: var(--blue, #1a46c9);
 }
 
 .mobile-avail {
