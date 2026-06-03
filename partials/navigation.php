@@ -26,6 +26,10 @@ function nav_active(string $key, string $current): string {
 }
 ?>
 
+<!-- Font Awesome 6 Free — icons used in mobile drawer -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 <!-- ==================================================
      HEADER / NAVIGATION
 ================================================== -->
@@ -503,104 +507,134 @@ function nav_active(string $key, string $current): string {
 <div class="mobile-scrim" id="mobile-scrim" aria-hidden="true"></div>
 
 
+
 <!-- ==================================================
      MOBILE DRAWER
+     RM logo mark · FA icons · table-row borders
+     Active = blue + 8px indent
+     Uses .mobile-nav-link class so existing JS works
 ================================================== -->
 
-<div class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation" role="dialog" aria-modal="true">
+<div class="mobile-drawer" id="mobile-drawer"
+    aria-label="Mobile navigation" role="dialog" aria-modal="true">
 
     <!-- DRAWER HEADER -->
     <div class="mobile-drawer__header">
-        <a href="<?= BASE_PATH ?>/" class="mobile-drawer__logo">
-            RAMESH MANDAL
+
+        <a href="<?= BASE_PATH ?>/" class="mobile-drawer__logo" aria-label="Home">
+            <span class="mobile-drawer__logo-mark" aria-hidden="true">RM</span>
+            <span class="mobile-drawer__logo-text">RAMESH MANDAL</span>
         </a>
-        <button
-            class="mobile-drawer__close"
-            id="drawer-close-btn"
-            aria-label="Close navigation"
-            type="button"
-        >✕</button>
+
+        <button class="mobile-drawer__close" id="drawer-close-btn"
+            aria-label="Close navigation" type="button">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M2 2l16 16M18 2L2 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+        </button>
+
     </div>
 
     <!-- DRAWER BODY -->
     <div class="mobile-drawer__body">
 
         <!-- WORK -->
-        <div class="mobile-nav-section">
-            <p class="mobile-nav-label">Work</p>
-            <div class="mobile-nav-links">
-                <a href="<?= BASE_PATH ?>/case-study/" class="mobile-nav-link">
-                    <span class="mobile-nav-link-icon" aria-hidden="true">✈</span>
-                    <span class="mobile-nav-link-text">
-                        Case Studies
-                        <span class="mobile-nav-link-desc">IndiGo, CrewPal, Design System</span>
-                    </span>
-                </a>
-                <a href="<?= BASE_PATH ?>/audit/" class="mobile-nav-link">
-                    <span class="mobile-nav-link-icon" aria-hidden="true">🔍</span>
-                    <span class="mobile-nav-link-text">
-                        UX Audits
-                        <span class="mobile-nav-link-desc">Zomato, Swiggy teardowns</span>
-                    </span>
-                </a>
-            </div>
-        </div>
+        <span class="mobile-nav-label">Work</span>
+
+        <a href="<?= BASE_PATH ?>/case-study/"
+            class="mobile-nav-link<?= ($currentKey === 'work') ? ' is-active' : '' ?>">
+            <span class="mobile-nav-link-icon" aria-hidden="true">
+                <i class="fa-solid fa-book-open"></i>
+            </span>
+            <span class="mobile-nav-link-text">
+                <span class="mobile-nav-link-title">Case Studies</span>
+                <span class="mobile-nav-link-desc">IndiGo, CrewPal, Design System</span>
+            </span>
+        </a>
+
+        <a href="<?= BASE_PATH ?>/audit/"
+            class="mobile-nav-link<?= ($currentKey === 'audits') ? ' is-active' : '' ?>">
+            <span class="mobile-nav-link-icon" aria-hidden="true">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <span class="mobile-nav-link-text">
+                <span class="mobile-nav-link-title">UX Audits</span>
+                <span class="mobile-nav-link-desc">Zomato, Swiggy teardowns</span>
+            </span>
+        </a>
 
         <!-- FIELD NOTES -->
-        <div class="mobile-nav-section">
-            <p class="mobile-nav-label">Field Notes</p>
-            <div class="mobile-nav-links">
-                <a href="<?= BASE_PATH ?>/blog/" class="mobile-nav-link">
-                    <span class="mobile-nav-link-icon" aria-hidden="true">⚡</span>
-                    <span class="mobile-nav-link-text">
-                        Stories &amp; Essays
-                        <span class="mobile-nav-link-desc">War stories, quiet wins, opinions</span>
-                    </span>
-                </a>
-                <a href="<?= BASE_PATH ?>/psychology/" class="mobile-nav-link">
-                    <span class="mobile-nav-link-icon" aria-hidden="true">🧠</span>
-                    <span class="mobile-nav-link-text">
-                        Behavioral Design
-                        <span class="mobile-nav-link-desc">Psychology applied to product</span>
-                    </span>
-                </a>
-            </div>
-        </div>
+        <span class="mobile-nav-label">Field Notes</span>
+
+        <a href="<?= BASE_PATH ?>/blog/"
+            class="mobile-nav-link<?= ($currentKey === 'field-notes') ? ' is-active' : '' ?>">
+            <span class="mobile-nav-link-icon" aria-hidden="true">
+                <i class="fa-solid fa-message"></i>
+            </span>
+            <span class="mobile-nav-link-text">
+                <span class="mobile-nav-link-title">Stories &amp; Essays</span>
+                <span class="mobile-nav-link-desc">War stories, quiet wins, opinions</span>
+            </span>
+        </a>
+
+        <a href="<?= BASE_PATH ?>/psychology/"
+            class="mobile-nav-link<?= ($currentKey === 'psychology') ? ' is-active' : '' ?>">
+            <span class="mobile-nav-link-icon" aria-hidden="true">
+                <i class="fa-solid fa-brain"></i>
+            </span>
+            <span class="mobile-nav-link-text">
+                <span class="mobile-nav-link-title">Behavioural Design</span>
+                <span class="mobile-nav-link-desc">Psychology applied to product</span>
+            </span>
+        </a>
 
         <!-- LAB -->
-        <div class="mobile-nav-section">
-            <p class="mobile-nav-label">Lab</p>
-            <div class="mobile-nav-links">
-                <a href="<?= BASE_PATH ?>/audit/" class="mobile-nav-link">
-                    <span class="mobile-nav-link-icon" aria-hidden="true">🤖</span>
-                    <span class="mobile-nav-link-text">
-                        Experiments
-                        <span class="mobile-nav-link-desc">AI-UX, frameworks, prototypes</span>
-                    </span>
-                </a>
-            </div>
-        </div>
+        <span class="mobile-nav-label">Lab</span>
 
+        <a href="<?= BASE_PATH ?>/audit/"
+            class="mobile-nav-link<?= ($currentKey === 'lab') ? ' is-active' : '' ?>">
+            <span class="mobile-nav-link-icon" aria-hidden="true">
+                <i class="fa-solid fa-vial-circle-check"></i>
+            </span>
+            <span class="mobile-nav-link-text">
+                <span class="mobile-nav-link-title">Experiments</span>
+                <span class="mobile-nav-link-desc">AI-UX, frameworks, prototypes</span>
+            </span>
+        </a>
+
+        <!-- DIVIDER -->
         <div class="mobile-nav-divider"></div>
 
         <!-- SECONDARY -->
-        <div class="mobile-nav-links">
-            <a href="<?= BASE_PATH ?>/resources.php" class="mobile-nav-link">
-                <span class="mobile-nav-link-icon" aria-hidden="true">📦</span>
-                <span class="mobile-nav-link-text">Toolkit</span>
-            </a>
-            <a href="<?= BASE_PATH ?>/about.php" class="mobile-nav-link">
-                <span class="mobile-nav-link-icon" aria-hidden="true">👤</span>
-                <span class="mobile-nav-link-text">About</span>
-            </a>
-        </div>
+        <a href="<?= BASE_PATH ?>/resources.php"
+            class="mobile-nav-link<?= ($currentKey === 'toolkit') ? ' is-active' : '' ?>">
+            <span class="mobile-nav-link-icon" aria-hidden="true">
+                <i class="fa-solid fa-toolbox"></i>
+            </span>
+            <span class="mobile-nav-link-text">
+                <span class="mobile-nav-link-title">Toolkit</span>
+            </span>
+        </a>
+
+        <a href="<?= BASE_PATH ?>/about.php"
+            class="mobile-nav-link<?= ($currentKey === 'about') ? ' is-active' : '' ?>">
+            <span class="mobile-nav-link-icon" aria-hidden="true">
+                <i class="fa-solid fa-user"></i>
+            </span>
+            <span class="mobile-nav-link-text">
+                <span class="mobile-nav-link-title">About</span>
+            </span>
+        </a>
 
     </div><!-- /drawer body -->
 
     <!-- DRAWER FOOTER -->
     <div class="mobile-drawer__footer">
         <a href="<?= BASE_PATH ?>/contact.php" class="mobile-connect-btn">
-            Connect ↗
+            Connect
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M1 13L13 1M13 1H4M13 1v9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
         </a>
         <div class="mobile-avail">
             <span class="avail-dot" aria-hidden="true"></span>
