@@ -426,6 +426,16 @@
 
     if (window.matchMedia("(max-width: 768px)").matches) {
 
+      /* ── FORCE TRUE FULL WIDTH ────────────────────────────────
+         Override any CSS constraints so the section is exactly
+         100vw. We do this in JS so GSAP pin doesn't fight a
+         CSS transform: translateX(-50%) on the same element.     */
+      section.style.width     = "100vw";
+      section.style.position  = "relative";
+      section.style.left      = "50%";
+      section.style.transform = "translateX(-50%)";
+      section.style.boxSizing = "border-box";
+
       /* ── WORD SPLIT ───────────────────────────────────────── */
       var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
       var wordsM   = rawTextM.split(" ").filter(Boolean);
@@ -438,30 +448,36 @@
 
       /* ── INITIAL STATES ───────────────────────────────────── */
 
-      /* Section starts as a centred card — pin will hold it here */
+      /* Start as inset rounded card — percentages now relative
+         to 100vw so this is a genuine viewport-centred card     */
       gsap.set(section, {
-        clipPath:   "inset(8% 5% 8% 5% round 20px)",
+        clipPath:   "inset(10% 6% 10% 6% round 20px)",
         willChange: "clip-path",
+        /* Clear the transform so GSAP pin can manage position  */
+        clearProps: "transform",
       });
+
+      /* After clearProps removes translateX, re-centre with margin */
+      section.style.transform  = "";
+      section.style.marginLeft = "calc(50% - 50vw)";
+      section.style.left       = "0";
 
       gsap.set(wordElsM, { color: "rgba(255,255,255,0.15)" });
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 12 });
       if (mark) gsap.set(mark, { autoAlpha: 0.2 });
 
       /* ── MASTER TIMELINE ──────────────────────────────────── */
-      /* Everything that happens while pinned lives here.
-         Timeline duration = scroll distance = pin length.        */
 
       var tlM = gsap.timeline();
 
-      /* PHASE 1 — Box expands to full bleed (20% of timeline) */
+      /* PHASE 1 — Box expands to full bleed */
       tlM.to(section, {
         clipPath:  "inset(0% 0% 0% 0% round 0px)",
         duration:  1,
         ease:      "power2.inOut",
       });
 
-      /* Quote mark fades in (overlaps with end of expand) */
+      /* Quote mark fades in (overlaps end of expand) */
       if (mark) {
         tlM.to(mark, {
           autoAlpha: 1,
@@ -470,7 +486,7 @@
         }, "-=0.3");
       }
 
-      /* PHASE 2 — Words highlight (60% of timeline) */
+      /* PHASE 2 — Words highlight left to right */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
@@ -478,7 +494,7 @@
         ease:     "power1.inOut",
       }, "-=0.1");
 
-      /* PHASE 3 — Attribution appears (last 20%) */
+      /* PHASE 3 — Attribution appears */
       if (attr) {
         tlM.to(attr, {
           autoAlpha: 1,
@@ -493,23 +509,23 @@
         trigger:   section,
         animation: tlM,
 
-        /* Pin fires when section CENTRE hits viewport CENTRE */
+        /* Pin when section centre hits viewport centre */
         start:     "center center",
 
-        /* Pin long enough for expand + 31 words + attribution.
-           2× viewport = comfortable scroll pace on mobile.       */
+        /* 2× viewport height = comfortable scroll pace */
         end:       () => "+=" + Math.round(window.innerHeight * 2),
 
-        pin:       true,          /* section locks at centre */
-        scrub:     1.4,           /* smooth lag follows thumb */
+        pin:       true,
+        scrub:     1.4,
         anticipatePin:       1,
         invalidateOnRefresh: true,
 
-        /* Once pin releases, section is full-bleed and just
-           scrolls away upward — no clip-path reversal.           */
         onLeave: function () {
-          /* Ensure final state is clean full bleed */
-          gsap.set(section, { clipPath: "none", clearProps: "willChange" });
+          /* Permanently full-bleed after pin releases */
+          gsap.set(section, {
+            clipPath:   "none",
+            clearProps: "willChange",
+          });
         },
       });
 

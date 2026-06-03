@@ -128,9 +128,22 @@
 @media (max-width: 768px) {
 
   .philosophy-section {
-    padding:     64px 20px;
-    overflow:    visible;    /* clip-path expand must not be clipped */
+    /*
+      TRUE FULL-SCREEN BREAKOUT:
+      width:100vw + left:50% + translateX(-50%) breaks out of
+      any parent padding so the section is exactly viewport-wide.
+      clip-path percentages are then relative to 100vw, so
+      inset(8% 5%) = 8vw top/bottom, 5vw left/right — a genuine
+      viewport-centred card that expands to true full bleed.
+    */
+    width:       100vw;
+    position:    relative;
+    left:        50%;
+    transform:   translateX(-50%);
+    padding:     64px 24px;
+    overflow:    visible;
     will-change: clip-path;
+    box-sizing:  border-box;
   }
 
   .philosophy-mark {
@@ -139,7 +152,7 @@
 
   .philosophy-quote {
     font-size:  clamp(1.4rem, 6vw, 2rem);
-    transition: none !important;  /* GSAP owns all transitions */
+    transition: none !important;
     opacity:    1    !important;
     transform:  none !important;
   }
