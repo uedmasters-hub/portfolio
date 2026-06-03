@@ -128,7 +128,14 @@
 @media (max-width: 768px) {
 
   .philosophy-section {
-    padding: 64px 20px;
+    padding:    64px 20px;
+    /* Prevent clipped corners causing overflow on parent */
+    overflow:   visible;
+  }
+
+  /* Ensure parent doesn't clip the expanding box */
+  .philosophy-section {
+    will-change: clip-path;
   }
 
   .philosophy-mark {
@@ -137,12 +144,17 @@
 
   .philosophy-quote {
     font-size: clamp(1.4rem, 6vw, 2rem);
+    /* Remove CSS transition — GSAP owns opacity/color on mobile */
+    transition: none !important;
   }
 
   .philosophy-attr {
     font-size:  13px;
     flex-wrap:  wrap;
     gap:        6px;
+    /* Remove CSS transition — GSAP owns this on mobile */
+    transition: none !important;
+  }
   }
 
 }
@@ -180,4 +192,29 @@
   z-index: 50;
   width:   100% !important;
   left:    0   !important;
+}
+/* ── MOBILE CLIP-PATH EXPAND ─────────────────
+   GSAP sets clip-path: inset(5% 6%... round 24px)
+   on mobile as initial state. Ensure the section
+   itself and its immediate parent don't have
+   overflow:hidden which would fight the clip.   */
+
+@media (max-width: 768px) {
+
+  /* Phil-word: same as desktop */
+  .phil-word {
+    display:     inline;
+    white-space: normal;
+    will-change: color;
+  }
+
+  .philosophy-quote.is-visible .phil-word {
+    color: inherit;
+  }
+
+  /* While GSAP animates clip-path, no overflow clipping on parent */
+  .philosophy-section {
+    overflow: visible;
+  }
+
 }

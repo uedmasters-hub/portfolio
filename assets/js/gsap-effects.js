@@ -415,8 +415,92 @@
     quote.classList.add("is-visible");
     if (attr) attr.classList.add("is-visible");
 
-    /* ── MOBILE FALLBACK — skip pin, let CSS handle it ────────── */
-    if (window.matchMedia("(max-width: 768px)").matches) return;
+    /* ── MOBILE ANIMATION ──────────────────────────────────────
+       Instead of skipping, mobile gets its own sequence:
+       1. Section scales up from a pill/card → full-screen fill
+          using clip-path: inset() shrinking to 0% border-radius
+          collapsing to 0 — the blue box "opens" as user scrolls in
+       2. Words then highlight word-by-word (no pin on mobile —
+          standard ScrollTrigger trigger, not scrubbed)
+       3. Attribution fades in after last word
+       Gives the "fill the page" feel you described.             */
+
+    if (window.matchMedia("(max-width: 768px)").matches) {
+
+      /* ── STEP 1: BOX EXPAND ──────────────────────────────────
+         Section starts as a rounded inset card, expands to fill */
+
+      gsap.set(section, {
+        clipPath:     "inset(5% 6% 5% 6% round 24px)",
+        willChange:   "clip-path",
+      });
+
+      /* Expand to full bleed as section scrolls into view */
+      gsap.to(section, {
+        clipPath: "inset(0% 0% 0% 0% round 0px)",
+        ease:     "power2.inOut",
+        scrollTrigger: {
+          trigger:  section,
+          start:    "top 90%",
+          end:      "top 20%",
+          scrub:    1.2,
+          invalidateOnRefresh: true,
+        }
+      });
+
+      /* ── STEP 2: WORD SPLIT ───────────────────────────────── */
+
+      var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
+      var wordsM   = rawTextM.split(" ").filter(Boolean);
+
+      quote.innerHTML = wordsM.map(function (w) {
+        return '<span class="phil-word">' + w + "</span>";
+      }).join(" ");
+
+      var wordElsM = Array.from(quote.querySelectorAll(".phil-word"));
+
+      /* All words start dim */
+      gsap.set(wordElsM, { color: "rgba(255,255,255,0.15)" });
+      if (attr)  gsap.set(attr,  { autoAlpha: 0, y: 10 });
+      if (mark)  gsap.set(mark,  { autoAlpha: 0.25 });
+
+      /* ── STEP 3: HIGHLIGHT TIMELINE ──────────────────────── */
+
+      var tlM = gsap.timeline({
+        scrollTrigger: {
+          trigger:  section,
+          start:    "top 15%",   /* fires after box is fully expanded */
+          end:      "bottom 20%",
+          scrub:    1.5,
+          invalidateOnRefresh: true,
+        }
+      });
+
+      /* Quote mark */
+      if (mark) {
+        tlM.to(mark, { autoAlpha: 1, duration: 0.3, ease: "power2.out" });
+      }
+
+      /* Words light up */
+      tlM.to(wordElsM, {
+        color:    "rgba(255,255,255,1)",
+        duration: 0.4,
+        stagger:  { each: 0.08, from: "start", ease: "none" },
+        ease:     "power1.inOut",
+      }, mark ? "-=0.1" : "0");
+
+      /* Attribution */
+      if (attr) {
+        tlM.to(attr, {
+          autoAlpha: 1,
+          y:         0,
+          duration:  0.5,
+          ease:      "power2.out",
+        }, "-=0.2");
+      }
+
+      return; /* mobile handled — skip desktop block below */
+    }
 
     /* ── SPLIT QUOTE INTO WORD SPANS ───────────────────────────
        Preserves the exact text including em-dashes and commas.
