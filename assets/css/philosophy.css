@@ -129,9 +129,8 @@
 
   .philosophy-section {
     padding:    64px 20px;
-    /* GSAP will add min-height + flex-centre via JS.
-       No overflow, no clip-path, no width changes.
-       Section stays at natural document width.      */
+    /* GSAP switches to position:fixed during the expand.
+       No overflow/clip/width changes needed here.         */
   }
 
   .philosophy-mark {
@@ -140,7 +139,6 @@
 
   .philosophy-quote {
     font-size:  clamp(1.4rem, 6vw, 2rem);
-    /* GSAP owns all colour/opacity on mobile */
     transition: none !important;
     opacity:    1    !important;
     transform:  none !important;

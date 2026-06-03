@@ -415,17 +415,21 @@
     quote.classList.add("is-visible");
     if (attr) attr.classList.add("is-visible");
 
-    /* ── MOBILE: HEIGHT-ONLY EXPAND + HIGHLIGHT ──────────────────
-       Exact behaviour:
-       1. Section scrolls in normally at natural width + height
-       2. Section centre hits viewport centre → PIN
-       3. While pinned: min-height grows → 100vh (height only,
-          width is never touched, no clip-path, no scale)
-       4. Content stays vertically centred via flexbox
-       5. Words highlight left-to-right on scroll progress
-       6. Attribution fades in after last word
-       7. Pin releases → section (now full-height) scrolls away
-          naturally. No exit animation. No size reversal.         */
+    /* ── MOBILE: CENTRE-ANCHOR EXPAND + HIGHLIGHT ────────────────
+       How it works:
+       ─ Section scrolls normally until its centre = viewport centre
+       ─ ScrollTrigger pins the section (GSAP handles the spacer so
+         the next section does NOT jump)
+       ─ While pinned we use position:fixed + top/bottom to stretch
+         the section equally up and down from its locked centre,
+         completely outside normal flow → zero layout push
+       ─ We tween top from centreY → 0  and bottom from centreY → 0
+         simultaneously so expansion is symmetric
+       ─ Words highlight once section is full-screen
+       ─ On unpin: restore position:relative, let section scroll away
+         at full height (next section was never pushed, so no jump)
+
+       Width: NEVER touched. Only top/bottom/height change.         */
 
     if (window.matchMedia("(max-width: 768px)").matches) {
 
@@ -439,58 +443,26 @@
 
       var wordElsM = Array.from(quote.querySelectorAll(".phil-word"));
 
-      /* ── CAPTURE NATURAL HEIGHT before GSAP touches anything ── */
-      var naturalH = section.getBoundingClientRect().height;
-
       /* ── INITIAL STATES ─────────────────────────────────────── */
-
-      /* Section: keep natural height, enable flex-centre for content */
-      gsap.set(section, {
-        minHeight:      naturalH + "px",
-        display:        "flex",
-        flexDirection:  "column",
-        justifyContent: "center",
-      });
-
-      /* Words: all dim */
       gsap.set(wordElsM, { color: "rgba(255,255,255,0.15)" });
-
-      /* Attribution: hidden */
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
-
-      /* Quote mark: dim */
       if (mark) gsap.set(mark, { autoAlpha: 0.25 });
 
       /* ── MASTER TIMELINE ────────────────────────────────────── */
       var tlM = gsap.timeline();
 
-      /* PHASE 1 — Height expands from natural → 100vh
-         Only min-height changes. Width: 100%, untouched.
-         Content stays centred because justifyContent: center.   */
-      tlM.to(section, {
-        minHeight: window.innerHeight + "px",
-        duration:  1,
-        ease:      "power2.inOut",
-      });
+      /* We'll populate the timeline in onEnter once we know the
+         section's real position — see ScrollTrigger callbacks.   */
 
-      /* Quote mark fully visible during expand */
-      if (mark) {
-        tlM.to(mark, {
-          autoAlpha: 1,
-          duration:  0.4,
-          ease:      "power2.out",
-        }, "-=0.5");
-      }
-
-      /* PHASE 2 — 31 words light up sequentially */
+      /* PHASE 2 — Words light up after expand */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
         stagger:  { each: 0.07, from: "start", ease: "none" },
         ease:     "power1.inOut",
-      }, "-=0.1");
+      });
 
-      /* PHASE 3 — Attribution slides up */
+      /* PHASE 3 — Attribution */
       if (attr) {
         tlM.to(attr, {
           autoAlpha: 1,
@@ -502,26 +474,64 @@
 
       /* ── SCROLLTRIGGER ──────────────────────────────────────── */
       ScrollTrigger.create({
-        trigger:   section,
-        animation: tlM,
-
-        /* Pin when section centre aligns with viewport centre */
-        start:     "center center",
-
-        /* Scroll distance while pinned.
-           expand(1) + 31 words(~2.5) + attribution(0.5) = ~4 units
-           2.4× viewport gives a comfortable unhurried pace.     */
-        end:       function () {
+        trigger: section,
+        start:   "center center",
+        end:     function () {
           return "+=" + Math.round(window.innerHeight * 2.4);
         },
-
         pin:                 true,
         scrub:               1.2,
         anticipatePin:       1,
         invalidateOnRefresh: true,
 
-        /* No onLeave cleanup needed — min-height stays at 100vh
-           and section just scrolls away naturally full-height.  */
+        /* ── ON PIN: switch to fixed + expand from centre ──────── */
+        onEnter: function (self) {
+          /* Measure where section sits in viewport right now */
+          var rect    = section.getBoundingClientRect();
+          var centreY = rect.top + rect.height / 2;   /* px from viewport top */
+
+          /* Switch to fixed so section leaves flow entirely */
+          gsap.set(section, {
+            position: "fixed",
+            top:      centreY - rect.height / 2,
+            left:     rect.left,
+            width:    rect.width,
+            height:   rect.height,
+            margin:   0,
+          });
+
+          /* Animate top → 0 and height → 100vh simultaneously
+             so it expands equally upward and downward from centre */
+          gsap.to(section, {
+            top:      0,
+            height:   window.innerHeight,
+            duration: 0.7,
+            ease:     "power2.inOut",
+            onComplete: function () {
+              /* Snap width to 100% now it's at full height */
+              gsap.set(section, { width: "100%" });
+            }
+          });
+
+          /* Quote mark brightens during expand */
+          if (mark) {
+            gsap.to(mark, {
+              autoAlpha: 1,
+              duration:  0.5,
+              ease:      "power2.out",
+            });
+          }
+        },
+
+        /* ── ON RELEASE: restore section to normal flow ─────────── */
+        onLeave: function () {
+          gsap.set(section, {
+            clearProps: "position,top,left,width,height,margin",
+          });
+        },
+
+        /* ── WHILE PINNED: drive word highlight ─────────────────── */
+        animation: tlM,
       });
 
       return; /* mobile handled — skip desktop block */
