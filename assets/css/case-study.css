@@ -6,6 +6,7 @@
 
 .cs-index-hero {
   padding:       80px 48px 64px;
+  margin-top: 32px; /* offset negative margin on .hero-wrapper */
   border-bottom: 1px solid var(--border);
 }
 
