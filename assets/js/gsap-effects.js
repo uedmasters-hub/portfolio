@@ -494,8 +494,9 @@
       trigger:       section,
       animation:     tl,
 
-      /* Pin starts when section top hits viewport top */
-      start:         "top top",
+      /* Pin starts when section CENTRE hits viewport CENTRE —
+         section stays vertically centred while text highlights */
+      start:         "center center",
 
       /* Pin duration:
          31 words × 90ms stagger + durations + attribution ≈ 4.5s of timeline.
