@@ -685,47 +685,74 @@
 ================================================== */
 
 .mobile-drawer {
-  display:          none;
+  display:          none;       /* closed by default — GSAP animates, CSS hides */
   position:         fixed;
   top:              0;
   right:            0;
   bottom:           0;
   width:            min(360px, 100vw);
   z-index:          210;
+  /* Ambient base — the gradient is always present but only
+     animates while open (animation-play-state controlled by
+     .is-open class below)                                    */
   background:       #ffffff;
+  background-image:
+    radial-gradient(
+      ellipse 160% 120% at 110% 0%,
+      rgba(207, 222, 255, 0.50) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 120% 100% at -10% 100%,
+      rgba(220, 232, 255, 0.35) 0%,
+      transparent 65%
+    );
+  background-size:   200% 200%, 200% 200%;
+  background-repeat: no-repeat;
+  /* Gradient drifts paused until drawer opens */
+  animation:
+    drawer-bg-shift-a 14s ease-in-out infinite alternate,
+    drawer-bg-shift-b 20s ease-in-out infinite alternate-reverse;
+  animation-play-state: paused;
   flex-direction:   column;
   overflow:         hidden;
+  /* Off-screen by default — GSAP overwrites this inline */
+  transform:        translateX(100%);
 }
 
+/* When open: resume ambient animation */
 .mobile-drawer.is-open {
-  display:   flex;
-  animation: drawerSlideIn 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  display: flex;
+  animation-play-state: running;
 }
 
-@keyframes drawerSlideIn {
-  from { opacity: 0; transform: translateX(24px); }
-  to   { opacity: 1; transform: translateX(0); }
+@keyframes drawer-bg-shift-a {
+  0%   { background-position: 0%   0%,   100% 100%; }
+  50%  { background-position: 30%  40%,  70%  60%;  }
+  100% { background-position: 60%  20%,  40%  80%;  }
+}
+
+@keyframes drawer-bg-shift-b {
+  0%   { background-size: 200% 200%, 200% 200%; }
+  50%  { background-size: 220% 210%, 190% 215%; }
+  100% { background-size: 195% 220%, 210% 195%; }
 }
 
 /* Scrim */
 .mobile-scrim {
-  display:    none;
+  display:    none;       /* closed by default */
   position:   fixed;
   inset:      0;
   z-index:    205;
   background: rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+  opacity:    0;          /* GSAP tweens this */
+  /* No animation or transition */
 }
 
 .mobile-scrim.is-open {
-  display:   block;
-  animation: scrimIn 0.3s ease forwards;
-}
-
-@keyframes scrimIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  display: block;   /* JS adds this class; GSAP then animates opacity */
 }
 
 
