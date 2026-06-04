@@ -125,7 +125,7 @@ body {
   inset:          0;
   z-index:        -10;
   pointer-events: none;
-  overflow:       hidden;
+  /* No overflow:hidden — same reason as .bg-canvas above */
 }
 
 /* =============================================================
@@ -134,12 +134,15 @@ body {
    ============================================================= */
 
 .bg-canvas {
-  /* Fixed container for all background elements */
+  /* Fixed container for all background elements.
+     NO overflow:hidden — a position:fixed element with overflow:hidden
+     creates a new containing block that can trap other position:fixed
+     elements (like the mobile drawer) and break their transforms.
+     position:fixed + inset:0 already clips to viewport naturally.  */
   position:       fixed;
   inset:          0;
   z-index:        -10;
   pointer-events: none;
-  overflow:       hidden;
 }
 
 .bg-grid {
