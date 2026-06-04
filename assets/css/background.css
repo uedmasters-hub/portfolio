@@ -24,59 +24,43 @@ html {
 }
 
 body {
-  /* Base warm near-white — never changes */
+  /* Base warm near-white */
   background-color: #f5f5f3;
 
   /*
-    THREE gradient layers stacked:
-    Layer 1 — Large primary blob, top-left → drifts across
-    Layer 2 — Secondary blob, bottom-right corner
-    Layer 3 — Accent ghost, centre-right wander
-
-    All use radial gradients. Colours are #1a46c9 blue mixed
-    heavily toward #f5f5f3 — resulting tints are so pale that
-    on content sections they read as near-white with a hint of
-    warmth. Only on the hero (plain bg) do they register as
-    visible colour.
+    TWO gradient layers — both originate from the top-left area.
+    Key design decisions:
+    - Ellipses are very large (120%+ wide) so colour fills from the
+      corner naturally with no visible hotspot or concentrated blob.
+    - Opacity is low at centre (0.38, 0.25) and fades to transparent
+      over a long distance — creates ambient wash, not a spot.
+    - background-size stays at 100% 100% so percentages in 'at X% Y%
+      map directly to the viewport corner, not to an oversized canvas.
+    - Animation moves background-position on a 200% canvas (bg-shift-2)
+      for drift while the initial position is anchored top-left.
   */
   background-image:
     radial-gradient(
-      ellipse 80% 60% at var(--bx1, 15%) var(--by1, 20%),
-      rgba(207, 222, 255, 0.55) 0%,
-      rgba(220, 232, 255, 0.25) 40%,
-      transparent               75%
+      ellipse 140% 90% at 0% 0%,
+      rgba(207, 222, 255, 0.38) 0%,
+      rgba(215, 228, 255, 0.15) 50%,
+      transparent               85%
     ),
     radial-gradient(
-      ellipse 70% 55% at var(--bx2, 85%) var(--by2, 78%),
-      rgba(215, 228, 255, 0.45) 0%,
-      rgba(225, 235, 255, 0.18) 45%,
-      transparent               72%
-    ),
-    radial-gradient(
-      ellipse 55% 45% at var(--bx3, 55%) var(--by3, 45%),
-      rgba(230, 238, 255, 0.30) 0%,
-      rgba(235, 242, 255, 0.12) 50%,
-      transparent               78%
+      ellipse 100% 70% at 5% 5%,
+      rgba(220, 232, 255, 0.22) 0%,
+      rgba(228, 238, 255, 0.08) 55%,
+      transparent               80%
     );
 
-  /* Large background size so blobs are big and soft */
-  background-size:
-    200% 200%,
-    200% 200%,
-    180% 180%;
+  background-size:   200% 200%, 200% 200%;
+  background-position: 0% 0%, 0% 0%;
 
-  /* Stagger starting positions */
-  background-position:
-    0%   0%,
-    100% 100%,
-    50%  50%;
-
-  /* THE ANIMATION */
+  /* Three independent drifts — same keyframes, now starting top-left */
   animation: bg-shift-1 28s ease-in-out infinite alternate,
              bg-shift-2 36s ease-in-out infinite alternate-reverse,
              bg-shift-3 44s ease-in-out infinite alternate;
 
-  /* Smooth transition if reduced-motion guard kicks in */
   transition: background-color 0.5s ease;
 }
 
@@ -87,31 +71,31 @@ body {
    mechanically — always wandering.
    ============================================================= */
 
-/* Layer 1 — primary blob, top-left ↔ bottom-right wander */
+/* Layer 1 — primary wash drifts from top-left across the page */
 @keyframes bg-shift-1 {
-  0%   { background-position: 0%   0%,   100% 100%, 50% 50%; }
-  25%  { background-position: 30%  20%,  70%  80%,  60% 40%; }
-  50%  { background-position: 60%  10%,  40%  90%,  30% 70%; }
-  75%  { background-position: 20%  50%,  80%  50%,  70% 30%; }
-  100% { background-position: 80%  40%,  20%  60%,  45% 55%; }
+  0%   { background-position: 0%   0%,   0%   0%;   }
+  25%  { background-position: 20%  15%,  15%  10%;  }
+  50%  { background-position: 45%  25%,  35%  20%;  }
+  75%  { background-position: 25%  45%,  20%  40%;  }
+  100% { background-position: 55%  35%,  45%  30%;  }
 }
 
-/* Layer 2 — secondary blob, counter-drift */
+/* Layer 2 — background-size breathes slowly */
 @keyframes bg-shift-2 {
-  0%   { background-size: 200% 200%, 200% 200%, 180% 180%; }
-  33%  { background-size: 220% 210%, 190% 195%, 200% 185%; }
-  66%  { background-size: 195% 215%, 210% 200%, 175% 195%; }
-  100% { background-size: 210% 195%, 195% 210%, 190% 175%; }
+  0%   { background-size: 200% 200%, 200% 200%; }
+  33%  { background-size: 215% 205%, 205% 210%; }
+  66%  { background-size: 195% 210%, 210% 195%; }
+  100% { background-size: 210% 195%, 195% 215%; }
 }
 
-/* Layer 3 — slow opacity breathe via size scaling */
+/* Layer 3 — secondary slow drift, slightly offset from layer 1 */
 @keyframes bg-shift-3 {
-  0%   { background-position: 0%   0%,   100% 100%, 50%  50%;  }
-  20%  { background-position: 15%  35%,  85%  65%,  35%  65%;  }
-  40%  { background-position: 50%  15%,  50%  85%,  65%  35%;  }
-  60%  { background-position: 35%  60%,  65%  40%,  20%  80%;  }
-  80%  { background-position: 70%  30%,  30%  70%,  80%  20%;  }
-  100% { background-position: 25%  80%,  75%  20%,  55%  45%;  }
+  0%   { background-position: 0%   0%,   0%   0%;   }
+  20%  { background-position: 10%  25%,  8%   20%;  }
+  40%  { background-position: 35%  10%,  30%  8%;   }
+  60%  { background-position: 20%  40%,  15%  35%;  }
+  80%  { background-position: 50%  20%,  40%  15%;  }
+  100% { background-position: 15%  50%,  10%  45%;  }
 }
 
 /* =============================================================
@@ -267,13 +251,13 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   body {
-    animation:         none !important;
-    background-image:  radial-gradient(
-      ellipse 80% 60% at 15% 20%,
-      rgba(207, 222, 255, 0.40) 0%,
-      transparent 70%
+    animation:          none !important;
+    background-image:   radial-gradient(
+      ellipse 140% 90% at 0% 0%,
+      rgba(207, 222, 255, 0.30) 0%,
+      transparent 80%
     );
-    background-size:   100% 100%;
+    background-size:    100% 100%;
     background-position: 0 0;
   }
 

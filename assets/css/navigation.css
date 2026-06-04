@@ -25,27 +25,28 @@
 
   z-index: 200;
 
-  background: rgba(245,245,243,0.85);
-  backdrop-filter: blur(0px);
+  /* Fully transparent at top of page — content shows through.
+     Transitions to glass state once .is-scrolled is added by JS. */
+  background:              transparent;
+  backdrop-filter:         blur(0px);
   -webkit-backdrop-filter: blur(0px);
-
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-bottom:           1px solid transparent;
 
   transform: translateY(0);
   transition:
     transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.3s ease,
-    backdrop-filter 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
+    background 0.4s ease,
+    backdrop-filter 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
 /* Scrolled state — glass kicks in */
 .header.is-scrolled {
-  background: rgba(245,245,243,0.82);
-  backdrop-filter: blur(20px);
+  background:              rgba(245,245,243,0.82);
+  backdrop-filter:         blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom-color: rgba(0,0,0,0.08);
+  border-bottom-color:     rgba(0,0,0,0.08);
   box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 4px 24px rgba(0,0,0,0.04);
 }
 
