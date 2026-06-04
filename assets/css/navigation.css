@@ -685,7 +685,7 @@
 ================================================== */
 
 .mobile-drawer {
-  display:          none;
+  display:          none;       /* closed by default */
   position:         fixed;
   top:              0;
   right:            0;
@@ -695,37 +695,30 @@
   background:       #ffffff;
   flex-direction:   column;
   overflow:         hidden;
+  /* Off-screen: ensures no flash even if display flips before GSAP */
+  transform:        translateX(100%);
+  /* No animation or transition — GSAP owns all motion */
 }
 
 .mobile-drawer.is-open {
-  display:   flex;
-  animation: drawerSlideIn 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes drawerSlideIn {
-  from { opacity: 0; transform: translateX(24px); }
-  to   { opacity: 1; transform: translateX(0); }
+  display: flex;    /* JS adds this class; GSAP then animates translateX */
 }
 
 /* Scrim */
 .mobile-scrim {
-  display:    none;
+  display:    none;       /* closed by default */
   position:   fixed;
   inset:      0;
   z-index:    205;
   background: rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+  opacity:    0;          /* GSAP tweens this */
+  /* No animation or transition */
 }
 
 .mobile-scrim.is-open {
-  display:   block;
-  animation: scrimIn 0.3s ease forwards;
-}
-
-@keyframes scrimIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  display: block;   /* JS adds this class; GSAP then animates opacity */
 }
 
 

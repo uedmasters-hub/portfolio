@@ -279,59 +279,228 @@
 
   /* ==================================================
      MOBILE DRAWER
+     ─────────────────────────────────────────────────
+     State machine: isOpen (bool) = single source of truth
+     CSS controls display (none / flex) via .is-open class
+     GSAP controls motion (translateX, opacity)
+
+     Lifecycle:
+       Page load  → drawer hidden (CSS display:none default)
+       Open       → add .is-open (display:flex) → GSAP animates in
+       Close      → GSAP animates out → remove .is-open (display:none)
+
+     This order guarantees:
+       - No flash on load (CSS hides before GSAP even runs)
+       - No open-on-load (class never pre-exists)
+       - GSAP only runs after element is visible (display:flex first)
   ================================================== */
 
-  let drawerOpen = false;
+  (function initMobileDrawer() {
 
-  function openMobileDrawer() {
-    drawerOpen = true;
+    /* ── Element refs ──────────────────────────────────────── */
+    var elHamburger = document.getElementById('hamburger-btn');
+    var elDrawer    = document.getElementById('mobile-drawer');
+    var elScrim     = document.getElementById('mobile-scrim');
+    var elCloseBtn  = document.getElementById('drawer-close-btn');
 
-    drawer.classList.add("is-open");
-    if (scrim) scrim.classList.add("is-open");
+    /* Hard stop if critical elements are missing */
+    if (!elHamburger) { console.error('[Drawer] #hamburger-btn not found'); return; }
+    if (!elDrawer)    { console.error('[Drawer] #mobile-drawer not found');  return; }
 
-    hamburger.classList.add("is-open");
-    hamburger.setAttribute("aria-expanded", "true");
-    hamburger.setAttribute("aria-label", "Close navigation menu");
+    var elNavLinks = Array.from(elDrawer.querySelectorAll('.mobile-nav-link'));
+    var elFooter   = elDrawer.querySelector('.mobile-drawer__footer');
 
-    document.body.style.overflow = "hidden";
-  }
+    /* ── State ─────────────────────────────────────────────── */
+    var isOpen   = false;
+    var isGsap   = (typeof gsap !== 'undefined');
+    var activeTl = null;   /* current in-flight timeline */
 
-  function closeMobileDrawer() {
-    drawerOpen = false;
+    /* Sanity check: drawer must start closed */
+    elDrawer.classList.remove('is-open');
+    if (elScrim) elScrim.classList.remove('is-open');
 
-    drawer.classList.remove("is-open");
-    if (scrim) scrim.classList.remove("is-open");
+    /* ── Helpers ───────────────────────────────────────────── */
+    function setAriaOpen(open) {
+      elHamburger.classList.toggle('is-open', open);
+      elHamburger.setAttribute('aria-expanded', String(open));
+      elHamburger.setAttribute('aria-label',
+        open ? 'Close navigation menu' : 'Open navigation menu');
+      elDrawer.setAttribute('aria-hidden', String(!open));
+    }
 
-    hamburger.classList.remove("is-open");
-    hamburger.setAttribute("aria-expanded", "false");
-    hamburger.setAttribute("aria-label", "Open navigation menu");
+    /* ── OPEN ──────────────────────────────────────────────── */
+    function openDrawer() {
+      if (isOpen) return;
+      isOpen = true;
 
-    document.body.style.overflow = "";
-  }
+      if (activeTl) { activeTl.kill(); activeTl = null; }
 
-  if (hamburger) {
-    hamburger.addEventListener("click", function () {
-      drawerOpen ? closeMobileDrawer() : openMobileDrawer();
-    });
-  }
+      /* 1. Update ARIA and body scroll */
+      setAriaOpen(true);
+      document.body.style.overflow = 'hidden';
 
-  // Close button inside drawer
-  if (closeBtn) {
-    closeBtn.addEventListener("click", closeMobileDrawer);
-  }
+      /* 2. Make elements visible (display:flex / display:block) */
+      elDrawer.classList.add('is-open');
+      if (elScrim) elScrim.classList.add('is-open');
 
-  // Scrim click closes drawer
-  if (scrim) {
-    scrim.addEventListener("click", closeMobileDrawer);
-  }
+      /* 3. Animate */
+      if (!isGsap) {
+        /* No GSAP — CSS transform handles nothing, just show */
+        elDrawer.style.transform = 'translateX(0)';
+        focusDrawer();
+        return;
+      }
 
-  // Close drawer links on tap
-  if (drawer) {
-    drawer.querySelectorAll(".mobile-nav-link").forEach(function (link) {
-      link.addEventListener("click", function () {
-        closeMobileDrawer();
+      /* Reset positions before animating in */
+      gsap.set(elDrawer, { x: '100%' });
+      gsap.set(elScrim,  { opacity: 0 });
+      gsap.set(elNavLinks, { opacity: 0, x: 16 });
+      if (elFooter) gsap.set(elFooter, { opacity: 0, y: 8 });
+
+      var tl = gsap.timeline({ onComplete: focusDrawer });
+
+      /* Scrim fades in */
+      tl.to(elScrim, {
+        opacity:  1,
+        duration: 0.22,
+        ease:     'power2.out',
+      }, 0);
+
+      /* Drawer slides in from right */
+      tl.to(elDrawer, {
+        x:        0,
+        duration: 0.42,
+        ease:     'power3.out',
+      }, 0);
+
+      /* Nav rows stagger up */
+      tl.to(elNavLinks, {
+        opacity:  1,
+        x:        0,
+        duration: 0.24,
+        stagger:  0.045,
+        ease:     'power2.out',
+      }, 0.22);
+
+      /* Footer */
+      if (elFooter) {
+        tl.to(elFooter, {
+          opacity:  1,
+          y:        0,
+          duration: 0.20,
+          ease:     'power2.out',
+        }, 0.30);
+      }
+
+      activeTl = tl;
+    }
+
+    /* ── CLOSE ─────────────────────────────────────────────── */
+    function closeDrawer() {
+      if (!isOpen) return;
+      isOpen = false;
+
+      if (activeTl) { activeTl.kill(); activeTl = null; }
+
+      /* Update ARIA immediately */
+      setAriaOpen(false);
+
+      if (!isGsap) {
+        /* No GSAP — hide immediately */
+        elDrawer.classList.remove('is-open');
+        if (elScrim) elScrim.classList.remove('is-open');
+        elDrawer.style.transform = 'translateX(100%)';
+        document.body.style.overflow = '';
+        elHamburger.focus();
+        return;
+      }
+
+      var tl = gsap.timeline({
+        onComplete: function () {
+          /* Remove class AFTER animation — restores display:none */
+          elDrawer.classList.remove('is-open');
+          if (elScrim) elScrim.classList.remove('is-open');
+          document.body.style.overflow = '';
+          elHamburger.focus();
+        }
       });
+
+      /* Items out */
+      var exitEls = elFooter
+        ? elNavLinks.concat([elFooter])
+        : elNavLinks.slice();
+
+      tl.to(exitEls, {
+        opacity:  0,
+        x:        10,
+        duration: 0.14,
+        stagger:  0.02,
+        ease:     'power2.in',
+      }, 0);
+
+      /* Drawer out */
+      tl.to(elDrawer, {
+        x:        '100%',
+        duration: 0.36,
+        ease:     'power3.in',
+      }, 0.04);
+
+      /* Scrim out */
+      tl.to(elScrim, {
+        opacity:  0,
+        duration: 0.26,
+        ease:     'power2.in',
+      }, 0.06);
+
+      activeTl = tl;
+    }
+
+    /* ── Focus management ─────────────────────────────────── */
+    function focusDrawer() {
+      var target = elDrawer.querySelector('.mobile-drawer__close') || elNavLinks[0];
+      if (target) target.focus();
+    }
+
+    /* ── Focus trap ───────────────────────────────────────── */
+    elDrawer.addEventListener('keydown', function (e) {
+      if (!isOpen || e.key !== 'Tab') return;
+      var focusable = Array.from(elDrawer.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      ));
+      if (focusable.length < 2) return;
+      var first = focusable[0];
+      var last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
     });
-  }
+
+    /* ── Event listeners ──────────────────────────────────── */
+    elHamburger.addEventListener('click', function () {
+      isOpen ? closeDrawer() : openDrawer();
+    });
+
+    if (elCloseBtn) {
+      elCloseBtn.addEventListener('click', closeDrawer);
+    }
+
+    if (elScrim) {
+      elScrim.addEventListener('click', closeDrawer);
+    }
+
+    elNavLinks.forEach(function (link) {
+      link.addEventListener('click', closeDrawer);
+    });
+
+    /* Escape key — handled globally in navigation.js already
+       for mega menu; we patch drawerOpen check here           */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) closeDrawer();
+    });
+
+  })(); /* end initMobileDrawer */
+
 
 })();
