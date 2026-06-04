@@ -279,169 +279,189 @@
 
   /* ==================================================
      MOBILE DRAWER — GSAP animation
-     Open:  scrim fade in → drawer slide in → items stagger
-     Close: items fade → drawer slide out → scrim fade out
+     Open:  drawer x:100%→0, scrim opacity:0→1, items stagger in
+     Close: items fade, drawer x:0→100%, scrim opacity:1→0
   ================================================== */
 
-  let drawerOpen   = false;
-  let drawerTween  = null;   /* tracks in-flight animation for interruption */
+  var drawerOpen  = false;
+  var drawerTween = null;
 
-  /* ── Elements ────────────────────────────────── */
-  var navLinks  = drawer ? Array.from(drawer.querySelectorAll(".mobile-nav-link")) : [];
+  var navLinks     = drawer ? Array.from(drawer.querySelectorAll(".mobile-nav-link")) : [];
   var drawerFooter = drawer ? drawer.querySelector(".mobile-drawer__footer") : null;
+  var useGsap      = (typeof gsap !== "undefined");
 
-  /* ── Guard: if GSAP not loaded, fall back to CSS classes ── */
-  var useGsap = (typeof gsap !== "undefined");
+  /* ── Initial state ─────────────────────────────────────────────
+     Set drawer off-screen and invisible via transforms/opacity.
+     We do NOT use display:none — that blocks GSAP from reading
+     element dimensions and fights gsap.set() overrides.
+     CSS sets visibility:hidden + opacity:0 as the default state.
+     GSAP tweens opacity and uses autoAlpha for visibility.        */
 
-  /* ── Initial CSS state (GSAP owns position, not CSS anim) ─ */
   if (useGsap && drawer) {
-    /* Start off-screen to the right — GSAP will tween from here */
-    gsap.set(drawer, { x: "100%", display: "none" });
-    if (scrim) gsap.set(scrim, { opacity: 0, display: "none" });
+    gsap.set(drawer, {
+      x:          "100%",   /* off-screen right */
+      autoAlpha:  0,        /* opacity:0 + visibility:hidden */
+    });
   }
 
-  /* ────────────────────────────────────────────────────────────
-     OPEN
-  ──────────────────────────────────────────────────────────── */
+  if (useGsap && scrim) {
+    gsap.set(scrim, {
+      autoAlpha: 0,
+    });
+  }
+
+  /* Set initial state on nav items */
+  if (useGsap && navLinks.length) {
+    gsap.set(navLinks, { opacity: 0, y: 12 });
+  }
+  if (useGsap && drawerFooter) {
+    gsap.set(drawerFooter, { opacity: 0, y: 8 });
+  }
+
+  /* ── OPEN ──────────────────────────────────────────────────────
+     1. Re-enable pointer-events (CSS .is-gsap-open)
+     2. Scrim fades in
+     3. Drawer slides in from right
+     4. Nav items stagger up
+     5. Footer fades in
+     6. Focus moves into drawer                                    */
+
   function openMobileDrawer() {
     if (drawerOpen) return;
     drawerOpen = true;
 
-    /* Kill any in-flight close animation */
     if (drawerTween) drawerTween.kill();
 
-    /* ARIA + state */
+    /* ARIA */
     drawer.setAttribute("aria-hidden", "false");
     hamburger.classList.add("is-open");
     hamburger.setAttribute("aria-expanded", "true");
     hamburger.setAttribute("aria-label", "Close navigation menu");
     document.body.style.overflow = "hidden";
 
+    /* Enable pointer events via class */
+    drawer.classList.add("is-gsap-open");
+    if (scrim) scrim.classList.add("is-gsap-open");
+
     if (!useGsap) {
-      /* CSS fallback */
+      /* CSS fallback — add class that restores visibility */
       drawer.classList.add("is-open");
       if (scrim) scrim.classList.add("is-open");
       return;
     }
 
-    /* Make elements visible before animating */
-    gsap.set(drawer, { display: "flex" });
-    if (scrim) gsap.set(scrim, { display: "block" });
-
     var tl = gsap.timeline();
 
-    /* 1. Scrim fades in */
-    tl.to(scrim || {}, {
-      opacity:  1,
-      duration: 0.25,
-      ease:     "power2.out",
-    });
+    /* Scrim fades in */
+    tl.to(scrim, {
+      autoAlpha: 1,
+      duration:  0.25,
+      ease:      "power2.out",
+    }, 0);
 
-    /* 2. Drawer slides in from right — slightly overlapping scrim */
+    /* Drawer slides in — starts immediately, overlaps scrim */
     tl.to(drawer, {
-      x:        0,
-      duration: 0.42,
-      ease:     "power3.out",
-    }, "-=0.15");
+      x:         0,
+      autoAlpha: 1,
+      duration:  0.45,
+      ease:      "power3.out",
+    }, 0.05);
 
-    /* 3. Nav rows stagger up + fade in */
-    tl.fromTo(navLinks, {
-      opacity: 0,
-      y:       10,
-    }, {
+    /* Nav rows stagger up after drawer starts moving */
+    tl.to(navLinks, {
       opacity:  1,
       y:        0,
       duration: 0.28,
       stagger:  0.045,
       ease:     "power2.out",
-    }, "-=0.18");
+    }, 0.22);
 
-    /* 4. Footer fades in */
+    /* Footer fades in last */
     if (drawerFooter) {
-      tl.fromTo(drawerFooter, {
-        opacity: 0,
-        y:       8,
-      }, {
+      tl.to(drawerFooter, {
         opacity:  1,
         y:        0,
         duration: 0.22,
         ease:     "power2.out",
-      }, "-=0.20");
+      }, 0.30);
     }
 
-    drawerTween = tl;
-
-    /* Move focus into drawer after slide completes */
+    /* Move focus to close button after slide completes */
     tl.call(function () {
-      var first = drawer.querySelector(
-        ".mobile-drawer__close, .mobile-nav-link"
-      );
-      if (first) first.focus();
+      var focusTarget = drawer.querySelector(".mobile-drawer__close");
+      if (focusTarget) focusTarget.focus();
     });
+
+    drawerTween = tl;
   }
 
-  /* ────────────────────────────────────────────────────────────
-     CLOSE
-  ──────────────────────────────────────────────────────────── */
+  /* ── CLOSE ─────────────────────────────────────────────────────
+     1. Nav items + footer fade out
+     2. Drawer slides out right
+     3. Scrim fades out
+     4. Pointer-events disabled (remove .is-gsap-open)
+     5. Focus returns to hamburger                                 */
+
   function closeMobileDrawer() {
     if (!drawerOpen) return;
     drawerOpen = false;
 
-    /* Kill any in-flight open animation */
     if (drawerTween) drawerTween.kill();
 
-    /* ARIA + state */
+    /* ARIA */
     drawer.setAttribute("aria-hidden", "true");
     hamburger.classList.remove("is-open");
     hamburger.setAttribute("aria-expanded", "false");
     hamburger.setAttribute("aria-label", "Open navigation menu");
 
     if (!useGsap) {
-      /* CSS fallback */
-      drawer.classList.remove("is-open");
-      if (scrim) scrim.classList.remove("is-open");
+      drawer.classList.remove("is-open", "is-gsap-open");
+      if (scrim) scrim.classList.remove("is-open", "is-gsap-open");
       document.body.style.overflow = "";
+      if (hamburger) hamburger.focus();
       return;
     }
 
     var tl = gsap.timeline({
       onComplete: function () {
-        /* Hide after animation so it's out of tab order */
-        gsap.set(drawer, { display: "none" });
-        if (scrim) gsap.set(scrim, { display: "none" });
+        /* Restore scroll and pointer-events after animation */
         document.body.style.overflow = "";
-        /* Return focus to hamburger */
+        drawer.classList.remove("is-gsap-open");
+        if (scrim) scrim.classList.remove("is-gsap-open");
         if (hamburger) hamburger.focus();
       }
     });
 
-    /* 1. Nav rows fade out quickly */
-    tl.to(navLinks.concat(drawerFooter ? [drawerFooter] : []), {
+    /* Nav items + footer fade out quickly */
+    var exitTargets = navLinks.slice();
+    if (drawerFooter) exitTargets.push(drawerFooter);
+    tl.to(exitTargets, {
       opacity:  0,
       y:        6,
-      duration: 0.16,
+      duration: 0.14,
       stagger:  0.02,
       ease:     "power2.in",
-    });
+    }, 0);
 
-    /* 2. Drawer slides out to the right */
+    /* Drawer slides out right */
     tl.to(drawer, {
-      x:        "100%",
-      duration: 0.36,
-      ease:     "power3.in",
-    }, "-=0.08");
+      x:         "100%",
+      autoAlpha: 0,
+      duration:  0.38,
+      ease:      "power3.in",
+    }, 0.06);
 
-    /* 3. Scrim fades out */
-    tl.to(scrim || {}, {
-      opacity:  0,
-      duration: 0.22,
-      ease:     "power2.in",
-    }, "-=0.22");
+    /* Scrim fades out in sync */
+    tl.to(scrim, {
+      autoAlpha: 0,
+      duration:  0.28,
+      ease:      "power2.in",
+    }, 0.08);
 
     drawerTween = tl;
   }
 
-  /* ── Event listeners ────────────────────────── */
+  /* ── Event listeners ─────────────────────────────────────────── */
 
   if (hamburger) {
     hamburger.addEventListener("click", function () {
@@ -457,22 +477,22 @@
     scrim.addEventListener("click", closeMobileDrawer);
   }
 
-  /* Focus trap inside drawer */
+  /* Focus trap */
   if (drawer) {
     drawer.addEventListener("keydown", function (e) {
-      if (!drawerOpen) return;
+      if (!drawerOpen || e.key !== "Tab") return;
       var focusable = Array.from(drawer.querySelectorAll(
         "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"
-      ));
+      )).filter(function (el) {
+        return el.offsetParent !== null;  /* visible only */
+      });
       if (!focusable.length) return;
       var first = focusable[0];
       var last  = focusable[focusable.length - 1];
-      if (e.key === "Tab") {
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault(); last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault(); first.focus();
-        }
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
       }
     });
   }

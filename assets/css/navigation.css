@@ -685,7 +685,10 @@
 ================================================== */
 
 .mobile-drawer {
-  display:          none;
+  /* GSAP controls visibility via autoAlpha (opacity + visibility).
+     display:none is intentionally removed — it blocks gsap.set().
+     Drawer is hidden initially via visibility:hidden + opacity:0
+     set in navigation.js on page load.                           */
   position:         fixed;
   top:              0;
   right:            0;
@@ -693,25 +696,33 @@
   width:            min(360px, 100vw);
   z-index:          210;
   background:       #ffffff;
+  display:          flex;        /* always flex — GSAP hides via opacity/visibility */
   flex-direction:   column;
   overflow:         hidden;
+  visibility:       hidden;      /* GSAP will set visibility:visible on open */
+  opacity:          0;           /* GSAP will tween opacity on open */
+  pointer-events:   none;        /* no interaction while hidden */
 }
 
-/* .mobile-drawer.is-open — display + position managed by GSAP */
-/* GSAP sets display:flex, translateX(0) on open             */
-/* GSAP sets display:none, translateX(100%) on close         */
-/* No CSS animation needed here.                             */
+.mobile-drawer.is-gsap-open {
+  pointer-events: auto;          /* re-enable interaction when open */
+}
 
 /* Scrim */
 .mobile-scrim {
-  display:    none;        /* GSAP sets display:block on open   */
   position:   fixed;
   inset:      0;
   z-index:    205;
   background: rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-  /* opacity animated by GSAP — no CSS transition here        */
+  visibility: hidden;            /* GSAP controls via autoAlpha */
+  opacity:    0;
+  pointer-events: none;
+}
+
+.mobile-scrim.is-gsap-open {
+  pointer-events: auto;
 }
 
 
