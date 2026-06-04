@@ -352,44 +352,49 @@
       }
 
       /* Reset positions before animating in */
-      gsap.set(elDrawer, { x: '100%' });
-      gsap.set(elScrim,  { opacity: 0 });
-      gsap.set(elNavLinks, { opacity: 0, x: 16 });
-      if (elFooter) gsap.set(elFooter, { opacity: 0, y: 8 });
+      gsap.set(elDrawer,   { x: '100%' });
+      gsap.set(elScrim,    { opacity: 0 });
+      gsap.set(elNavLinks, { opacity: 0, y: 14 });
+      if (elFooter) gsap.set(elFooter, { opacity: 0, y: 10 });
 
       var tl = gsap.timeline({ onComplete: focusDrawer });
 
-      /* Scrim fades in */
+      /* Backdrop fades in — starts immediately */
       tl.to(elScrim, {
         opacity:  1,
-        duration: 0.22,
+        duration: 0.30,
         ease:     'power2.out',
       }, 0);
 
-      /* Drawer slides in from right */
+      /* Drawer slides in — subtle overshoot via custom ease.
+         CustomEase is part of GSAP free tier via string syntax.
+         'back.out(1.4)' gives a small, premium overshoot
+         that settles cleanly — not bouncy, just confident.   */
       tl.to(elDrawer, {
         x:        0,
-        duration: 0.42,
-        ease:     'power3.out',
-      }, 0);
+        duration: 0.50,
+        ease:     'back.out(1.4)',
+      }, 0.04);
 
-      /* Nav rows stagger up */
+      /* Nav items stagger in — fade + slight upward rise.
+         Starts after drawer is ~60% in (0.04 + 0.26 = 0.30s).
+         y-motion (not x) — vertical rise feels more refined. */
       tl.to(elNavLinks, {
         opacity:  1,
-        x:        0,
-        duration: 0.24,
-        stagger:  0.045,
+        y:        0,
+        duration: 0.26,
+        stagger:  0.05,
         ease:     'power2.out',
-      }, 0.22);
+      }, 0.30);
 
-      /* Footer */
+      /* Footer fades in last, barely trailing items */
       if (elFooter) {
         tl.to(elFooter, {
           opacity:  1,
           y:        0,
-          duration: 0.20,
+          duration: 0.22,
           ease:     'power2.out',
-        }, 0.30);
+        }, 0.42);
       }
 
       activeTl = tl;
@@ -425,32 +430,31 @@
         }
       });
 
-      /* Items out */
+      /* Items out — fade + slight downward drift, no stagger on close */
       var exitEls = elFooter
         ? elNavLinks.concat([elFooter])
         : elNavLinks.slice();
 
       tl.to(exitEls, {
         opacity:  0,
-        x:        10,
-        duration: 0.14,
-        stagger:  0.02,
+        y:        8,
+        duration: 0.16,
         ease:     'power2.in',
       }, 0);
 
-      /* Drawer out */
+      /* Drawer out — clean exit, slightly faster than entry */
       tl.to(elDrawer, {
         x:        '100%',
-        duration: 0.36,
+        duration: 0.32,
         ease:     'power3.in',
-      }, 0.04);
+      }, 0.06);
 
-      /* Scrim out */
+      /* Backdrop fades — in sync with drawer exit */
       tl.to(elScrim, {
         opacity:  0,
-        duration: 0.26,
+        duration: 0.24,
         ease:     'power2.in',
-      }, 0.06);
+      }, 0.08);
 
       activeTl = tl;
     }
