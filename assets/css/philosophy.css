@@ -127,24 +127,12 @@
 
 @media (max-width: 768px) {
 
-  /* .phil-spacer is injected by JS — it owns the layout height.
-     The section becomes absolute inside it.
-     We only need to ensure no clipping breaks the visual.       */
-  .phil-spacer {
-    overflow: visible !important;
-  }
-
+  /* Section stays in normal flow.
+     JS sets display:flex + minHeight for content centering.
+     Parent gets paddingBottom to push siblings down.           */
   .philosophy-section {
-    padding:          64px 20px;
-    /* GSAP sets position:absolute + scaleY on this element.
-       transform-origin ensures expansion is from the centre.    */
-    transform-origin: center center;
-    overflow:         visible;
-    box-sizing:       border-box;
-  }
-
-  .philosophy-inner {
-    transform-origin: center center;  /* counter-scale anchor */
+    padding:    64px 20px;
+    box-sizing: border-box;
   }
 
   .philosophy-mark {
@@ -153,6 +141,7 @@
 
   .philosophy-quote {
     font-size:  clamp(1.4rem, 6vw, 2rem);
+    /* GSAP owns opacity/transform on mobile */
     transition: none !important;
     opacity:    1    !important;
     transform:  none !important;

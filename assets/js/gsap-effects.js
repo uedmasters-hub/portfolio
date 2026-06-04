@@ -415,135 +415,113 @@
     quote.classList.add("is-visible");
     if (attr) attr.classList.add("is-visible");
 
-    /* ── MOBILE: LAYOUT-AWARE EXPAND + HIGHLIGHT ─────────────────
-       Strategy: wrap the section in a spacer div that grows its
-       actual layout height (pushing content down), while the
-       section itself uses scaleY from transformOrigin:center so
-       the expansion is visually symmetric (grows up AND down).
+    /* ── MOBILE PHILOSOPHY — clean implementation ─────────────────
+       Single responsibility per stage. No wrappers, no position hacks.
 
-       Two things run in sync:
-         A. spacer div height: naturalH → 100vh   (layout push)
-         B. section scaleY:    1       → ratio     (visual expand)
-
-       The spacer owns the layout space. The section is absolute
-       inside the spacer, centred, so it visually expands from
-       the middle while the spacer below it grows the page height.
-
-       Pump effect is preserved — GSAP's anticipatePin creates it.
-       No position:fixed, no clearProps, no onLeave jump.         */
+       Key technique for layout push WITHOUT a wrapper:
+         • section stays in normal flow (position: relative)
+         • GSAP pin handles sticky natively
+         • We grow padding-bottom on section's parentElement
+           by (vh - naturalH) to push subsequent siblings down
+           in exact proportion to the section's visual growth
+         • This is a real CSS change → real reflow → real push
+         • Padding grows in sync with the expand timeline
+         • On ScrollTrigger's pin release, padding stays → no jump  */
 
     if (window.matchMedia("(max-width: 768px)").matches) {
 
-      var inner = section.querySelector(".philosophy-inner");
+      /* ══ STAGE 1: MEASURE ═══════════════════════════════════════
+         Read all dimensions once, before any DOM changes.          */
 
-      /* ── WORD SPLIT ─────────────────────────────────────────── */
-      var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
-      var wordsM   = rawTextM.split(" ").filter(Boolean);
+      var vh       = window.innerHeight;
+      var naturalH = Math.round(section.getBoundingClientRect().height);
+      var pushAmt  = vh - naturalH;   /* extra space needed below */
+      var parent   = section.parentElement;
+      var inner    = section.querySelector(".philosophy-inner");
 
-      quote.innerHTML = wordsM.map(function (w) {
+      /* ══ STAGE 2: WORD SPLIT ════════════════════════════════════
+         Split blockquote into individual word spans.
+         Each span gets a class; GSAP tweens their color.           */
+
+      var rawText = quote.textContent.trim().replace(/\s+/g, " ");
+      var words   = rawText.split(" ").filter(Boolean);
+
+      quote.innerHTML = words.map(function (w) {
         return '<span class="phil-word">' + w + "</span>";
       }).join(" ");
 
-      var wordElsM = Array.from(quote.querySelectorAll(".phil-word"));
+      var wordEls = Array.from(quote.querySelectorAll(".phil-word"));
 
-      /* ── INITIAL STATES ─────────────────────────────────────── */
-      gsap.set(wordElsM, { color: "rgba(255,255,255,0.15)" });
+      /* ══ STAGE 3: INITIAL STATE ═════════════════════════════════
+         Set starting values for everything GSAP will animate.
+         Section stays in normal flow — no position changes.        */
+
+      /* Words start dim */
+      gsap.set(wordEls, { color: "rgba(255,255,255,0.15)" });
+
+      /* Attribution hidden below */
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
+
+      /* Quote mark dim */
       if (mark) gsap.set(mark, { autoAlpha: 0.25 });
 
-      /* ── WRAP SECTION IN A LAYOUT SPACER ────────────────────── */
-      /* The spacer stays in normal flow and grows the layout.
-         The section becomes absolute inside it — centred — so
-         scaleY expands it symmetrically without pushing anything. */
-
-      var naturalH = section.getBoundingClientRect().height;
-
-      /* Create spacer */
-      var spacer = document.createElement("div");
-      spacer.className = "phil-spacer";
-      spacer.style.cssText = [
-        "width:100%",
-        "height:" + naturalH + "px",
-        "position:relative",
-        "overflow:visible",
-      ].join(";");
-
-      /* Inject spacer: insert before section, move section inside */
-      section.parentNode.insertBefore(spacer, section);
-      spacer.appendChild(section);
-
-      /* Section: absolute inside spacer, centred vertically */
+      /* Section: flex-column so content centres as height grows */
       gsap.set(section, {
-        position:        "absolute",
-        top:             "50%",
-        left:            0,
-        width:           "100%",
-        yPercent:        -50,
-        transformOrigin: "center center",
+        display:        "flex",
+        flexDirection:  "column",
+        justifyContent: "center",
+        minHeight:      naturalH + "px",
+        boxSizing:      "border-box",
       });
 
-      /* Inner: counter-scale origin */
-      if (inner) gsap.set(inner, { transformOrigin: "center center" });
+      /* Parent padding proxy — grows to push siblings down */
+      var padProxy = { bottom: 0 };
 
-      /* ── SCALE RATIO CALC ───────────────────────────────────── */
-      var scaleRatio   = 1;
-      var scaleInverse = 1;
+      /* ══ STAGE 4: TIMELINE ══════════════════════════════════════
+         Each phase has one job. Phases are sequential.
+         Timeline is scrubbed by ScrollTrigger — not time-based.    */
 
-      function calcScale() {
-        /* Use naturalH (fixed) not getBCR (changes as we scale) */
-        scaleRatio   = window.innerHeight / naturalH;
-        scaleInverse = 1 / scaleRatio;
-      }
-      calcScale();
+      var tl = gsap.timeline();
 
-      /* ── MASTER TIMELINE ────────────────────────────────────── */
-      var tlM = gsap.timeline();
-
-      /* PHASE 1 — Spacer height grows (layout push) AND
-                   section scaleY grows (visual symmetric expand)
-         Both tween simultaneously with identical ease + duration  */
-
-      tlM.to(spacer, {
-        height:   window.innerHeight,
-        duration: 1,
-        ease:     "power2.inOut",
+      /* PHASE A — Section grows tall (min-height: naturalH → vh)
+                   Parent padding grows equally (0 → pushAmt)
+                   Both in exact sync → content below pushed down   */
+      tl.to(section, {
+        minHeight: vh + "px",
+        duration:  1,
+        ease:      "power2.inOut",
       });
 
-      tlM.to(section, {
-        scaleY:   function () { calcScale(); return scaleRatio; },
+      tl.to(padProxy, {
+        bottom:   pushAmt,
         duration: 1,
         ease:     "power2.inOut",
-      }, "<"); /* exact sync with spacer */
+        onUpdate: function () {
+          /* Apply padding to parent on every scrub frame */
+          parent.style.paddingBottom = Math.round(padProxy.bottom) + "px";
+        },
+      }, "<"); /* exact sync with section grow */
 
-      /* Counter-scale inner so text stays 1:1 */
-      if (inner) {
-        tlM.to(inner, {
-          scaleY:   function () { return scaleInverse; },
-          duration: 1,
-          ease:     "power2.inOut",
-        }, "<");
-      }
-
-      /* Quote mark brightens during expand */
+      /* Quote mark brightens at peak of expand */
       if (mark) {
-        tlM.to(mark, {
+        tl.to(mark, {
           autoAlpha: 1,
           duration:  0.4,
           ease:      "power2.out",
         }, "-=0.5");
       }
 
-      /* PHASE 2 — Words highlight */
-      tlM.to(wordElsM, {
+      /* PHASE B — Words light up left-to-right */
+      tl.to(wordEls, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
         stagger:  { each: 0.07, from: "start", ease: "none" },
         ease:     "power1.inOut",
       }, "-=0.1");
 
-      /* PHASE 3 — Attribution */
+      /* PHASE C — Attribution slides in */
       if (attr) {
-        tlM.to(attr, {
+        tl.to(attr, {
           autoAlpha: 1,
           y:         0,
           duration:  0.5,
@@ -551,16 +529,19 @@
         }, "-=0.2");
       }
 
-      /* ── SCROLLTRIGGER ──────────────────────────────────────── */
-      /* We pin the SPACER (layout owner), not the section.
-         The spacer stays in flow. The section is absolute inside.
-         Pin fires when spacer centre = viewport centre.           */
+      /* ══ STAGE 5: SCROLLTRIGGER ═════════════════════════════════
+         Pin fires when section centre = viewport centre.
+         anticipatePin:1 creates the pump effect on approach.
+         scrub:1.2 ties timeline progress to scroll position.
+         invalidateOnRefresh recalculates on orientation change.    */
+
       ScrollTrigger.create({
-        trigger:   spacer,
-        animation: tlM,
+        trigger:   section,
+        animation: tl,
         start:     "center center",
         end: function () {
-          return "+=" + Math.round(window.innerHeight * 2.4);
+          /* Scroll distance: grow(1) + highlight(~2) + attr(0.4) */
+          return "+=" + Math.round(vh * 2.4);
         },
         pin:                 true,
         scrub:               1.2,
