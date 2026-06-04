@@ -278,36 +278,170 @@
 
 
   /* ==================================================
-     MOBILE DRAWER
+     MOBILE DRAWER — GSAP animation
+     Open:  scrim fade in → drawer slide in → items stagger
+     Close: items fade → drawer slide out → scrim fade out
   ================================================== */
 
-  let drawerOpen = false;
+  let drawerOpen   = false;
+  let drawerTween  = null;   /* tracks in-flight animation for interruption */
 
+  /* ── Elements ────────────────────────────────── */
+  var navLinks  = drawer ? Array.from(drawer.querySelectorAll(".mobile-nav-link")) : [];
+  var drawerFooter = drawer ? drawer.querySelector(".mobile-drawer__footer") : null;
+
+  /* ── Guard: if GSAP not loaded, fall back to CSS classes ── */
+  var useGsap = (typeof gsap !== "undefined");
+
+  /* ── Initial CSS state (GSAP owns position, not CSS anim) ─ */
+  if (useGsap && drawer) {
+    /* Start off-screen to the right — GSAP will tween from here */
+    gsap.set(drawer, { x: "100%", display: "none" });
+    if (scrim) gsap.set(scrim, { opacity: 0, display: "none" });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     OPEN
+  ──────────────────────────────────────────────────────────── */
   function openMobileDrawer() {
+    if (drawerOpen) return;
     drawerOpen = true;
 
-    drawer.classList.add("is-open");
-    if (scrim) scrim.classList.add("is-open");
+    /* Kill any in-flight close animation */
+    if (drawerTween) drawerTween.kill();
 
+    /* ARIA + state */
+    drawer.setAttribute("aria-hidden", "false");
     hamburger.classList.add("is-open");
     hamburger.setAttribute("aria-expanded", "true");
     hamburger.setAttribute("aria-label", "Close navigation menu");
-
     document.body.style.overflow = "hidden";
+
+    if (!useGsap) {
+      /* CSS fallback */
+      drawer.classList.add("is-open");
+      if (scrim) scrim.classList.add("is-open");
+      return;
+    }
+
+    /* Make elements visible before animating */
+    gsap.set(drawer, { display: "flex" });
+    if (scrim) gsap.set(scrim, { display: "block" });
+
+    var tl = gsap.timeline();
+
+    /* 1. Scrim fades in */
+    tl.to(scrim || {}, {
+      opacity:  1,
+      duration: 0.25,
+      ease:     "power2.out",
+    });
+
+    /* 2. Drawer slides in from right — slightly overlapping scrim */
+    tl.to(drawer, {
+      x:        0,
+      duration: 0.42,
+      ease:     "power3.out",
+    }, "-=0.15");
+
+    /* 3. Nav rows stagger up + fade in */
+    tl.fromTo(navLinks, {
+      opacity: 0,
+      y:       10,
+    }, {
+      opacity:  1,
+      y:        0,
+      duration: 0.28,
+      stagger:  0.045,
+      ease:     "power2.out",
+    }, "-=0.18");
+
+    /* 4. Footer fades in */
+    if (drawerFooter) {
+      tl.fromTo(drawerFooter, {
+        opacity: 0,
+        y:       8,
+      }, {
+        opacity:  1,
+        y:        0,
+        duration: 0.22,
+        ease:     "power2.out",
+      }, "-=0.20");
+    }
+
+    drawerTween = tl;
+
+    /* Move focus into drawer after slide completes */
+    tl.call(function () {
+      var first = drawer.querySelector(
+        ".mobile-drawer__close, .mobile-nav-link"
+      );
+      if (first) first.focus();
+    });
   }
 
+  /* ────────────────────────────────────────────────────────────
+     CLOSE
+  ──────────────────────────────────────────────────────────── */
   function closeMobileDrawer() {
+    if (!drawerOpen) return;
     drawerOpen = false;
 
-    drawer.classList.remove("is-open");
-    if (scrim) scrim.classList.remove("is-open");
+    /* Kill any in-flight open animation */
+    if (drawerTween) drawerTween.kill();
 
+    /* ARIA + state */
+    drawer.setAttribute("aria-hidden", "true");
     hamburger.classList.remove("is-open");
     hamburger.setAttribute("aria-expanded", "false");
     hamburger.setAttribute("aria-label", "Open navigation menu");
 
-    document.body.style.overflow = "";
+    if (!useGsap) {
+      /* CSS fallback */
+      drawer.classList.remove("is-open");
+      if (scrim) scrim.classList.remove("is-open");
+      document.body.style.overflow = "";
+      return;
+    }
+
+    var tl = gsap.timeline({
+      onComplete: function () {
+        /* Hide after animation so it's out of tab order */
+        gsap.set(drawer, { display: "none" });
+        if (scrim) gsap.set(scrim, { display: "none" });
+        document.body.style.overflow = "";
+        /* Return focus to hamburger */
+        if (hamburger) hamburger.focus();
+      }
+    });
+
+    /* 1. Nav rows fade out quickly */
+    tl.to(navLinks.concat(drawerFooter ? [drawerFooter] : []), {
+      opacity:  0,
+      y:        6,
+      duration: 0.16,
+      stagger:  0.02,
+      ease:     "power2.in",
+    });
+
+    /* 2. Drawer slides out to the right */
+    tl.to(drawer, {
+      x:        "100%",
+      duration: 0.36,
+      ease:     "power3.in",
+    }, "-=0.08");
+
+    /* 3. Scrim fades out */
+    tl.to(scrim || {}, {
+      opacity:  0,
+      duration: 0.22,
+      ease:     "power2.in",
+    }, "-=0.22");
+
+    drawerTween = tl;
   }
+
+  /* ── Event listeners ────────────────────────── */
 
   if (hamburger) {
     hamburger.addEventListener("click", function () {
@@ -315,23 +449,37 @@
     });
   }
 
-  // Close button inside drawer
   if (closeBtn) {
     closeBtn.addEventListener("click", closeMobileDrawer);
   }
 
-  // Scrim click closes drawer
   if (scrim) {
     scrim.addEventListener("click", closeMobileDrawer);
   }
 
-  // Close drawer links on tap
+  /* Focus trap inside drawer */
   if (drawer) {
-    drawer.querySelectorAll(".mobile-nav-link").forEach(function (link) {
-      link.addEventListener("click", function () {
-        closeMobileDrawer();
-      });
+    drawer.addEventListener("keydown", function (e) {
+      if (!drawerOpen) return;
+      var focusable = Array.from(drawer.querySelectorAll(
+        "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"
+      ));
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last  = focusable[focusable.length - 1];
+      if (e.key === "Tab") {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      }
     });
   }
+
+  /* Close on nav link tap */
+  navLinks.forEach(function (link) {
+    link.addEventListener("click", closeMobileDrawer);
+  });
 
 })();

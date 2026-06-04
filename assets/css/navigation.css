@@ -697,35 +697,21 @@
   overflow:         hidden;
 }
 
-.mobile-drawer.is-open {
-  display:   flex;
-  animation: drawerSlideIn 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes drawerSlideIn {
-  from { opacity: 0; transform: translateX(24px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
+/* .mobile-drawer.is-open — display + position managed by GSAP */
+/* GSAP sets display:flex, translateX(0) on open             */
+/* GSAP sets display:none, translateX(100%) on close         */
+/* No CSS animation needed here.                             */
 
 /* Scrim */
 .mobile-scrim {
-  display:    none;
+  display:    none;        /* GSAP sets display:block on open   */
   position:   fixed;
   inset:      0;
   z-index:    205;
   background: rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-}
-
-.mobile-scrim.is-open {
-  display:   block;
-  animation: scrimIn 0.3s ease forwards;
-}
-
-@keyframes scrimIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  /* opacity animated by GSAP — no CSS transition here        */
 }
 
 
