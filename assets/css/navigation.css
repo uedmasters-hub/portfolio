@@ -685,17 +685,43 @@
 ================================================== */
 
 .mobile-drawer {
-  display:          none;       /* closed by default — GSAP animates, CSS hides */
+  /* ── LAYOUT & VISIBILITY ──────────────────────────────────
+     display:none = closed. JS adds .is-open for display:flex.
+     GSAP owns all transform/opacity animation.
+     No CSS transform here — GSAP sets x:100% via gsap.set()
+     before .is-open is added, so no CSS transform conflicts.  */
+  display:          none;
   position:         fixed;
   top:              0;
   right:            0;
   bottom:           0;
   width:            min(360px, 100vw);
   z-index:          210;
-  /* Ambient base — the gradient is always present but only
-     animates while open (animation-play-state controlled by
-     .is-open class below)                                    */
-  background:       #ffffff;
+  flex-direction:   column;
+  overflow:         hidden;
+  /* Background: solid white base only.
+     Ambient gradient lives on ::before so CSS animation
+     is on a DIFFERENT element than GSAP's transform target.
+     This prevents any CSS animation / GSAP transform conflict. */
+  background: #ffffff;
+}
+
+/* When open: show as flex (GSAP immediately overwrites transform) */
+.mobile-drawer.is-open {
+  display: flex;
+}
+
+/* ── AMBIENT BACKGROUND GRADIENT ──────────────────────────────
+   Lives on ::before so it is completely isolated from the
+   parent element that GSAP animates via transform.
+   CSS animation here can never conflict with GSAP on the parent. */
+.mobile-drawer::before {
+  content:  "";
+  position: absolute;
+  inset:    0;
+  z-index:  0;
+  pointer-events: none;
+
   background-image:
     radial-gradient(
       ellipse 160% 120% at 110% 0%,
@@ -709,21 +735,22 @@
     );
   background-size:   200% 200%, 200% 200%;
   background-repeat: no-repeat;
-  /* Gradient drifts paused until drawer opens */
+  background-position: 0% 0%, 100% 100%;
+
   animation:
     drawer-bg-shift-a 14s ease-in-out infinite alternate,
     drawer-bg-shift-b 20s ease-in-out infinite alternate-reverse;
-  animation-play-state: paused;
-  flex-direction:   column;
-  overflow:         hidden;
-  /* Off-screen by default — GSAP overwrites this inline */
-  transform:        translateX(100%);
+  animation-play-state: paused;  /* paused when drawer is closed */
 }
 
-/* When open: resume ambient animation */
-.mobile-drawer.is-open {
-  display: flex;
-  animation-play-state: running;
+.mobile-drawer.is-open::before {
+  animation-play-state: running; /* runs while drawer is open */
+}
+
+/* Drawer content must sit above the ::before gradient */
+.mobile-drawer > * {
+  position: relative;
+  z-index:  1;
 }
 
 @keyframes drawer-bg-shift-a {
