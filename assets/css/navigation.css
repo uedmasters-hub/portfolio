@@ -684,42 +684,48 @@
    Active = blue + 8px extra indent
 ================================================== */
 
-/* ─────────────────────────────────────────────────────────────
-   MOBILE DRAWER
-   Layout and visual design only. Zero animation.
-   GSAP owns all motion via transforms and opacity.
-   display is set by GSAP (display:none / display:flex).
-   Do not add animation, transition, or keyframes here.
-───────────────────────────────────────────────────────────── */
-
 .mobile-drawer {
-  /* Layout */
-  position:       fixed;
-  top:            0;
-  right:          0;
-  bottom:         0;
-  width:          min(360px, 100vw);
-  z-index:        210;
-  /* Visual */
-  background:     #ffffff;
-  /* Flex — GSAP sets display:flex/none; flex-direction always needed */
-  flex-direction: column;
-  overflow:       hidden;
-  /* No display, transform, animation, or transition here.
-     GSAP sets display:none initially then display:flex on open. */
+  display:          none;
+  position:         fixed;
+  top:              0;
+  right:            0;
+  bottom:           0;
+  width:            min(360px, 100vw);
+  z-index:          210;
+  background:       #ffffff;
+  flex-direction:   column;
+  overflow:         hidden;
 }
 
-/* Scrim ─────────────────────────────────────────────────── */
+.mobile-drawer.is-open {
+  display:   flex;
+  animation: drawerSlideIn 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
+@keyframes drawerSlideIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Scrim */
 .mobile-scrim {
+  display:    none;
   position:   fixed;
   inset:      0;
   z-index:    205;
   background: rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-  /* No display, animation, or transition.
-     GSAP sets display:block/none and tweens opacity. */
+}
+
+.mobile-scrim.is-open {
+  display:   block;
+  animation: scrimIn 0.3s ease forwards;
+}
+
+@keyframes scrimIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 
