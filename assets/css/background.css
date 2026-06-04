@@ -119,6 +119,7 @@ body {
    Gradient lives on body. Grid lives on .grid directly.
    ============================================================= */
 
+/* .background kept for backward compat on other pages */
 .background {
   position:       fixed;
   inset:          0;
@@ -132,32 +133,41 @@ body {
    below all page content. Independent of .background z-index.
    ============================================================= */
 
-.grid {
+.bg-canvas {
+  /* Fixed container for all background elements */
   position:       fixed;
   inset:          0;
-  z-index:        0;       /* above body bg (-10), below content (1+) */
+  z-index:        -10;
+  pointer-events: none;
+  overflow:       hidden;
+}
+
+.bg-grid {
+  /* Grid lines — matches preloader grid exactly */
+  position:       absolute;
+  inset:          0;
   pointer-events: none;
 
   background-image: linear-gradient(
     to right,
-    rgba(26, 70, 201, 0.05) 1px,
-    transparent             1px
+    rgba(26, 70, 201, 0.045) 1px,
+    transparent              1px
   );
-  background-size: 98px 100%;
+  background-size: 12.5% 100%;   /* 8 columns — same as preloader */
 
-  /* Fade at top and bottom edges */
+  /* Fade at edges so lines don't cut sharply */
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent  0%,
-    black        10%,
-    black        90%,
+    black        8%,
+    black        92%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent  0%,
-    black        10%,
-    black        90%,
+    black        8%,
+    black        92%,
     transparent 100%
   );
 }
@@ -167,16 +177,15 @@ body {
    double-guard in case JS is slow)
    ============================================================= */
 
-.orb {
-  display: none !important;
-}
+/* bg-orb-1 and bg-orb-2 are ambient blobs — hidden, body bg handles the gradient */
+.bg-orb-1, .bg-orb-2 { display: none; }
 
 /* =============================================================
    06. MOUSE LIGHT — interactive cursor glow
    Follows cursor via lerp in background.js
    ============================================================= */
 
-.mouse-light {
+.bg-mouse-glow {
   position:       fixed;
   width:          560px;
   height:         560px;
@@ -197,7 +206,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .mouse-light {
+  .bg-mouse-glow {
     width:  280px;
     height: 280px;
     display: none; /* touch devices don't have mouse */
@@ -265,7 +274,7 @@ body {
     background-position: 0 0;
   }
 
-  .mouse-light {
+  .bg-mouse-glow {
     display: none;
   }
 }
