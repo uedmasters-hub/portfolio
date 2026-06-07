@@ -87,7 +87,7 @@ $nav = [
     }
   ?>
 </head>
-<body>
+<body data-header="dark">
 
   <!-- READING PROGRESS -->
   <div class="cs-progress-bar" id="cs-progress" role="progressbar" aria-label="Reading progress"></div>
