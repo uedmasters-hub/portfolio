@@ -315,9 +315,9 @@ $nav = [
       <!-- NEXT / PREV CASE STUDIES -->
       <div class="art-next-wrap">
         <div class="art-next">
-          <p class="art-next__label">NEXT CASE STUDY</p>
           <a href="crewpal.php" class="art-next__card">
             <span class="art-next__arrow">↗</span>
+            <p class="art-next__label">NEXT CASE STUDY</p>
             <p class="art-next__category">ENTERPRISE OPERATIONS</p>
             <h3 class="art-next__title">CrewPal Operations Platform</h3>
             <p class="art-next__tagline">25% satisfaction lift. 18% fewer scheduling errors. 8,000+ crew.</p>
