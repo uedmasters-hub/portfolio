@@ -145,9 +145,7 @@ function render_related_content(string $type, string $slug): void {
 .rc-item__browse {
   display: block; font-size: 12px; color: var(--blue,#1a46c9);
   text-decoration: none; padding: 8px 10px;
-  border: 1px solid var(--border, rgba(0,0,0,.07));
   border-radius: 8px; text-align: center;
-  background: var(--bg, #f5f5f3);
   transition: border-color .18s, background .18s;
   box-sizing: border-box; width: 100%;
 }
