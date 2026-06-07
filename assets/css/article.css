@@ -515,7 +515,7 @@
 .art-next-wrap {
   padding:       0;
   margin:        0 64px;
-  border:        1px solid var(--border, rgba(0,0,0,.07));
+  /* border:        1px solid var(--border, rgba(0,0,0,.07)); */
   border-radius: var(--radius-md, 16px);
   overflow:      hidden;
   box-sizing:    border-box;
@@ -525,13 +525,14 @@
   display:               grid;
   grid-template-columns: repeat(2, 1fr);
   width:                 100%;
+  gap: 44px;
   box-sizing:            border-box;
 }
 
 .art-next__card {
   position:        relative;
   padding:         48px 40px;
-  background:      transparent;
+  background: #fff;
   text-decoration: none;
   color:           inherit;
   display:         flex;
@@ -540,6 +541,7 @@
   gap:             10px;
   transition:      background var(--t-fast) ease;
   min-height:      180px;
+  border-radius: 24px;
 }
 
 .art-next__card:not(:last-child) {
