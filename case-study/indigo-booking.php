@@ -1077,7 +1077,7 @@
   box-sizing: border-box;
   width: 100%;text-align: left;
 }
-.rc-item__browse:hover { border-color: rgba(26,70,201,.3); background: rgba(26,70,201,.04); }
+.rc-item__browse:hover {border-color: rgba(26,70,201,.3);background: rgba(26,70,201,.04);border-radius: 6px;}
 
 /* Responsive */
 @media (max-width: 1024px) {
