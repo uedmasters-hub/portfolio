@@ -101,8 +101,8 @@ function render_related_content(string $type, string $slug): void {
   font-size: 11px; font-weight: 600; letter-spacing: .12em;
   text-transform: uppercase; color: var(--text-muted, #888);
   display: flex; align-items: center; gap: 6px;
-  background: var(--bg, #f5f5f3);
-  border: 1px solid var(--border, rgba(0,0,0,.08));
+  /* background: var(--bg, #f5f5f3);
+  border: 1px solid var(--border, rgba(0,0,0,.08)); */
   border-radius: 6px;
   padding: 6px 10px;
 }
@@ -110,7 +110,7 @@ function render_related_content(string $type, string $slug): void {
 .rc-item {
   display: flex; align-items: center; gap: 12px;
   padding: 12px; border-radius: 10px; text-decoration: none;
-  background: var(--bg, #f5f5f3);
+  /* background: var(--bg, #f5f5f3); */
   border: 1px solid var(--border, rgba(0,0,0,.07));
   transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
@@ -146,8 +146,7 @@ function render_related_content(string $type, string $slug): void {
   display: block; font-size: 12px; color: var(--blue,#1a46c9);
   text-decoration: none; padding: 8px 10px;
   border: 1px solid var(--border, rgba(0,0,0,.07));
-  border-radius: 8px; text-align: center;
-  background: var(--bg, #f5f5f3);
+  border-radius: 8px;
   transition: border-color .18s, background .18s;
   box-sizing: border-box; width: 100%;
 }
