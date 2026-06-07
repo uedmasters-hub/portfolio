@@ -112,8 +112,6 @@ function render_related_content(string $type, string $slug): void {
 .rc-item{
   display:flex;align-items:center;gap:12px;padding:10px;
   border-radius:10px;text-decoration:none;
-  background:var(--bg-elevated,#fff);
-  border:1px solid var(--border,rgba(0,0,0,.07));
   transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
 }
 .rc-item:hover{
@@ -148,9 +146,7 @@ function render_related_content(string $type, string $slug): void {
 .rc-item__browse{
   display:block;font-size:12px;color:var(--blue,#1a46c9);
   text-decoration:none;padding:8px 10px;margin-top:4px;
-  border:1px solid var(--border,rgba(0,0,0,.07));
-  border-radius:8px;text-align:center;
-  background:var(--bg-elevated,#fff);
+  border-radius:8px;
   transition:border-color .18s,background .18s;
 }
 .rc-item__browse:hover{
