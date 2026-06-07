@@ -311,7 +311,7 @@ $nav = [
       <!-- NEXT / PREV CASE STUDIES -->
       <div class="art-next-wrap">
         <div class="art-next">
-          <a href="indigo-booking-flow.php" class="art-next__card">
+          <a href="<?= BASE_PATH ?>/case-study/indigo-booking-flow.php" class="art-next__card">
             <span class="art-next__arrow">↗</span>
             <p class="art-next__label">NEXT CASE STUDY</p>
             <p class="art-next__category">CONSUMER AVIATION</p>
