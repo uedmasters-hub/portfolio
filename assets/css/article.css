@@ -531,16 +531,16 @@
 
 .art-next__card {
   position:        relative;
-  padding:         48px 40px;
+  padding: 24px 24px;
   background: #fff;
   text-decoration: none;
   color:           inherit;
   display:         flex;
   flex-direction:  column;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   gap:             10px;
   transition:      background var(--t-fast) ease;
-  min-height:      180px;
+  /* min-height:      180px; */
   border-radius: 24px;
 }
 
