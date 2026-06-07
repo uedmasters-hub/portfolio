@@ -5,7 +5,8 @@
 /* ── HERO ────────────────────────────────── */
 
 .res-hero {
-  padding: 130px 48px 72px;
+  padding: 80px 48px 72px;
+  margin-top: 32px;
   display:       grid;
   grid-template-columns: 1.2fr 1fr;
   gap:           80px;
@@ -111,7 +112,7 @@
   padding: 72px 48px 0;
 }
 
-.res-section:last-of-type {/* padding-bottom: 96px; */}
+.res-section:last-of-type { padding-bottom: 96px; }
 
 .res-section-header {
   display:         flex;
@@ -635,7 +636,7 @@
 /* ── CTA BAND ────────────────────────────── */
 
 .res-cta {
-  margin: 0 0px 72px;
+  margin:    0 48px 96px;
   padding:   48px 56px;
   background: var(--text-primary);
   border-radius: var(--radius-lg);
