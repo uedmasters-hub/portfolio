@@ -435,6 +435,7 @@
     if (window.matchMedia("(max-width: 768px)").matches) {
 
       var inner = section.querySelector(".philosophy-inner");
+      var mark  = section.querySelector(".philosophy-mark");
 
       /* ── WORD SPLIT ─────────────────────────────────────────── */
       var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
@@ -449,99 +450,51 @@
       /* ── INITIAL STATES ─────────────────────────────────────── */
       gsap.set(wordElsM, { color: "rgba(255,255,255,0.15)" });
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
-      if (mark) gsap.set(mark, { autoAlpha: 0.25 });
+      if (mark) gsap.set(mark, { autoAlpha: 0.3 });
 
-      /* ── WRAP SECTION IN A LAYOUT SPACER ────────────────────── */
-      /* The spacer stays in normal flow and grows the layout.
-         The section becomes absolute inside it — centred — so
-         scaleY expands it symmetrically without pushing anything. */
+      /* ── STRATEGY: MIN-HEIGHT EXPANSION IN NORMAL FLOW ──────────
+         Tween section min-height from natural → 100vh so the blue
+         background genuinely fills the screen. Section stays in
+         normal document flow the whole time — no absolute/fixed
+         positioning, no scaleY, no counter-scale tricks.
+         GSAP's native pinSpacing injects a spacer above to prevent
+         overlap with the section above; content below naturally
+         shifts down as min-height grows.
+         Quote is centred vertically via flexbox (CSS).             */
 
-      var naturalH = section.getBoundingClientRect().height;
-
-      /* Create spacer */
-      var spacer = document.createElement("div");
-      spacer.className = "phil-spacer";
-      spacer.style.cssText = [
-        "width:100%",
-        "height:" + naturalH + "px",
-        "position:relative",
-        "overflow:visible",
-      ].join(";");
-
-      /* Inject spacer: insert before section, move section inside */
-      section.parentNode.insertBefore(spacer, section);
-      spacer.appendChild(section);
-
-      /* Section: absolute inside spacer, centred vertically */
-      gsap.set(section, {
-        position:        "absolute",
-        top:             "50%",
-        left:            0,
-        width:           "100%",
-        yPercent:        -50,
-        transformOrigin: "center center",
-      });
-
-      /* Inner: counter-scale origin */
-      if (inner) gsap.set(inner, { transformOrigin: "center center" });
-
-      /* ── SCALE RATIO CALC ───────────────────────────────────── */
-      var scaleRatio   = 1;
-      var scaleInverse = 1;
-
-      function calcScale() {
-        /* Use naturalH (fixed) not getBCR (changes as we scale) */
-        scaleRatio   = window.innerHeight / naturalH;
-        scaleInverse = 1 / scaleRatio;
-      }
-      calcScale();
+      var naturalH = Math.round(section.getBoundingClientRect().height);
 
       /* ── MASTER TIMELINE ────────────────────────────────────── */
       var tlM = gsap.timeline();
 
-      /* PHASE 1 — Spacer height grows (layout push) AND
-                   section scaleY grows (visual symmetric expand)
-         Both tween simultaneously with identical ease + duration  */
+      /* PHASE 1 — Expand to full viewport height */
+      tlM.fromTo(section,
+        { minHeight: naturalH },
+        {
+          minHeight: function () { return window.innerHeight; },
+          duration:  1,
+          ease:      "power2.inOut",
+        }
+      );
 
-      tlM.to(spacer, {
-        height:   window.innerHeight,
-        duration: 1,
-        ease:     "power2.inOut",
-      });
-
-      tlM.to(section, {
-        scaleY:   function () { calcScale(); return scaleRatio; },
-        duration: 1,
-        ease:     "power2.inOut",
-      }, "<"); /* exact sync with spacer */
-
-      /* Counter-scale inner so text stays 1:1 */
-      if (inner) {
-        tlM.to(inner, {
-          scaleY:   function () { return scaleInverse; },
-          duration: 1,
-          ease:     "power2.inOut",
-        }, "<");
-      }
-
-      /* Quote mark brightens during expand */
+      /* Quote mark brightens as section expands */
       if (mark) {
         tlM.to(mark, {
           autoAlpha: 1,
-          duration:  0.4,
+          duration:  0.5,
           ease:      "power2.out",
-        }, "-=0.5");
+        }, "<0.3");
       }
 
-      /* PHASE 2 — Words highlight */
+      /* PHASE 2 — Words highlight one by one */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
         stagger:  { each: 0.07, from: "start", ease: "none" },
         ease:     "power1.inOut",
-      }, "-=0.1");
+      }, "-=0.15");
 
-      /* PHASE 3 — Attribution */
+      /* PHASE 3 — Attribution slides up */
       if (attr) {
         tlM.to(attr, {
           autoAlpha: 1,
@@ -551,19 +504,24 @@
         }, "-=0.2");
       }
 
-      /* ── SCROLLTRIGGER ──────────────────────────────────────── */
-      /* We pin the SPACER (layout owner), not the section.
-         The spacer stays in flow. The section is absolute inside.
-         Pin fires when spacer centre = viewport centre.           */
+      /* PHASE 4 — Hold at full-screen before scroll-out */
+      tlM.to({}, { duration: 0.4 });
+
+      /* ── SCROLLTRIGGER — PIN + SCRUB ────────────────────────── */
+      /* Pin the section itself. ScrollTrigger pinSpacing injects a
+         spacer to prevent overlap with sections above and below.
+         start:"top top" pins when section reaches top of viewport.
+         After end, section un-pins and scrolls out naturally.       */
       ScrollTrigger.create({
-        trigger:   spacer,
+        trigger:   section,
         animation: tlM,
-        start:     "center center",
+        start:     "top top",
         end: function () {
-          return "+=" + Math.round(window.innerHeight * 2.4);
+          return "+=" + Math.round(window.innerHeight * 2.8);
         },
         pin:                 true,
-        scrub:               1.2,
+        pinSpacing:          true,
+        scrub:               1.4,
         anticipatePin:       1,
         invalidateOnRefresh: true,
       });
