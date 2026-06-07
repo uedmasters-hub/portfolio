@@ -452,49 +452,72 @@
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
       if (mark) gsap.set(mark, { autoAlpha: 0.3 });
 
-      /* ── STRATEGY: MIN-HEIGHT EXPANSION IN NORMAL FLOW ──────────
-         Tween section min-height from natural → 100vh so the blue
-         background genuinely fills the screen. Section stays in
-         normal document flow the whole time — no absolute/fixed
-         positioning, no scaleY, no counter-scale tricks.
-         GSAP's native pinSpacing injects a spacer above to prevent
-         overlap with the section above; content below naturally
-         shifts down as min-height grows.
-         Quote is centred vertically via flexbox (CSS).             */
+      /* ── STRATEGY: SPACER WRAPPER + TRUE FULL-SCREEN ───────────
+         The section is lifted out of flow into a spacer div.
+         The spacer owns layout height (starts at naturalH).
+         The section becomes position:fixed-like via GSAP pin,
+         always filling the viewport when pinned.
 
-      var naturalH = Math.round(section.getBoundingClientRect().height);
+         Steps:
+         1. Measure natural section height
+         2. Add top/bottom margin to spacer for breathing room
+         3. Wrap section in spacer — spacer stays in flow
+         4. Section: position absolute, top:0, height:100%
+            inside spacer initially, GSAP pin makes it fixed
+         5. Timeline only drives word highlight — no height tween
+         6. ScrollTrigger pins the SPACER (not the section)
+            so adjacent sections are never overlapped              */
 
-      /* ── MASTER TIMELINE ────────────────────────────────────── */
+      /* Measure before any DOM changes */
+      var naturalH  = Math.round(section.getBoundingClientRect().height);
+      var breathe   = 48; /* px gap above and below */
+
+      /* ── CREATE SPACER ──────────────────────────────────────── */
+      var spacer = document.createElement("div");
+      spacer.className = "phil-spacer";
+      spacer.style.cssText = [
+        "position:relative",
+        "width:100%",
+        "height:" + (naturalH + breathe * 2) + "px",
+        "margin-top:" + breathe + "px",
+        "margin-bottom:" + breathe + "px",
+        "overflow:visible",
+      ].join(";");
+
+      /* Move section inside spacer */
+      section.parentNode.insertBefore(spacer, section);
+      spacer.appendChild(section);
+
+      /* Section: fill spacer, centred content via flex (CSS) */
+      gsap.set(section, {
+        position: "absolute",
+        top:      0,
+        left:     0,
+        width:    "100%",
+        height:   "100%",
+      });
+
+      /* ── TIMELINE: words only, no height tween ──────────────── */
       var tlM = gsap.timeline();
 
-      /* PHASE 1 — Expand to full viewport height */
-      tlM.fromTo(section,
-        { minHeight: naturalH },
-        {
-          minHeight: function () { return window.innerHeight; },
-          duration:  1,
-          ease:      "power2.inOut",
-        }
-      );
-
-      /* Quote mark brightens as section expands */
+      /* Quote mark brightens */
       if (mark) {
         tlM.to(mark, {
           autoAlpha: 1,
-          duration:  0.5,
+          duration:  0.4,
           ease:      "power2.out",
-        }, "<0.3");
+        });
       }
 
-      /* PHASE 2 — Words highlight one by one */
+      /* Words highlight one by one */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
-        stagger:  { each: 0.07, from: "start", ease: "none" },
+        stagger:  { each: 0.08, from: "start", ease: "none" },
         ease:     "power1.inOut",
-      }, "-=0.15");
+      }, mark ? "-=0.1" : "0");
 
-      /* PHASE 3 — Attribution slides up */
+      /* Attribution slides up */
       if (attr) {
         tlM.to(attr, {
           autoAlpha: 1,
@@ -504,23 +527,24 @@
         }, "-=0.2");
       }
 
-      /* PHASE 4 — Hold at full-screen before scroll-out */
-      tlM.to({}, { duration: 0.4 });
+      /* Hold before scroll-out */
+      tlM.to({}, { duration: 0.3 });
 
-      /* ── SCROLLTRIGGER — PIN + SCRUB ────────────────────────── */
-      /* Pin the section itself. ScrollTrigger pinSpacing injects a
-         spacer to prevent overlap with sections above and below.
-         start:"top top" pins when section reaches top of viewport.
-         After end, section un-pins and scrolls out naturally.       */
+      /* ── SCROLLTRIGGER: pin the section, trigger on spacer ──── */
+      /* Pin the SECTION (not spacer) so it becomes fixed and fills
+         the viewport. The spacer holds the layout space.
+         start: "center center" matches desktop behaviour —
+         pin fires when section centre meets viewport centre.
+         pinSpacing:false because spacer already owns the space.   */
       ScrollTrigger.create({
-        trigger:   section,
-        animation: tlM,
-        start:     "top top",
+        trigger:             section,
+        animation:           tlM,
+        start:               "center center",
         end: function () {
-          return "+=" + Math.round(window.innerHeight * 2.8);
+          return "+=" + Math.round(window.innerHeight * 2.2);
         },
         pin:                 true,
-        pinSpacing:          true,
+        pinSpacing:          false,
         scrub:               1.4,
         anticipatePin:       1,
         invalidateOnRefresh: true,

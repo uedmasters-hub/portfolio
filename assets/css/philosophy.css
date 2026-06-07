@@ -124,26 +124,30 @@
 
 @media (max-width: 768px) {
 
+  /* Spacer injected by JS — holds layout space.
+     Breathing room (margin) is set inline by JS. */
+  .phil-spacer {
+    overflow: visible !important;
+    box-sizing: border-box;
+  }
+
+  /* Section is position:absolute inside spacer (set by GSAP).
+     Flex centres the inner content vertically + horizontally. */
   .philosophy-section {
-    /* Flexbox centres the inner content vertically as
-       min-height expands from natural → 100vh via GSAP   */
     display:         flex;
     align-items:     center;
     justify-content: flex-start;
     padding:         48px 24px;
     box-sizing:      border-box;
-    /* Margin ensures breathing room with adjacent sections
-       even during the expansion animation                 */
-    margin-top:      0;
-    margin-bottom:   0;
-    /* overflow visible so GSAP pin spacer doesn't clip   */
-    overflow:        visible;
-    width:           100%;
+    overflow:        hidden; /* clip grain texture to section bounds */
+    min-height:      0;      /* reset — height controlled by spacer/GSAP pin */
   }
 
   .philosophy-inner {
     width:     100%;
     max-width: 100%;
+    position:  relative;
+    z-index:   2;
   }
 
   .philosophy-mark {
@@ -162,11 +166,6 @@
     flex-wrap:  wrap;
     gap:        6px;
     transition: none !important;
-  }
-
-  /* GSAP pin spacer — must not collapse */
-  .phil-spacer {
-    overflow: visible !important;
   }
 
 }
