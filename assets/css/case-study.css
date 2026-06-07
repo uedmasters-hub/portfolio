@@ -499,15 +499,15 @@
   max-width:  720px;
   display:    flex;
   flex-direction: column;
-  gap:        48px;
+  /* gap:        48px; */
 }
 
 .cs-section {
   scroll-margin-top: 100px;
   display:           flex;
   flex-direction:    column;
-  gap:               24px;
-  padding-bottom:    48px;
+  gap:               16px;
+  /* padding-bottom:    48px; */
 }
 
 .cs-section__label {
