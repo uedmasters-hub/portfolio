@@ -64,7 +64,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
 </head>
-<body>
+<body data-header="dark">
 
   <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
 
@@ -98,7 +98,7 @@ $nav = [
       <div class="cs-detail-hero fade-in">
         <img
           class="cs-detail-hero__img"
-          src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?q=80&w=2400&auto=format&fit=crop"
+          src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2400&auto=format&fit=crop"
           alt="Design system components representing Quikr's unified platform"
           loading="eager"
         />
