@@ -311,14 +311,14 @@ $nav = [
       <!-- NEXT / PREV CASE STUDIES -->
       <div class="art-next-wrap">
         <div class="art-next">
-          <a href="<?= BASE_PATH ?>/case-study/indigo-booking-flow.php" class="art-next__card">
+          <a href="<?= BASE_PATH ?>/case-study/indigo-booking.php" class="art-next__card">
             <span class="art-next__arrow">↗</span>
             <p class="art-next__label">NEXT CASE STUDY</p>
             <p class="art-next__category">CONSUMER AVIATION</p>
             <h3 class="art-next__title">IndiGo Booking Flow &amp; CX Transformation</h3>
             <p class="art-next__tagline">6× fare selection uplift. NPS +22 pts. 6M monthly passengers.</p>
           </a>
-          <a href="crewpal.php" class="art-next__card">
+          <a href="<?= BASE_PATH ?>/case-study/crewpal.php" class="art-next__card">
             <span class="art-next__arrow">↗</span>
             <p class="art-next__label">ALSO READ</p>
             <p class="art-next__category">ENTERPRISE OPERATIONS</p>
