@@ -77,7 +77,7 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
   </div>
 
   <?php
-    $currentKey = "work"; // change per-page (see table below)
+    $currentKey = "audit";
     require __DIR__ . "/../partials/navigation.php";
   ?>
 

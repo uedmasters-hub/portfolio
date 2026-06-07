@@ -85,7 +85,7 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
   </aside>
 
   <?php
-    $currentKey = "field-notes"; // change per-page (see table below)
+    $currentKey = "psychology";
     require_once __DIR__ . "/../partials/navigation.php";
   ?>
 
