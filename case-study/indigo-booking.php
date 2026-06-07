@@ -64,7 +64,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
 </head>
-<body>
+<body data-header="dark">
 
   <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
 

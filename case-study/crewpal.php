@@ -63,7 +63,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
 </head>
-<body>
+<body data-header="dark">
   <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader__grid"></div>
@@ -87,7 +87,7 @@ $nav = [
   <div class="page-wrapper">
     <main id="main-content">
       <div class="cs-detail-hero fade-in">
-        <img class="cs-detail-hero__img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2400&auto=format&fit=crop" alt="Aircraft representing crew operations" loading="eager"/>
+        <img class="cs-detail-hero__img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2400&auto=format&fit=crop" alt="Aircraft representing crew operations" loading="eager"/>
         <div class="cs-detail-hero__overlay"></div>
         <div class="cs-detail-hero__content">
           <p class="cs-detail-hero__category">CREW OPERATIONS SYSTEM</p>

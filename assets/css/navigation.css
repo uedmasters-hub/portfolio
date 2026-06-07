@@ -1119,3 +1119,90 @@ body {
   .avail-dot { animation: none; }
 
 }
+
+/* ==================================================
+   DARK HERO MODE
+   Add data-header="dark" to <body> on pages where
+   the header sits over a dark image/video hero.
+   — Transparent state: white text, white logo mark
+   — Scrolled (.is-scrolled): reverts to light glass
+   — mega-open: always light (panel is always light)
+================================================== */
+
+/* Transparent over dark hero — white everything */
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .logo__mark {
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .logo__text {
+  color: rgba(255,255,255,0.95);
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-trigger {
+  color: rgba(255,255,255,0.85);
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-trigger:hover,
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-trigger[aria-expanded="true"] {
+  background: rgba(255,255,255,0.12);
+  color: #ffffff;
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-chevron {
+  stroke: rgba(255,255,255,0.7);
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-link {
+  color: rgba(255,255,255,0.85);
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-link:hover {
+  background: rgba(255,255,255,0.12);
+  color: #ffffff;
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-link.active {
+  color: #ffffff;
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-link.active::after {
+  background: rgba(255,255,255,0.8);
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-trigger.active {
+  color: #ffffff;
+}
+
+/* Connect button — white outline on dark */
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-connect {
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.4);
+  backdrop-filter: blur(8px);
+}
+
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-connect:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.6);
+}
+
+/* Hamburger bars on dark */
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open) .nav-hamburger span {
+  background: #ffffff;
+}
+
+/* Subtle gradient scrim so header is always legible over any image */
+body[data-header="dark"] .header:not(.is-scrolled):not(.mega-open)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.28) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
