@@ -195,17 +195,9 @@ body:not(.nav-hidden) .psych-filter {
   display:        flex;
   flex-direction: column;
   cursor:         pointer;
-  transition:
-    transform    0.22s ease,
-    box-shadow   0.22s ease,
-    border-color 0.22s ease;
 }
 
-.psych-card:hover {
-  transform:    translateY(-4px);
-  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
-  border-color: rgba(26,70,201,0.18);
-}
+/* .psych-card:hover → inherited from .hover-lift in global.css */
 
 /* COLOR ACCENT TOP STRIP */
 .psych-card::before {

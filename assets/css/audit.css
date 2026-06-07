@@ -143,17 +143,9 @@
   text-decoration:  none;
   color:            inherit;
   background:       var(--bg-elevated);
-  transition:
-    transform    0.22s ease,
-    box-shadow   0.22s ease,
-    border-color 0.22s ease;
 }
 
-.audit-card:not(.audit-card--soon):hover {
-  transform:    translateY(-4px);
-  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
-  border-color: rgba(26,70,201,0.18);
-}
+/* .audit-card:hover → inherited from .hover-lift in global.css */
 
 .audit-card--soon {
   opacity: 0.65;

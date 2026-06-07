@@ -74,11 +74,7 @@
   min-height:      180px;
 }
 
-.bento-card:hover {
-  transform:    translateY(-4px);
-  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
-  border-color: rgba(26,70,201,0.18);
-}
+/* .bento-card:hover → inherited from .hover-lift in global.css */
 
 .bento-card:hover .bento-card__arrow {
   transform: translate(3px, -3px);

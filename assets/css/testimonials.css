@@ -67,11 +67,7 @@
     border-color 0.35s ease;
 }
 
-.testimonial-card:hover {
-  transform:    translateY(-4px);
-  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
-  border-color: rgba(26,70,201,0.18);
-}
+/* .testimonial-card:hover → inherited from .hover-lift in global.css */
 
 .testimonial-card__quote-mark {
   font-size:   3rem;

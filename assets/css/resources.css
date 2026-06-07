@@ -189,11 +189,7 @@
   transition: transform 0.3s var(--ease-out);
 }
 
-.res-download-card:hover {
-  transform:    translateY(-4px);
-  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
-  border-color: rgba(26,70,201,0.18);
-}
+/* .res-download-card:hover → inherited from .hover-lift in global.css */
 
 .res-download-card:hover::before { transform: scaleX(1); }
 
@@ -394,10 +390,8 @@
     border-color 0.3s ease;
 }
 
-.res-tool:hover {
-  transform:    translateY(-4px);
-  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
-  border-color: rgba(26,70,201,0.18);
+/* .res-tool:hover → inherited from .hover-lift in global.css
+  (
 }
 
 .res-tool__header {
