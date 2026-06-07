@@ -92,14 +92,14 @@
 
   /* ── START ─────────────────────────────── */
 
-  setTimeout(phase1, 650);
+  setTimeout(phase1, 200);
 
   if (document.readyState === "complete") {
     setTimeout(phase2, 900);
   } else {
     window.addEventListener("load", function () {
       var elapsed = performance.now();
-      var minTime = 1400;
+      var minTime = 800;
       var wait    = Math.max(0, minTime - elapsed);
       setTimeout(phase2, wait);
     });
@@ -110,6 +110,6 @@
     if (!preloader.classList.contains("is-done")) {
       phase2();
     }
-  }, 4000);
+  }, 2500);
 
 })();
