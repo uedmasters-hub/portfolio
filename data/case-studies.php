@@ -111,13 +111,24 @@ $caseStudies = [
   ],
 
   [
-    'slug'           => 'quikr-design-system',
-    'title'          => 'Quikr Unified Design System',
-    'company'        => 'Quikr India',
-    'year'           => '2015–2017',
-    'category'       => 'Design Infrastructure',
-    'status'         => 'published',
-    'image'          => '/assets/images/cs-quikr-thumb.jpg',
+    'slug'     => 'quikr-design-system',
+    'title'    => 'Quikr Unified Design System',
+    'company'  => 'Quikr India',
+    'year'     => '2015–2017',
+    'category' => 'DESIGN INFRASTRUCTURE',
+    'status'   => 'published',
+    'image'    => 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?q=80&w=1600&auto=format&fit=crop',
+    'role'     => 'Sr. Visual Designer',
+    'duration' => '18 months',
+    'featured' => false,
+    'tagline'  => 'Building Quikr\'s first token-based design system adopted by 5 engineering teams across 5 product verticals.',
+    'tags'     => ['Design Systems', 'Component Library', 'Design Ops', 'Visual Design'],
+    'metrics'  => [
+      ['value' => '5',    'label' => 'Product Verticals'],
+      ['value' => '18mo', 'label' => 'Time to Adoption'],
+      ['value' => '20%',  'label' => 'Email CTR Up'],
+      ['value' => '18%',  'label' => 'Drop-off Reduced'],
+    ],
   ],
 
 ];
