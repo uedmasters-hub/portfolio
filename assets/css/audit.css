@@ -144,15 +144,15 @@
   color:            inherit;
   background:       var(--bg-elevated);
   transition:
-    transform  0.4s var(--ease-out),
-    box-shadow 0.4s var(--ease-out),
-    border-color 0.3s ease;
+    transform    0.22s ease,
+    box-shadow   0.22s ease,
+    border-color 0.22s ease;
 }
 
 .audit-card:not(.audit-card--soon):hover {
-  transform:    translateY(-6px);
-  box-shadow:   var(--shadow-lg);
-  border-color: rgba(26,70,201,0.2);
+  transform:    translateY(-4px);
+  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
+  border-color: rgba(26,70,201,0.18);
 }
 
 .audit-card--soon {

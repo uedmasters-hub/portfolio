@@ -109,16 +109,16 @@
   flex-direction: column;
   cursor:         pointer;
   transition:
-    transform   0.4s var(--ease-out),
-    box-shadow  0.4s ease,
-    border-color 0.3s ease;
+    transform    0.22s ease,
+    box-shadow   0.22s ease,
+    border-color 0.22s ease;
   text-decoration: none;
   color:           inherit;
 }
 
 .cs-card:hover {
-  transform:    translateY(-5px);
-  box-shadow:   0 20px 60px rgba(26,70,201,0.10);
+  transform:    translateY(-4px);
+  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
   border-color: rgba(26,70,201,0.18);
 }
 
@@ -572,8 +572,9 @@
 }
 
 .cs-metric-card:hover {
-  border-color: rgba(26,70,201,0.20);
-  background:   rgba(26,70,201,0.02);
+  transform:    translateY(-4px);
+  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
+  border-color: rgba(26,70,201,0.18);
 }
 
 .cs-metric-card__value {

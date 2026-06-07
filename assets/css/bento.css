@@ -75,8 +75,9 @@
 }
 
 .bento-card:hover {
-  transform:  translateY(-4px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+  transform:    translateY(-4px);
+  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
+  border-color: rgba(26,70,201,0.18);
 }
 
 .bento-card:hover .bento-card__arrow {

@@ -69,8 +69,8 @@
 
 .testimonial-card:hover {
   transform:    translateY(-4px);
-  box-shadow:   0 16px 48px rgba(26,70,201,0.08);
-  border-color: rgba(26,70,201,0.20);
+  box-shadow:   0 16px 48px rgba(26,70,201,0.09);
+  border-color: rgba(26,70,201,0.18);
 }
 
 .testimonial-card__quote-mark {
