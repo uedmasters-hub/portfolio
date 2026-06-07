@@ -338,7 +338,6 @@
 
   .bento-section {
     padding: 80px 40px 100px;
-    margin-top: 40%; /* offset negative margin on .hero-wrapper */
   }
 
   /* reset ALL grid placement — stack as 2 cols */
@@ -371,7 +370,6 @@
 
   .bento-section {
     padding: 64px 20px 80px;
-    margin-top: 40%; /* offset negative margin on .hero-wrapper */
   }
 
   /* single column — everything stacks */
