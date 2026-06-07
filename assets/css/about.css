@@ -5,10 +5,11 @@
 /* ── HERO ────────────────────────────────── */
 
 .about-hero {
-  padding: 130px 48px 80px;
+  padding: 80px 48px 80px;
   display:       grid;
   grid-template-columns: 1fr 1fr;
   gap:           80px;
+  margin-top: 32px;
   align-items:   start;
   border-bottom: 1px solid var(--border);
 }
