@@ -102,7 +102,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
     ]);
   ?>
 </head>
-<body>
+<body data-header="dark">
 
   <div class="art-progress" id="art-progress" role="progressbar" aria-label="Reading progress"></div>
 
