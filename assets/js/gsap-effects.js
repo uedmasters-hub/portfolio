@@ -434,17 +434,13 @@
 
     if (window.matchMedia("(max-width: 768px)").matches) {
 
-      var inner = section.querySelector(".philosophy-inner");
-      var mark  = section.querySelector(".philosophy-mark");
+      var mark = section.querySelector(".philosophy-mark");
 
       /* ── WORD SPLIT ─────────────────────────────────────────── */
       var rawTextM = quote.textContent.trim().replace(/\s+/g, " ");
-      var wordsM   = rawTextM.split(" ").filter(Boolean);
-
-      quote.innerHTML = wordsM.map(function (w) {
+      quote.innerHTML = rawTextM.split(" ").filter(Boolean).map(function (w) {
         return '<span class="phil-word">' + w + "</span>";
       }).join(" ");
-
       var wordElsM = Array.from(quote.querySelectorAll(".phil-word"));
 
       /* ── INITIAL STATES ─────────────────────────────────────── */
@@ -452,102 +448,123 @@
       if (attr) gsap.set(attr, { autoAlpha: 0, y: 10 });
       if (mark) gsap.set(mark, { autoAlpha: 0.3 });
 
-      /* ── STRATEGY: SPACER WRAPPER + TRUE FULL-SCREEN ───────────
-         The section is lifted out of flow into a spacer div.
-         The spacer owns layout height (starts at naturalH).
-         The section becomes position:fixed-like via GSAP pin,
-         always filling the viewport when pinned.
+      /* ── APPROACH: STICKY + TALL SPACER ─────────────────────────
+         Requirements:
+           A) Section scrolls up normally until its centre is at
+              viewport centre — then it STICKS there (no jump to top)
+           B) While stuck, height grows from natural → 100vh so the
+              blue genuinely fills the screen (layout height grows,
+              pushing content below down — zero overlap)
+           C) Animation plays during the stuck phase (scrubbed)
+           D) After animation completes, the section scrolls OFF
+              naturally upward with no special exit effect
 
-         Steps:
-         1. Measure natural section height
-         2. Add top/bottom margin to spacer for breathing room
-         3. Wrap section in spacer — spacer stays in flow
-         4. Section: position absolute, top:0, height:100%
-            inside spacer initially, GSAP pin makes it fixed
-         5. Timeline only drives word highlight — no height tween
-         6. ScrollTrigger pins the SPACER (not the section)
-            so adjacent sections are never overlapped              */
+         Implementation:
+           1. Wrap section in a tall SPACER div
+              spacer height = naturalH + scrollDistance
+              This means content below is already pushed down by
+              the full amount — NO overlap at any point
+           2. Section: position sticky inside spacer
+              sticky-top = (viewport - naturalH) / 2  → centres it
+              This replaces pin — section sticks mid-screen naturally
+           3. Section height tweens naturalH → 100vh via GSAP scrub
+              As height grows, the section fills screen, sticky-top
+              adjusts via CSS calc so it stays centred
+           4. Words animate during the scrub
+           5. When spacer scrolls past, section un-sticks and
+              scrolls away naturally — no exit effect needed        */
 
-      /* Measure before any DOM changes */
-      var naturalH  = Math.round(section.getBoundingClientRect().height);
-      var breathe   = 48; /* px gap above and below */
+      var vH       = window.innerHeight;
+      var naturalH = Math.round(section.getBoundingClientRect().height);
+      var scrollD  = Math.round(vH * 2.4);   /* scroll distance for animation */
+      var breathe  = 64;                      /* gap above + below section */
 
       /* ── CREATE SPACER ──────────────────────────────────────── */
       var spacer = document.createElement("div");
       spacer.className = "phil-spacer";
+      /* Spacer total height = breathing + natural + scroll distance + breathing */
       spacer.style.cssText = [
         "position:relative",
         "width:100%",
-        "height:" + (naturalH + breathe * 2) + "px",
-        "margin-top:" + breathe + "px",
-        "margin-bottom:" + breathe + "px",
+        "height:" + (breathe + naturalH + scrollD + breathe) + "px",
         "overflow:visible",
       ].join(";");
 
-      /* Move section inside spacer */
       section.parentNode.insertBefore(spacer, section);
       spacer.appendChild(section);
 
-      /* Section: fill spacer, centred content via flex (CSS) */
+      /* ── SECTION: STICKY inside spacer ──────────────────────── */
+      /* sticky-top centres the section vertically in the viewport */
+      var stickyTop = Math.round((vH - naturalH) / 2);
       gsap.set(section, {
-        position: "absolute",
-        top:      0,
-        left:     0,
-        width:    "100%",
-        height:   "100%",
+        position:  "sticky",
+        top:       stickyTop,
+        left:      0,
+        width:     "100%",
+        zIndex:    10,
+        boxSizing: "border-box",
       });
 
-      /* ── TIMELINE: words only, no height tween ──────────────── */
+      /* ── MASTER TIMELINE ────────────────────────────────────── */
       var tlM = gsap.timeline();
 
-      /* Quote mark brightens */
+      /* PHASE 1 — Expand height: naturalH → 100vh
+         As height grows, sticky-top must shrink to keep centred.
+         We tween both together.                                    */
+      tlM.to(section, {
+        height:   vH,
+        top:      0,            /* when full-screen, top:0 is correct */
+        duration: 1,
+        ease:     "power2.inOut",
+      });
+
+      /* Quote mark brightens during expand */
       if (mark) {
         tlM.to(mark, {
           autoAlpha: 1,
           duration:  0.4,
           ease:      "power2.out",
-        });
+        }, "<0.3");
       }
 
-      /* Words highlight one by one */
+      /* PHASE 2 — Words highlight */
       tlM.to(wordElsM, {
         color:    "rgba(255,255,255,1)",
         duration: 0.4,
         stagger:  { each: 0.08, from: "start", ease: "none" },
         ease:     "power1.inOut",
-      }, mark ? "-=0.1" : "0");
+      }, "-=0.2");
 
-      /* Attribution slides up */
+      /* PHASE 3 — Attribution */
       if (attr) {
         tlM.to(attr, {
           autoAlpha: 1,
           y:         0,
-          duration:  0.5,
+          duration:  0.4,
           ease:      "power2.out",
-        }, "-=0.2");
+        }, "-=0.15");
       }
 
-      /* Hold before scroll-out */
+      /* Hold */
       tlM.to({}, { duration: 0.3 });
 
-      /* ── SCROLLTRIGGER: pin the section, trigger on spacer ──── */
-      /* Pin the SECTION (not spacer) so it becomes fixed and fills
-         the viewport. The spacer holds the layout space.
-         start: "center center" matches desktop behaviour —
-         pin fires when section centre meets viewport centre.
-         pinSpacing:false because spacer already owns the space.   */
+      /* ── SCROLLTRIGGER: scrub against SPACER ────────────────── */
+      /* Trigger on spacer so the scroll distance is the full spacer.
+         NO pin — sticky CSS handles the sticking.
+         start: section enters from bottom → fires after breathe gap.
+         end: spacer bottom → section naturally scrolls off.         */
       ScrollTrigger.create({
-        trigger:             section,
+        trigger:             spacer,
         animation:           tlM,
-        start:               "center center",
-        end: function () {
-          return "+=" + Math.round(window.innerHeight * 2.2);
-        },
-        pin:                 true,
-        pinSpacing:          false,
-        scrub:               1.4,
-        anticipatePin:       1,
+        start:               "top+=" + breathe + " bottom",
+        end:                 "bottom bottom",
+        scrub:               1.2,
         invalidateOnRefresh: true,
+        onRefresh: function (self) {
+          /* Recalculate sticky-top and height on resize */
+          vH       = window.innerHeight;
+          stickyTop = Math.round((vH - naturalH) / 2);
+        },
       });
 
       return; /* mobile handled — skip desktop block */
