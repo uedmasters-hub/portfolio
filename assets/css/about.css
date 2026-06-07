@@ -5,7 +5,7 @@
 /* ── HERO ────────────────────────────────── */
 
 .about-hero {
-  padding:       80px 48px 80px;
+  padding: 130px 48px 80px;
   display:       grid;
   grid-template-columns: 1fr 1fr;
   gap:           80px;
