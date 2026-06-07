@@ -142,24 +142,11 @@ function render_related_content(string $type, string $slug): void {
   flex-shrink: 0; transition: transform .18s, color .18s;
 }
 .rc-item__browse {
-  /* display: block; font-size: 12px; color: var(--blue,#1a46c9);
-  text-decoration: none; padding: 8px 10px; margin-top: 4px;
-  border: 1px solid var(--border,rgba(0,0,0,.07));
-  border-radius: 8px; text-align: center;
-  background: var(--bg,#f5f5f3);
+  display: block;font-size: 12px;color: var(--blue,#1a46c9);
+  text-decoration: none;padding: 8px 10px;
   transition: border-color .18s, background .18s;
-  box-sizing: border-box; width: 100%; */
-
-    display: block;
-    font-size: 12px;
-    color: var(--blue,#1a46c9);
-    text-decoration: none;
-    padding: 8px 10px;
-    text-align: center;
-    transition: border-color .18s, background .18s;
-    box-sizing: border-box;
-    width: 100%;
-    text-align: left;
+  box-sizing: border-box;
+  width: 100%;text-align: left;
 }
 .rc-item__browse:hover { border-color: rgba(26,70,201,.3); background: rgba(26,70,201,.04); }
 
