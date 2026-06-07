@@ -12,7 +12,7 @@ require_once __DIR__ . "/../data/navigation.php";
 ?>
 
 <!-- JS — defer all, cursor last -->
-<script src="<?= BASE_PATH ?>/assets/js/app.js"         defer></script>
+<!-- <script src="<?= BASE_PATH ?>/assets/js/app.js"         defer></script>
 <script src="<?= BASE_PATH ?>/assets/js/background.js"  defer></script>
 <script src="<?= BASE_PATH ?>/assets/js/preloader.js"   defer></script>
 <script src="<?= BASE_PATH ?>/assets/js/typewriter.js"  defer></script>
@@ -20,7 +20,7 @@ require_once __DIR__ . "/../data/navigation.php";
 <script src="<?= BASE_PATH ?>/assets/js/contact.js"     defer></script>
 <script src="<?= BASE_PATH ?>/assets/js/animations.js"  defer></script>
 <script src="<?= BASE_PATH ?>/assets/js/transitions.js" defer></script>
-<script src="<?= BASE_PATH ?>/assets/js/cursor.js"      defer></script>
+<script src="<?= BASE_PATH ?>/assets/js/cursor.js"      defer></script> -->
 
 <footer class="site-footer" role="contentinfo">
 
