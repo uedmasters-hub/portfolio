@@ -408,7 +408,7 @@
 
 .form-field::after { display: none; }
 
-.form-field:hover { background: rgba(0,0,0,0.06); }
+.form-field:hover {background: #ffffff;}
 
 .form-field:focus-within {
   background:   #ffffff;
