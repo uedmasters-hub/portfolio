@@ -22,9 +22,9 @@ if (!isset($currentKey)) {
 if (!function_exists("nav_active")) {
 function nav_active(string $trigger, string $current): string {
     $groups = [
-        'work'        => ['work', 'audit'],
+        'work'        => ['work'],
         'field-notes' => ['field-notes', 'psychology', 'blogs'],
-        'lab'         => ['lab'],
+        'lab'         => ['lab', 'audit'],
         'toolkit'     => ['toolkit'],
         'about'       => ['about'],
     ];
@@ -571,18 +571,6 @@ function nav_mobile_group(array $keys, string $current): string {
             </span>
             <span class="mobile-nav-link-text">
                 <span class="mobile-nav-link-title">Case Studies</span>
-                <!-- <span class="mobile-nav-link-desc">IndiGo, CrewPal, Design System</span> -->
-            </span>
-        </a>
-
-        <a href="<?= BASE_PATH ?>/audit/"
-            class="mobile-nav-link<?= nav_mobile_group(['audit'], $currentKey) ?>">
-            <span class="mobile-nav-link-icon" aria-hidden="true">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </span>
-            <span class="mobile-nav-link-text">
-                <span class="mobile-nav-link-title">UX Audits</span>
-                <!-- <span class="mobile-nav-link-desc">Zomato, Swiggy teardowns</span> -->
             </span>
         </a>
 
@@ -615,7 +603,7 @@ function nav_mobile_group(array $keys, string $current): string {
         <span class="mobile-nav-label">Lab</span>
 
         <a href="<?= BASE_PATH ?>/audit/"
-            class="mobile-nav-link<?= ($currentKey === 'lab') ? ' is-active' : '' ?>">
+            class="mobile-nav-link<?= nav_mobile_group(['lab', 'audit'], $currentKey) ?>">
             <span class="mobile-nav-link-icon" aria-hidden="true">
                 <i class="fa-solid fa-vial-circle-check"></i>
             </span>
