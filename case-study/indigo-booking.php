@@ -314,8 +314,8 @@ $nav = [
 
       <!-- NEXT / PREV CASE STUDIES -->
       <div class="art-next-wrap">
+        <p class="art-next__label">NEXT CASE STUDY</p>
         <div class="art-next">
-          <p class="art-next__label">NEXT CASE STUDY</p>
           <a href="crewpal.php" class="art-next__card">
             <span class="art-next__arrow">↗</span>
             <p class="art-next__category">ENTERPRISE OPERATIONS</p>
