@@ -124,30 +124,29 @@
 
 @media (max-width: 768px) {
 
-  /* Spacer injected by JS — holds layout space.
-     Breathing room (margin) is set inline by JS. */
+  /* Spacer: injected by JS, holds full scroll distance in layout.
+     Content below is already pushed down by spacer height —
+     nothing ever overlaps.                                      */
   .phil-spacer {
     overflow: visible !important;
-    box-sizing: border-box;
   }
 
-  /* Section is position:absolute inside spacer (set by GSAP).
-     Flex centres the inner content vertically + horizontally. */
+  /* Section: sticky inside spacer (position set inline by GSAP).
+     Flex centres the inner content vertically as height grows.  */
   .philosophy-section {
     display:         flex;
     align-items:     center;
     justify-content: flex-start;
     padding:         48px 24px;
     box-sizing:      border-box;
-    overflow:        hidden; /* clip grain texture to section bounds */
-    min-height:      0;      /* reset — height controlled by spacer/GSAP pin */
+    overflow:        hidden;    /* clip grain texture */
+    will-change:     height, top;
   }
 
   .philosophy-inner {
-    width:     100%;
-    max-width: 100%;
-    position:  relative;
-    z-index:   2;
+    width:    100%;
+    position: relative;
+    z-index:  2;
   }
 
   .philosophy-mark {
