@@ -18,10 +18,33 @@ if (!isset($currentKey)) {
     $currentKey = "";
 }
 
-// Helper — returns "active" class string if key matches
+// Returns "active" if $trigger's group contains $current
 if (!function_exists("nav_active")) {
-function nav_active(string $key, string $current): string {
-    return $key === $current ? " active" : "";
+function nav_active(string $trigger, string $current): string {
+    $groups = [
+        'work'        => ['work', 'audit'],
+        'field-notes' => ['field-notes', 'psychology', 'blogs'],
+        'lab'         => ['lab'],
+        'toolkit'     => ['toolkit'],
+        'about'       => ['about'],
+    ];
+    $group = $groups[$trigger] ?? [$trigger];
+    return in_array($current, $group, true) ? " active" : "";
+}
+}
+
+// Mobile drawer: exact or group match
+if (!function_exists("nav_mobile_active")) {
+function nav_mobile_active(string $key, string $current): string {
+    // Mobile sub-items need exact match
+    return $key === $current ? " is-active" : "";
+}
+}
+
+// Mobile parent-group match (for parent labels — not used yet but handy)
+if (!function_exists("nav_mobile_group")) {
+function nav_mobile_group(array $keys, string $current): string {
+    return in_array($current, $keys, true) ? " is-active" : "";
 }
 }
 ?>
@@ -542,7 +565,7 @@ function nav_active(string $key, string $current): string {
         <span class="mobile-nav-label">Work</span>
 
         <a href="<?= BASE_PATH ?>/case-study/"
-            class="mobile-nav-link<?= ($currentKey === 'work') ? ' is-active' : '' ?>">
+            class="mobile-nav-link<?= nav_mobile_group(['work'], $currentKey) ?>">
             <span class="mobile-nav-link-icon" aria-hidden="true">
                 <i class="fa-solid fa-book-open"></i>
             </span>
@@ -553,7 +576,7 @@ function nav_active(string $key, string $current): string {
         </a>
 
         <a href="<?= BASE_PATH ?>/audit/"
-            class="mobile-nav-link<?= ($currentKey === 'audits') ? ' is-active' : '' ?>">
+            class="mobile-nav-link<?= nav_mobile_group(['audit'], $currentKey) ?>">
             <span class="mobile-nav-link-icon" aria-hidden="true">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </span>
@@ -567,7 +590,7 @@ function nav_active(string $key, string $current): string {
         <span class="mobile-nav-label">Field Notes</span>
 
         <a href="<?= BASE_PATH ?>/blog/"
-            class="mobile-nav-link<?= ($currentKey === 'field-notes') ? ' is-active' : '' ?>">
+            class="mobile-nav-link<?= nav_mobile_group(['field-notes', 'blogs'], $currentKey) ?>">
             <span class="mobile-nav-link-icon" aria-hidden="true">
                 <i class="fa-solid fa-message"></i>
             </span>
@@ -578,7 +601,7 @@ function nav_active(string $key, string $current): string {
         </a>
 
         <a href="<?= BASE_PATH ?>/psychology/"
-            class="mobile-nav-link<?= ($currentKey === 'psychology') ? ' is-active' : '' ?>">
+            class="mobile-nav-link<?= nav_mobile_group(['psychology'], $currentKey) ?>">
             <span class="mobile-nav-link-icon" aria-hidden="true">
                 <i class="fa-solid fa-brain"></i>
             </span>
