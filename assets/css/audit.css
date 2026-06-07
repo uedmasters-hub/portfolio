@@ -427,7 +427,7 @@
 .audit-detail-hero__content {
   position: relative;
   z-index:  2;
-  padding:  80px 50px 80px;
+  padding: 136px 50px 50px;
   display:  flex;
   flex-direction: column;
   gap:      16px;
