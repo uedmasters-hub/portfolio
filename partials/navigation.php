@@ -211,6 +211,14 @@ function nav_active(string $key, string $current): string {
                         </span>
                     </a>
 
+                    <a href="<?= BASE_PATH ?>/case-study/quikr-design-system" class="mega-link">
+                        <span class="mega-link-icon" aria-hidden="true">⚙</span>
+                        <span>
+                            <span class="mega-link-title">Quikr Unified Design System</span>
+                            <span class="mega-link-desc">5 verticals unified · Design infrastructure</span>
+                        </span>
+                    </a>
+
                 </div>
 
             </div>

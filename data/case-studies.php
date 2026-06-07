@@ -110,4 +110,14 @@ $caseStudies = [
     ],
   ],
 
+  [
+    'slug'           => 'quikr-design-system',
+    'title'          => 'Quikr Unified Design System',
+    'company'        => 'Quikr India',
+    'year'           => '2015–2017',
+    'category'       => 'Design Infrastructure',
+    'status'         => 'published',
+    'image'          => '/assets/images/cs-quikr-thumb.jpg',
+  ],
+
 ];
