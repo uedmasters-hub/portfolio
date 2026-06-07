@@ -65,6 +65,7 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/experience.css" />
@@ -338,7 +339,7 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
 
         <div class="about-testimonials__grid">
           <?php foreach ($aboutTestimonials as $t): ?>
-            <article class="about-testi-card tl-reveal">
+            <article class="about-testi-card hover-lift tl-reveal">
               <div class="about-testi-card__mark" aria-hidden="true">"</div>
               <blockquote class="about-testi-card__quote"><?= htmlspecialchars($t['quote']) ?></blockquote>
               <footer class="about-testi-card__footer">
