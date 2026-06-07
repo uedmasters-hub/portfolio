@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/case-studies.php";
 
-$currentKey = "case-studies";
+$currentKey = "work";
 $pageTitle  = "Case Studies — Ramesh Mandal";
 $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, design systems, and marketplace design — all backed by measurable outcomes.";
 ?>

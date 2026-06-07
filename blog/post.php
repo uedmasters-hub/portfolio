@@ -5,6 +5,9 @@
 
 require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/blog.php";
+
+$currentKey = "field-notes"; /* nav active state */
+
 /* ── slug ────────────────────────────────── */
 $slug = isset($_GET['slug'])
   ? preg_replace('/[^a-z0-9\-]/', '', strtolower(trim($_GET['slug'])))
@@ -39,7 +42,6 @@ $wordCount = array_sum(array_map('str_word_count', $post['body']));
 $readTime  = max(1, round($wordCount / 200)) . ' min read';
 
 /* ── page meta ───────────────────────────── */
-$currentKey = "blogs";
 $pageTitle  = htmlspecialchars($post['title']) . " — Field Notes";
 $pageDesc   = htmlspecialchars($post['excerpt']);
 ?>

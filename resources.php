@@ -2,7 +2,7 @@
 require_once __DIR__ . "/includes/config.php";
 require_once __DIR__ . "/data/resources.php";
 
-$currentKey = "resources";
+$currentKey = "toolkit";
 $pageTitle  = "Resources — Ramesh Mandal";
 $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, proprietary frameworks, and quick-reference answers for designers and product teams.";
 ?>

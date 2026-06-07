@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/blog.php";
 
-$currentKey = "blogs";
+$currentKey = "field-notes";
 $pageTitle  = "Field Notes — Ramesh Mandal";
 $pageDesc   = "Real observations from 17 years of shipping products. War stories, quiet wins, unpopular opinions, and research insights from the field.";
 

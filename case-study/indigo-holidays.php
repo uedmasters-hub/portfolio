@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../includes/config.php";
 
-$currentKey = "case-studies";
+$currentKey = "work";
 $pageTitle  = "IndiGo Holidays Marketplace — Case Study";
 $pageDesc   = "How I redesigned the IndiGo Holidays marketplace with personalised hotel bundles, driving 22% ancillary revenue growth in 6 weeks.";
 

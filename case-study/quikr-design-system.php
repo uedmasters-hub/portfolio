@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../includes/config.php";
-$currentKey = "case-studies";
+$currentKey = "work";
 $pageTitle  = "Quikr Unified Design System — Case Study";
 $pageDesc   = "How I built Quikr's first cross-vertical design system as sole design lead — a token-based foundation adopted by five engineering teams across five product verticals in 18 months.";
 $meta = [
