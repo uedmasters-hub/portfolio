@@ -454,8 +454,8 @@
 
   /* Circular FAB on mobile — carousel fills it */
   .gallery-fab {
-    bottom:          80px;
-    right:           16px;
+    bottom:          85px;
+    right:           18px;
     width:           52px;
     height:          52px;
     padding:         0;
