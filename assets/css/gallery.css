@@ -389,11 +389,28 @@
 
 @media (max-width: 768px) {
 
+  /* Circular icon-only FAB on mobile */
   .gallery-fab {
-    bottom: 80px; /* above mobile nav */
-    right:  16px;
-    padding: 10px 14px 10px 12px;
-    font-size: 12px;
+    bottom:         80px;
+    right:          16px;
+    width:          48px;
+    height:         48px;
+    padding:        0;
+    border-radius:  50%;
+    justify-content: center;
+  }
+
+  /* Hide text and count — icon only */
+  .gallery-fab__text,
+  .gallery-fab__count { display: none; }
+
+  /* Icon fills the circle */
+  .gallery-fab__icon {
+    width:         100%;
+    height:        100%;
+    border-radius: 50%;
+    background:    transparent;
+    font-size:     18px;
   }
 
   .gallery-grid-wrap { padding: 16px; }
@@ -409,9 +426,9 @@
 
   .gallery-single__footer {
     padding:        12px 16px 16px;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items:    flex-start;
-    gap:            12px;
+    gap:            10px;
   }
 
   .gallery-single__nav { width: 100%; justify-content: space-between; }

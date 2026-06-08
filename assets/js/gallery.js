@@ -100,11 +100,14 @@
 
   /* ── REVEAL LOGIC ───────────────────────── */
   /* Either condition triggers reveal — whichever comes first */
-  var revealed = false;
+  var revealed  = false;
+  var lastY     = 0;
+  var idleTimer = null;
 
   function reveal() {
     if (revealed) return;
     revealed = true;
+    lastY = window.scrollY;
     fab.classList.add('is-visible');
   }
 
@@ -113,18 +116,43 @@
 
   /* Condition B: 10% scroll depth */
   function onScroll() {
-    if (!revealed) {
-      var scrollPct = window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight);
-      if (scrollPct >= 0.10) reveal();
-    }
+    var y   = window.scrollY;
+    var h   = window.innerHeight;
+    var dh  = document.documentElement.scrollHeight;
+    var pct = y / Math.max(1, dh - h);
 
-    /* Hide near page top, show again once scrolled down */
+    /* Trigger reveal */
+    if (!revealed && pct >= 0.10) reveal();
+
+    /* Hide/show on scroll — same as case-study FAB */
     if (revealed) {
-      if (window.scrollY < 150) {
+      /* Hide when near bottom of page */
+      if ((y + h) > (dh - 200)) {
         fab.classList.add('is-hidden');
-      } else {
-        fab.classList.remove('is-hidden');
+        clearTimeout(idleTimer);
+        lastY = y;
+        return;
       }
+
+      /* Hide on scroll down, show on scroll up */
+      if (y > lastY + 4) {
+        fab.classList.add('is-hidden');
+        clearTimeout(idleTimer);
+      } else if (y < lastY - 4) {
+        fab.classList.remove('is-hidden');
+        clearTimeout(idleTimer);
+      }
+
+      /* Show after 800ms idle — same as case-study FAB */
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(function () {
+        if (y > 150) fab.classList.remove('is-hidden');
+      }, 800);
+
+      /* Hide when scrolled back near top */
+      if (y < 150) fab.classList.add('is-hidden');
+
+      lastY = y;
     }
   }
 
