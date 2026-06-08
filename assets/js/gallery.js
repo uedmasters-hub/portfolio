@@ -133,7 +133,7 @@
 
   /* Progress ring constants */
   var CIRCUMFERENCE = 2 * Math.PI * 18; /* r=18, ≈ 113.1 */
-  var INTERVAL      = 2500;             /* ms per image */
+  var INTERVAL      = 4000;             /* ms per image */
   var FADE_OUT      = 500;              /* ms fade-out duration */
   var KEYFRAME_NAME = 'galCarSweep';
 
