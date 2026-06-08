@@ -38,13 +38,27 @@
   fab.setAttribute('aria-label', 'View design screens');
   fab.setAttribute('type', 'button');
 
-  /* Carousel ring — two stacked imgs for crossfade */
+  /* Carousel ring — SVG progress + two stacked imgs for sequential fade */
   var carouselRing = '';
   if (carouselImages.length) {
+    /* SVG progress ring dimensions */
+    /* The SVG sits at -3px offset (inset:-3px in CSS).
+       Total SVG size = 36 + 6 = 42px.
+       Circle cx/cy = 21 (centre of 42px).
+       Radius = 18 (leaves 3px for stroke on each side).
+       Circumference = 2π×18 ≈ 113.1                       */
     carouselRing =
       '<span class="gallery-fab__carousel" aria-hidden="true">' +
-        '<img class="gallery-fab__carousel-img gallery-fab__carousel-img--a" src="" alt="" />' +
-        '<img class="gallery-fab__carousel-img gallery-fab__carousel-img--b" src="" alt="" />' +
+        /* Progress ring SVG */
+        '<svg class="gallery-fab__progress" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">' +
+          '<circle class="gallery-fab__progress-track" cx="21" cy="21" r="18"/>' +
+          '<circle class="gallery-fab__progress-bar"  cx="21" cy="21" r="18" id="galCarProgress"/>' +
+        '</svg>' +
+        /* Image clip wrapper */
+        '<span class="gallery-fab__carousel-clip">' +
+          '<img class="gallery-fab__carousel-img gallery-fab__carousel-img--a" src="" alt="" />' +
+          '<img class="gallery-fab__carousel-img gallery-fab__carousel-img--b" src="" alt="" />' +
+        '</span>' +
       '</span>';
   } else {
     carouselRing = '<span class="gallery-fab__icon" aria-hidden="true">◫</span>';
@@ -111,45 +125,85 @@
   var thumbsBuilt = false;
 
   /* ── CAROUSEL ENGINE ─────────────────────── */
-  var carIdx      = 0;      /* current visible index */
-  var carActive   = 'a';    /* which img slot is front */
-  var carTimer    = null;
-  var carRunning  = false;
+  var carIdx     = 0;
+  var carActive  = 'a';
+  var carTimer   = null;
+  var carRunning = false;
+  var progEl     = document.getElementById('galCarProgress');
+
+  /* Progress ring constants */
+  var CIRCUMFERENCE = 2 * Math.PI * 18; /* r=18, ≈ 113.1 */
+  var INTERVAL      = 2500;             /* ms per image */
+  var FADE_OUT      = 500;              /* ms fade-out duration */
+  var KEYFRAME_NAME = 'galCarSweep';
+
+  /* Inject @keyframes once into a style tag */
+  (function injectKeyframes() {
+    var style = document.createElement('style');
+    style.textContent =
+      '@keyframes ' + KEYFRAME_NAME + ' {' +
+        'from { stroke-dashoffset: ' + CIRCUMFERENCE.toFixed(2) + '; }' +
+        'to   { stroke-dashoffset: 0; }' +
+      '}';
+    document.head.appendChild(style);
+  }());
+
+  function progStart() {
+    if (!progEl) return;
+    progEl.style.strokeDasharray  = CIRCUMFERENCE.toFixed(2);
+    progEl.style.strokeDashoffset = CIRCUMFERENCE.toFixed(2);
+    /* Remove + force reflow + re-add to restart animation */
+    progEl.style.animation = 'none';
+    progEl.getBoundingClientRect(); /* reflow */
+    progEl.style.animation =
+      KEYFRAME_NAME + ' ' + INTERVAL + 'ms linear forwards';
+  }
+
+  function progStop() {
+    if (!progEl) return;
+    progEl.style.animation = 'none';
+  }
 
   function carStart() {
     if (!carouselImages.length || carRunning) return;
     carRunning = true;
-
-    /* Set first image immediately */
-    if (imgA) { imgA.src = carouselImages[0]; imgA.classList.add('is-front'); }
-
-    carTimer = setInterval(carStep, 2500);
+    /* First image into slot A immediately */
+    if (imgA) {
+      imgA.src = carouselImages[0];
+      imgA.classList.add('is-front');
+    }
+    progStart();
+    carTimer = setInterval(carStep, INTERVAL);
   }
 
   function carStop() {
     carRunning = false;
     clearInterval(carTimer);
+    progStop();
   }
 
   function carStep() {
     if (!carouselImages.length) return;
     var nextIdx = (carIdx + 1) % carouselImages.length;
+    var outEl   = carActive === 'a' ? imgA : imgB;
+    var inEl    = carActive === 'a' ? imgB : imgA;
 
-    /* Alternate between slot A and slot B */
-    if (carActive === 'a') {
-      /* Load next into B, bring B to front */
-      imgB.src = carouselImages[nextIdx];
-      imgB.classList.add('is-front');
-      imgA.classList.remove('is-front');
-      carActive = 'b';
-    } else {
-      imgA.src = carouselImages[nextIdx];
-      imgA.classList.add('is-front');
-      imgB.classList.remove('is-front');
-      carActive = 'a';
-    }
+    /* STEP 1: Preload next image into back slot (invisible) */
+    inEl.src = carouselImages[nextIdx];
 
-    carIdx = nextIdx;
+    /* STEP 2: Fade OUT the current image */
+    outEl.classList.remove('is-front');
+
+    /* STEP 3: After fade-out completes, fade IN the new image */
+    setTimeout(function () {
+      inEl.classList.add('is-front');
+    }, FADE_OUT);
+
+    /* STEP 4: Restart progress ring in sync with next interval */
+    progStart();
+
+    carActive = carActive === 'a' ? 'b' : 'a';
+    carIdx    = nextIdx;
   }
 
   /* Pause when tab not visible */
