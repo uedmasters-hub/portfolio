@@ -133,8 +133,11 @@
 
   /* Progress ring constants */
   var CIRCUMFERENCE = 2 * Math.PI * 18; /* r=18, ≈ 113.1 */
-  var INTERVAL      = 4000;             /* ms per image */
-  var FADE_OUT      = 500;              /* ms fade-out duration */
+  var RING_DURATION = 4500;             /* ms for ring to complete one sweep */
+  var PAUSE_AFTER   = 800;             /* ms to hold after ring completes */
+  var FADE_OUT      = 500;             /* ms fade-out duration */
+  var FADE_IN       = 500;             /* ms fade-in duration (matches CSS transition) */
+  var TOTAL_CYCLE   = RING_DURATION + PAUSE_AFTER + FADE_OUT + FADE_IN; /* ~6300ms */
   var KEYFRAME_NAME = 'galCarSweep';
 
   /* Inject @keyframes once into a style tag */
@@ -156,7 +159,7 @@
     progEl.style.animation = 'none';
     progEl.getBoundingClientRect(); /* reflow */
     progEl.style.animation =
-      KEYFRAME_NAME + ' ' + INTERVAL + 'ms linear forwards';
+      KEYFRAME_NAME + ' ' + RING_DURATION + 'ms linear forwards';
   }
 
   function progStop() {
@@ -173,34 +176,45 @@
       imgA.classList.add('is-front');
     }
     progStart();
-    carTimer = setInterval(carStep, INTERVAL);
+    carScheduleNext();
   }
 
   function carStop() {
     carRunning = false;
-    clearInterval(carTimer);
+    clearTimeout(carTimer);
     progStop();
   }
 
+  /* Schedule next step after full cycle: ring + pause + fades */
+  function carScheduleNext() {
+    carTimer = setTimeout(carStep, RING_DURATION + PAUSE_AFTER);
+  }
+
   function carStep() {
-    if (!carouselImages.length) return;
+    if (!carRunning || !carouselImages.length) return;
     var nextIdx = (carIdx + 1) % carouselImages.length;
     var outEl   = carActive === 'a' ? imgA : imgB;
     var inEl    = carActive === 'a' ? imgB : imgA;
 
-    /* STEP 1: Preload next image into back slot (invisible) */
+    /* Preload next image into back slot */
     inEl.src = carouselImages[nextIdx];
 
-    /* STEP 2: Fade OUT the current image */
+    /* Fade OUT current */
     outEl.classList.remove('is-front');
 
-    /* STEP 3: After fade-out completes, fade IN the new image */
+    /* After fade-out: fade IN new image */
     setTimeout(function () {
+      if (!carRunning) return;
       inEl.classList.add('is-front');
-    }, FADE_OUT);
 
-    /* STEP 4: Restart progress ring in sync with next interval */
-    progStart();
+      /* After fade-in completes: restart ring and schedule next */
+      setTimeout(function () {
+        if (!carRunning) return;
+        progStart();
+        carScheduleNext();
+      }, FADE_IN);
+
+    }, FADE_OUT);
 
     carActive = carActive === 'a' ? 'b' : 'a';
     carIdx    = nextIdx;
