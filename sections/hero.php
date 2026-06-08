@@ -22,6 +22,7 @@ require_once __DIR__ . "/../data/stats.php";
         <span class="hero__meta-item">10+ Enterprise Products</span>
         <span class="hero__meta-item">Millions of Users Served</span>
         <span class="hero__meta-item">Former UX Lead at IndiGo</span>
+        <span class="hero__meta-item">📍 Gurgaon, India</span>
       </div>
 
       <div class="hero__chips" role="list" aria-label="Expertise areas">

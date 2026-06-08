@@ -3,8 +3,8 @@ require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/psychology.php";
 
 $currentKey = "psychology";
-$pageTitle  = "UX Psychology — Ramesh Mandal";
-$pageDesc   = "24 psychological principles that shape every design decision — from attention and memory to trust, motivation, and emotion.";
+$pageTitle = "UX Psychology — Principles Behind Every Design Decision | Ramesh Mandal";
+$pageDesc  = "24 psychological principles that shape every design decision — explained by Ramesh Mandal, UX Design Agency Gurgaon. From attention to motivation, with real product examples.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +52,14 @@ $pageDesc   = "24 psychological principles that shape every design decision — 
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/components/popover.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/psychology.css"/>
+
+  <?php
+    require_once __DIR__ . "/../includes/schema.php";
+    echo schema_breadcrumb([
+        ["Home", "https://6epixels.com/"],
+        ["UX Psychology", "https://6epixels.com/psychology/"],
+    ]);
+  ?>
 </head>
 <body>
 

@@ -3,8 +3,8 @@ require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/blog.php";
 
 $currentKey = "field-notes";
-$pageTitle  = "Field Notes — Ramesh Mandal";
-$pageDesc   = "Real observations from 17 years of shipping products. War stories, quiet wins, unpopular opinions, and research insights from the field.";
+$pageTitle = "Field Notes — UX Design Insights by Ramesh Mandal | Gurgaon";
+$pageDesc  = "UX design essays, war stories, and frameworks from Ramesh Mandal — 17 years shipping enterprise products. Real lessons from aviation, SaaS, and marketplace UX.";
 
 // Separate featured posts
 $featured = array_filter($posts, fn($p) => $p['featured']);
@@ -63,6 +63,14 @@ foreach ($categories as $cat) {
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/blog.css"/>
+
+  <?php
+    require_once __DIR__ . "/../includes/schema.php";
+    echo schema_breadcrumb([
+        ["Home", "https://6epixels.com/"],
+        ["Field Notes", "https://6epixels.com/blog/"],
+    ]);
+  ?>
 </head>
 <body>
 

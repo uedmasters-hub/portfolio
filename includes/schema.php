@@ -66,10 +66,21 @@ function schema_person(): string {
         "url"             => SCHEMA_BASE_URL,
         "image"           => SCHEMA_OG_DEFAULT,
         "jobTitle"        => "Senior UX Leader & Product Strategist",
-        "description"     => "UX Leader with 17+ years driving AI-enabled product strategy at scale across aviation, SaaS, and enterprise platforms. Former Sr. Manager UI/UX at IndiGo Airlines.",
+        "description"     => "UX Design Agency in Gurgaon led by Ramesh Mandal. 17+ years driving AI-enabled product strategy at scale across aviation, SaaS, and enterprise platforms.",
         "sameAs"          => [
             SCHEMA_TWITTER,
             SCHEMA_LINKEDIN,
+        ],
+        "address"         => [
+            "@type"            => "PostalAddress",
+            "addressLocality"  => "Gurgaon",
+            "addressRegion"    => "Haryana",
+            "addressCountry"   => "IN",
+        ],
+        "areaServed"      => [
+            ["@type" => "City",    "name" => "Gurgaon"],
+            ["@type" => "City",    "name" => "Delhi NCR"],
+            ["@type" => "Country", "name" => "India"],
         ],
         "knowsAbout"      => [
             "UX Strategy", "Design Systems", "Product Design",
@@ -88,6 +99,60 @@ function schema_person(): string {
             "name"  => "Intelegencia",
             "url"   => "https://www.intelegencia.com",
         ],
+    ]);
+}
+
+/* ─────────────────────────────────────────────────
+   1b. LOCAL BUSINESS — homepage only
+   Strongest local SEO signal. Tells Google this is
+   a UX design practice based in Gurgaon.
+   Call alongside schema_person() on homepage.
+───────────────────────────────────────────────── */
+function schema_local_business(): string {
+    return _schema_tag([
+        "@context"        => "https://schema.org",
+        "@type"           => ["ProfessionalService", "LocalBusiness"],
+        "name"            => "Ramesh Mandal — UX Design",
+        "description"     => "UX Design Agency in Gurgaon specialising in enterprise UX strategy, design systems, AI-enabled workflows, and product design for 50M+ user platforms.",
+        "url"             => SCHEMA_BASE_URL,
+        "logo"            => SCHEMA_LOGO_URL,
+        "image"           => SCHEMA_OG_DEFAULT,
+        "founder"         => [
+            "@type" => "Person",
+            "name"  => SCHEMA_AUTHOR_NAME,
+            "url"   => SCHEMA_AUTHOR_URL,
+        ],
+        "address"         => [
+            "@type"           => "PostalAddress",
+            "streetAddress"   => "Gurgaon",
+            "addressLocality" => "Gurgaon",
+            "addressRegion"   => "Haryana",
+            "postalCode"      => "122001",
+            "addressCountry"  => "IN",
+        ],
+        "geo"             => [
+            "@type"     => "GeoCoordinates",
+            "latitude"  => "28.4595",
+            "longitude" => "77.0266",
+        ],
+        "areaServed"      => [
+            ["@type" => "City",    "name" => "Gurgaon"],
+            ["@type" => "City",    "name" => "Delhi"],
+            ["@type" => "City",    "name" => "Noida"],
+            ["@type" => "Country", "name" => "India"],
+        ],
+        "serviceType"     => [
+            "UX Strategy", "UX Design", "Product Design",
+            "Design Systems", "AI UX Workflows",
+            "Enterprise UX", "UX Audit", "UX Consulting",
+        ],
+        "priceRange"      => "₹₹₹",
+        "telephone"       => "+91-9538000060",
+        "email"           => "6epixels@gmail.com",
+        "sameAs"          => [SCHEMA_TWITTER, SCHEMA_LINKEDIN],
+        "openingHours"    => "Mo-Fr 09:00-18:00",
+        "currenciesAccepted" => "INR, USD",
+        "paymentAccepted" => "Bank Transfer, Invoice",
     ]);
 }
 

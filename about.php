@@ -9,8 +9,8 @@ require_once __DIR__ . "/data/about.php";
 require_once __DIR__ . "/data/experience.php";
 
 $currentKey = "about";
-$pageTitle  = "About — Ramesh Mandal";
-$pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise platforms. Design systems, product strategy, and AI-enabled workflows at scale.";
+$pageTitle  = "About Ramesh Mandal — UX Design Agency Lead, Gurgaon";
+$pageDesc   = "Ramesh Mandal leads a UX design practice in Gurgaon with 17+ years across aviation, SaaS, and enterprise platforms. Design systems, product strategy, and AI-enabled workflows at scale.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,7 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
   <!-- OG / TWITTER META -->
   <meta property="og:site_name"    content="Ramesh Mandal"/>
   <meta property="og:type"         content="website"/>
-  <meta property="og:url"          content="https://6epixels.com/about.php"/>
+  <meta property="og:url"          content="https://6epixels.com/about"/>
   <meta property="og:title"        content="Ramesh Mandal — About"/>
   <meta property="og:description"  content="Sr. Manager UI/UX, 17+ years. Led IndiGo booking, CrewPal, and design systems serving millions."/>
   <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
@@ -36,7 +36,7 @@ $pageDesc   = "17+ years of UX leadership across aviation, SaaS, and enterprise 
   <meta name="twitter:title"       content="Ramesh Mandal — About"/>
   <meta name="twitter:description" content="Sr. Manager UI/UX, 17+ years. Led IndiGo booking, CrewPal, and design systems serving millions."/>
   <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
-  <link rel="canonical"            href="https://6epixels.com/about.php"/>
+  <link rel="canonical"            href="https://6epixels.com/about"/>
 
   <!-- JSON-LD STRUCTURED DATA -->
   <?php

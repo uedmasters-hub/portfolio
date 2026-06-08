@@ -3,8 +3,8 @@ require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/case-studies.php";
 
 $currentKey = "work";
-$pageTitle  = "Case Studies — Ramesh Mandal";
-$pageDesc   = "UX case studies spanning airline commerce, enterprise apps, design systems, and marketplace design — all backed by measurable outcomes.";
+$pageTitle = "UX Case Studies — Enterprise Product Design by Ramesh Mandal, Gurgaon";
+$pageDesc  = "Real UX case studies from Ramesh Mandal, UX Design Agency Gurgaon. IndiGo booking flow, CrewPal operations, design systems — measurable outcomes at enterprise scale.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +51,22 @@ $pageDesc   = "UX case studies spanning airline commerce, enterprise apps, desig
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
+
+  <?php
+    require_once __DIR__ . "/../includes/schema.php";
+    echo schema_breadcrumb([
+        ["Home", "https://6epixels.com/"],
+        ["Case Studies", "https://6epixels.com/case-study/"],
+    ]);
+    echo _schema_tag([
+        "@context"    => "https://schema.org",
+        "@type"       => "CollectionPage",
+        "name"        => "UX Case Studies — Ramesh Mandal",
+        "description" => "Enterprise UX case studies by Ramesh Mandal, Gurgaon.",
+        "url"         => "https://6epixels.com/case-study/",
+        "author"      => ["@type"=>"Person","name"=>"Ramesh Mandal","url"=>"https://6epixels.com"],
+    ]);
+  ?>
 </head>
 <body>
 

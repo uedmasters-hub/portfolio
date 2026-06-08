@@ -33,10 +33,10 @@ $nav = [
   <!-- OG / TWITTER META -->
   <meta property="og:site_name"    content="Ramesh Mandal"/>
   <meta property="og:type"         content="article"/>
-  <meta property="og:url"          content="https://6epixels.com/case-study/design-system.php"/>
+  <meta property="og:url"          content="https://6epixels.com/case-study/design-system"/>
   <meta property="og:title"        content="Enterprise Design System — Case Study"/>
   <meta property="og:description"  content="One system. Ten products. 40% faster delivery. 200+ components, 15 designers, 3 years."/>
-  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image"        content="https://images.unsplash.com/photo-1558655146-9f40138edfeb?q=80&w=1200&auto=format&fit=crop"/>
   <meta property="og:image:width"  content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:locale"       content="en_IN"/>
@@ -44,8 +44,8 @@ $nav = [
   <meta name="twitter:site"        content="@ramsmandal"/>
   <meta name="twitter:title"       content="Enterprise Design System — Case Study"/>
   <meta name="twitter:description" content="One system. Ten products. 40% faster delivery. 200+ components, 15 designers, 3 years."/>
-  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
-  <link rel="canonical"            href="https://6epixels.com/case-study/design-system.php"/>
+  <meta name="twitter:image"       content="https://images.unsplash.com/photo-1558655146-9f40138edfeb?q=80&w=1200&auto=format&fit=crop"/>
+  <link rel="canonical"            href="https://6epixels.com/case-study/design-system"/>
 
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -71,6 +71,18 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
+
+  <?php
+    require_once __DIR__ . "/../includes/schema.php";
+    // Find this study in data
+    $studyForSchema = null;
+    foreach ($caseStudies as $cs) {
+        if ($cs["slug"] === "design-system") { $studyForSchema = $cs; break; }
+    }
+    if ($studyForSchema) {
+        echo schema_case_study($studyForSchema, "https://6epixels.com/case-study/design-system");
+    }
+  ?>
 </head>
 <body data-header="dark">
 

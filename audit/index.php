@@ -3,8 +3,8 @@ require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../data/audits.php";
 
 $currentKey = "audit";
-$pageTitle  = "UX Audits — Ramesh Mandal";
-$pageDesc   = "Public UX audits of real products — heuristic analysis, friction maps, psychology insights, and redesign suggestions for India's most-used apps.";
+$pageTitle = "UX Audits — Heuristic Analysis of Real Products | Ramesh Mandal";
+$pageDesc  = "Public UX audits by Ramesh Mandal, UX Consultant Gurgaon. Friction mapping, heuristic analysis, psychology breakdowns, and redesign suggestions for Zomato, Swiggy, and more.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,6 +53,14 @@ $pageDesc   = "Public UX audits of real products — heuristic analysis, frictio
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/audit.css"/>
+
+  <?php
+    require_once __DIR__ . "/../includes/schema.php";
+    echo schema_breadcrumb([
+        ["Home", "https://6epixels.com/"],
+        ["UX Audits", "https://6epixels.com/audit/"],
+    ]);
+  ?>
 </head>
 <body>
 

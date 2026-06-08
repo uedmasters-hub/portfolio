@@ -16,8 +16,8 @@ if (empty($_SESSION["csrf_token"])) {
 }
 
 $currentKey = "";
-$pageTitle  = "Contact — Ramesh Mandal";
-$pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior design leadership, product strategy, and enterprise UX roles.";
+$pageTitle = "Contact Ramesh Mandal — UX Consultant Gurgaon | Hire a UX Leader";
+$pageDesc  = "Hire Ramesh Mandal — UX Design Agency in Gurgaon. Open to senior UX leadership, consulting, and collaboration. Based in Gurgaon, available remotely across India and globally.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +31,7 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
   <!-- OG / TWITTER META -->
   <meta property="og:site_name"    content="Ramesh Mandal"/>
   <meta property="og:type"         content="website"/>
-  <meta property="og:url"          content="https://6epixels.com/contact.php"/>
+  <meta property="og:url"          content="https://6epixels.com/contact"/>
   <meta property="og:title"        content="Contact Ramesh Mandal"/>
   <meta property="og:description"  content="Open to senior UX leadership roles, product strategy, and enterprise design consultancy."/>
   <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
@@ -43,7 +43,7 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
   <meta name="twitter:title"       content="Contact Ramesh Mandal"/>
   <meta name="twitter:description" content="Open to senior UX leadership roles, product strategy, and enterprise design consultancy."/>
   <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
-  <link rel="canonical"            href="https://6epixels.com/contact.php"/>
+  <link rel="canonical"            href="https://6epixels.com/contact"/>
 
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -61,12 +61,22 @@ $pageDesc   = "Get in touch with Ramesh Mandal — UX Leader open to senior desi
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/testimonials.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/contact.css" />
 
+
+  <?php
+    require_once __DIR__ . "/includes/schema.php";
+    echo schema_person();
+    echo schema_breadcrumb([
+        ["Home", "https://6epixels.com/"],
+        ["Contact", "https://6epixels.com/contact"],
+    ]);
+  ?>
 </head>
 <body>
 

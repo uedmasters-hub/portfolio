@@ -33,10 +33,10 @@ $nav = [
   <!-- OG / TWITTER META -->
   <meta property="og:site_name"    content="Ramesh Mandal"/>
   <meta property="og:type"         content="article"/>
-  <meta property="og:url"          content="https://6epixels.com/case-study/indigo-holidays.php"/>
+  <meta property="og:url"          content="https://6epixels.com/case-study/indigo-holidays"/>
   <meta property="og:title"        content="IndiGo Holidays Marketplace — Case Study"/>
   <meta property="og:description"  content="Personalised hotel bundles driving 22% ancillary revenue growth in 6 weeks."/>
-  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image"        content="https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop"/>
   <meta property="og:image:width"  content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:locale"       content="en_IN"/>
@@ -44,8 +44,8 @@ $nav = [
   <meta name="twitter:site"        content="@ramsmandal"/>
   <meta name="twitter:title"       content="IndiGo Holidays Marketplace — Case Study"/>
   <meta name="twitter:description" content="Personalised hotel bundles driving 22% ancillary revenue growth in 6 weeks."/>
-  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
-  <link rel="canonical"            href="https://6epixels.com/case-study/indigo-holidays.php"/>
+  <meta name="twitter:image"       content="https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop"/>
+  <link rel="canonical"            href="https://6epixels.com/case-study/indigo-holidays"/>
 
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -71,6 +71,18 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
+
+  <?php
+    require_once __DIR__ . "/../includes/schema.php";
+    // Find this study in data
+    $studyForSchema = null;
+    foreach ($caseStudies as $cs) {
+        if ($cs["slug"] === "indigo-holidays") { $studyForSchema = $cs; break; }
+    }
+    if ($studyForSchema) {
+        echo schema_case_study($studyForSchema, "https://6epixels.com/case-study/indigo-holidays");
+    }
+  ?>
 </head>
 <body data-header="dark">
 

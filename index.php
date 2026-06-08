@@ -6,8 +6,8 @@
 require_once __DIR__ . "/includes/config.php";
 
 $currentKey  = "home";
-$pageTitle   = "Ramesh Mandal — UX Leader & Product Strategist";
-$pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at scale across aviation, SaaS, and enterprise platforms.";
+$pageTitle   = "Ramesh Mandal — UX Design Agency in Gurgaon | UX Leader & Product Strategist";
+$pageDesc    = "UX Design Agency based in Gurgaon, led by Ramesh Mandal — 17+ years driving AI-enabled product strategy at scale across aviation, SaaS, and enterprise platforms. Serving clients across India and globally.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,23 +16,23 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="<?= htmlspecialchars($pageDesc) ?>" />
-  <meta name="keywords" content="Ramesh Mandal, UX Leader, Product Strategist, Design Systems, AI Workflows, Enterprise UX, Aviation UX, SaaS UX, User Experience Design, UX Strategy, UX Portfolio"/>
+  <meta name="keywords" content="UX Design Agency Gurgaon, UX Designer Gurgaon, UX Agency India, Ramesh Mandal, UX Leader, Product Strategist, Design Systems, AI Workflows, Enterprise UX, Aviation UX, SaaS UX, User Experience Design, UX Strategy, UX Portfolio, UX Consultant Gurgaon, Product Design India"/>
 
   <title><?= htmlspecialchars($pageTitle) ?></title>
   <!-- OG / TWITTER META -->
   <meta property="og:site_name"    content="Ramesh Mandal"/>
   <meta property="og:type"         content="website"/>
   <meta property="og:url"          content="https://6epixels.com/"/>
-  <meta property="og:title"        content="Ramesh Mandal — UX Leader"/>
-  <meta property="og:description"  content="17+ years designing enterprise products at scale. UX Strategy, Design Systems, AI workflows for 50M+ users."/>
+  <meta property="og:title"        content="Ramesh Mandal — UX Design Agency in Gurgaon"/>
+  <meta property="og:description"  content="UX Design Agency in Gurgaon led by Ramesh Mandal. 17+ years designing enterprise products at scale — UX Strategy, Design Systems, AI workflows for 50M+ users."/>
   <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
   <meta property="og:image:width"  content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:locale"       content="en_IN"/>
   <meta name="twitter:card"        content="summary_large_image"/>
   <meta name="twitter:site"        content="@ramsmandal"/>
-  <meta name="twitter:title"       content="Ramesh Mandal — UX Leader"/>
-  <meta name="twitter:description" content="17+ years designing enterprise products at scale. UX Strategy, Design Systems, AI workflows for 50M+ users."/>
+  <meta name="twitter:title"       content="Ramesh Mandal — UX Design Agency in Gurgaon"/>
+  <meta name="twitter:description" content="UX Design Agency in Gurgaon. 17+ years designing enterprise products at scale. UX Strategy, Design Systems, AI workflows for 50M+ users."/>
   <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
   <link rel="canonical"            href="https://6epixels.com/"/>
 
@@ -41,6 +41,7 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
     require_once __DIR__ . "/includes/schema.php";
     echo schema_person();
     echo schema_website();
+    echo schema_local_business();
     echo schema_breadcrumb([['Home', 'https://6epixels.com/']]);
   ?>
 
@@ -68,6 +69,7 @@ $pageDesc    = "UX Leader with 17+ years driving AI-enabled product strategy at 
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css" />
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/hero.css" />

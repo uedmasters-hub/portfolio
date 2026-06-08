@@ -3,8 +3,8 @@ require_once __DIR__ . "/includes/config.php";
 require_once __DIR__ . "/data/resources.php";
 
 $currentKey = "toolkit";
-$pageTitle  = "Resources — Ramesh Mandal";
-$pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, proprietary frameworks, and quick-reference answers for designers and product teams.";
+$pageTitle = "UX Resources — Free Templates, Frameworks & Reading List | Ramesh Mandal";
+$pageDesc  = "Free UX resources curated by Ramesh Mandal — UX Design Agency, Gurgaon. Templates, annotated reading list, tool reviews, and proprietary frameworks from 17 years of enterprise product design.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,7 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   <!-- OG / TWITTER META -->
   <meta property="og:site_name"    content="Ramesh Mandal"/>
   <meta property="og:type"         content="website"/>
-  <meta property="og:url"          content="https://6epixels.com/resources.php"/>
+  <meta property="og:url"          content="https://6epixels.com/resources"/>
   <meta property="og:title"        content="UX Resources — Ramesh Mandal"/>
   <meta property="og:description"  content="Frameworks, templates, and curated references from 17 years of enterprise UX practice."/>
   <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
@@ -28,7 +28,7 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   <meta name="twitter:title"       content="UX Resources — Ramesh Mandal"/>
   <meta name="twitter:description" content="Frameworks, templates, and curated references from 17 years of enterprise UX practice."/>
   <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
-  <link rel="canonical"            href="https://6epixels.com/resources.php"/>
+  <link rel="canonical"            href="https://6epixels.com/resources"/>
   
   <!-- FAVICON -->
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
@@ -46,10 +46,19 @@ $pageDesc   = "Free UX templates, annotated reading list, honest tool reviews, p
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/resources.css"/>
+
+  <?php
+    require_once __DIR__ . "/includes/schema.php";
+    echo schema_breadcrumb([
+        ["Home", "https://6epixels.com/"],
+        ["Resources", "https://6epixels.com/resources"],
+    ]);
+  ?>
 </head>
 <body>
 

@@ -32,7 +32,7 @@ $nav = [
   <meta property="og:url"          content="https://6epixels.com/case-study/quikr-design-system"/>
   <meta property="og:title"        content="Quikr Unified Design System — Case Study"/>
   <meta property="og:description"  content="One token foundation. Five product verticals. 18 months. Built as sole design lead with zero prior system at Quikr."/>
-  <meta property="og:image"        content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta property="og:image"        content="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop"/>
   <meta property="og:image:width"  content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:locale"       content="en_IN"/>
@@ -40,7 +40,7 @@ $nav = [
   <meta name="twitter:site"        content="@ramsmandal"/>
   <meta name="twitter:title"       content="Quikr Unified Design System — Case Study"/>
   <meta name="twitter:description" content="One token foundation. Five product verticals. 18 months. Built as sole design lead."/>
-  <meta name="twitter:image"       content="https://6epixels.com/assets/og/og-default.jpg"/>
+  <meta name="twitter:image"       content="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop"/>
   <link rel="canonical"            href="https://6epixels.com/case-study/quikr-design-system"/>
 
   <!-- FAVICON -->

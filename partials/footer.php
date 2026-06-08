@@ -82,6 +82,10 @@ require_once __DIR__ . "/../data/navigation.php";
     <p class="footer-bottom__copy">
       © <?= date('Y') ?> Ramesh Mandal. Built with systems thinking.
     </p>
+    <nav class="footer-bottom__links" aria-label="Legal and SEO links">
+      <a href="<?= BASE_PATH ?>/seo">Site Map</a>
+      <a href="<?= BASE_PATH ?>/sitemap.xml">XML Sitemap</a>
+    </nav>
     <p class="footer-bottom__stack">
       PHP · HTML5 · Modular CSS · Vanilla JS
     </p>
