@@ -493,6 +493,12 @@ $nav = [
     array('src' => 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Bundle builder — flight + hotel configuration'),
     array('src' => 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Ancillary upsell — activity add-ons'),
   );
+
+  $carouselImages = array(
+    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=120&h=120&fit=crop&auto=format',
+  );
   require __DIR__ . "/../partials/gallery.php";
   ?>
   <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>

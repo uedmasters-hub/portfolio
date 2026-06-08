@@ -479,6 +479,13 @@ $nav = [
     array('src' => 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Payment — trust signals and friction reduction'),
     array('src' => 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Confirmation — post-booking engagement'),
   );
+
+  $carouselImages = array(
+    'https://images.unsplash.com/photo-1520437358207-323b43b50729?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1587019158091-1a103c5dd17f?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=120&h=120&fit=crop&auto=format',
+  );
   require __DIR__ . "/../partials/gallery.php";
   ?>
   <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>

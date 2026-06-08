@@ -551,6 +551,12 @@ $nav = [
     array('src' => 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Payment options — cognitive overload analysis'),
     array('src' => 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Order confirmation — post-purchase anxiety'),
   );
+
+  $carouselImages = array(
+    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=120&h=120&fit=crop&auto=format',
+  );
   require __DIR__ . "/../partials/gallery.php";
   ?>
   <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>

@@ -491,6 +491,12 @@ $nav = [
     array('src' => 'https://images.unsplash.com/photo-1556742111-a301076d9d18?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Rewards catalogue — redemption flow'),
     array('src' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Progress tracker — retention mechanics'),
   );
+
+  $carouselImages = array(
+    'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1556742111-a301076d9d18?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=120&h=120&fit=crop&auto=format',
+  );
   require __DIR__ . "/../partials/gallery.php";
   ?>
   <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>

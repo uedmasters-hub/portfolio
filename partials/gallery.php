@@ -1,37 +1,40 @@
 <?php
 /* =============================================
    partials/gallery.php
-   Floating gallery button + lightbox.
+   Floating carousel FAB + lightbox gallery.
 
-   Usage — call before </body> on any page:
-   <?php
-     $galleryImages = [ ... ];
+   Usage before </body>:
+     $galleryImages   = [ ['src'=>'...','caption'=>'...'], ... ];
+     $carouselImages  = [ 'https://...?w=120&h=120&fit=crop', ... ];
      require __DIR__ . "/../partials/gallery.php";
-   ?>
 
-   $galleryImages format:
-   [
-     ['src' => 'https://...', 'caption' => 'Flow name or screen description'],
-     ...
-   ]
-
-   If $galleryImages is empty or not set, nothing renders.
+   $galleryImages   — full-res images for lightbox
+   $carouselImages  — small square crops for FAB carousel
+                      (3–5 images recommended)
+   If neither is set, nothing renders.
    ============================================= */
 
-/* Bail if no images defined */
-if (empty($galleryImages) || !is_array($galleryImages)) return;
+if (empty($galleryImages) && empty($carouselImages)) return;
+if (!is_array($galleryImages ?? null))  $galleryImages  = [];
+if (!is_array($carouselImages ?? null)) $carouselImages = [];
 
-/* Sanitise */
-$safeImages = array_map(function ($img) {
+/* Sanitise gallery images */
+$safeGallery = array_map(function ($img) {
     return [
         'src'     => htmlspecialchars($img['src']     ?? '', ENT_QUOTES),
         'caption' => htmlspecialchars($img['caption'] ?? '', ENT_QUOTES),
     ];
 }, $galleryImages);
 
-/* Encode to JSON for JS */
-$jsonImages = json_encode($safeImages, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT);
+/* Sanitise carousel URLs */
+$safeCarousel = array_map(function ($url) {
+    return htmlspecialchars($url, ENT_QUOTES);
+}, $carouselImages);
+
+$jsonGallery  = json_encode($safeGallery,  JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT);
+$jsonCarousel = json_encode($safeCarousel, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT);
 ?>
 <script>
-window.GALLERY_IMAGES = <?= $jsonImages ?>;
+window.GALLERY_IMAGES   = <?= $jsonGallery ?>;
+window.CAROUSEL_IMAGES  = <?= $jsonCarousel ?>;
 </script>

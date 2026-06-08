@@ -582,6 +582,12 @@ $nav = [
     array('src' => 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Home screen — information architecture audit'),
     array('src' => 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Restaurant discovery — scroll depth study'),
   );
+
+  $carouselImages = array(
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=120&h=120&fit=crop&auto=format',
+  );
   require __DIR__ . "/../partials/gallery.php";
   ?>
   <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>

@@ -495,6 +495,12 @@ $nav = [
     array('src' => 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Grid system — layout foundations'),
     array('src' => 'https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Documentation — contribution guidelines'),
   );
+
+  $carouselImages = array(
+    'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1559028012-481c04fa702d?w=120&h=120&fit=crop&auto=format',
+  );
   require __DIR__ . "/../partials/gallery.php";
   ?>
   <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>

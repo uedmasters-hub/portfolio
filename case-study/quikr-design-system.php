@@ -472,6 +472,12 @@ $nav = [
     array('src' => 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Pattern library — reusable templates'),
     array('src' => 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Email campaign design system — CTR optimisation'),
   );
+
+  $carouselImages = array(
+    'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=120&h=120&fit=crop&auto=format',
+  );
   require __DIR__ . "/../partials/gallery.php";
   ?>
   <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>

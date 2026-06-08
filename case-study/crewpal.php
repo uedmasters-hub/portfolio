@@ -285,6 +285,12 @@ $nav = [
     array('src' => 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Swap request flow — peer-to-peer handoff'),
     array('src' => 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Notifications — real-time crew comms'),
   );
+
+  $carouselImages = array(
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=120&h=120&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=120&h=120&fit=crop&auto=format',
+  );
   require __DIR__ . "/../partials/gallery.php";
   ?>
   <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>
