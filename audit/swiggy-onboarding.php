@@ -71,6 +71,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/gallery.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/case-study.css"/>
@@ -573,5 +574,16 @@ $nav = [
   </script>
 
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
+
+  <?php
+  $galleryImages = array(
+    array('src' => 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Swiggy splash — onboarding entry point'),
+    array('src' => 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Location permission — trust barrier analysis'),
+    array('src' => 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Home screen — information architecture audit'),
+    array('src' => 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Restaurant discovery — scroll depth study'),
+  );
+  require __DIR__ . "/../partials/gallery.php";
+  ?>
+  <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>
 </body>
 </html>

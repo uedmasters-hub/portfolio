@@ -60,6 +60,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/gallery.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
@@ -467,5 +468,19 @@ $nav = [
 
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
+
+  <?php
+  /* ── GALLERY DATA ──────────────────────── */
+  $galleryImages = array(
+    array('src' => 'https://images.unsplash.com/photo-1520437358207-323b43b50729?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Homepage booking flow — search entry'),
+    array('src' => 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Flight selection — fare comparison grid'),
+    array('src' => 'https://images.unsplash.com/photo-1529074963764-98f45c47344b?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Passenger details — progressive disclosure'),
+    array('src' => 'https://images.unsplash.com/photo-1587019158091-1a103c5dd17f?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Add-ons selection — ancillary upsell'),
+    array('src' => 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Payment — trust signals and friction reduction'),
+    array('src' => 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Confirmation — post-booking engagement'),
+  );
+  require __DIR__ . "/../partials/gallery.php";
+  ?>
+  <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>
 </body>
 </html>

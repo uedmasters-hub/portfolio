@@ -90,6 +90,7 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/gallery.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
@@ -387,5 +388,22 @@ $pageDesc   = htmlspecialchars($post['excerpt']);
 
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
+
+  <?php
+  /* ── GALLERY: build from post data ─────── */
+  $galleryImages = array();
+  if (!empty($post['gallery']) && is_array($post['gallery'])) {
+      $galleryImages = $post['gallery'];
+  } elseif (!empty($post['image'])) {
+      /* Fallback: use hero image if no gallery defined */
+      $galleryImages = array(
+          array('src' => $post['image'], 'caption' => $post['title'] . ' — reference image'),
+      );
+  }
+  if (!empty($galleryImages)) {
+      require __DIR__ . "/../partials/gallery.php";
+  }
+  ?>
+  <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>
 </body>
 </html>

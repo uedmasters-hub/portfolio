@@ -66,6 +66,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/gallery.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
@@ -481,5 +482,17 @@ $nav = [
 
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
+
+  <?php
+  /* ── GALLERY DATA ──────────────────────── */
+  $galleryImages = array(
+    array('src' => 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Loyalty dashboard — points and tier status'),
+    array('src' => 'https://images.unsplash.com/photo-1583207431511-0e22a161aad6?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Gamification — milestone rewards system'),
+    array('src' => 'https://images.unsplash.com/photo-1556742111-a301076d9d18?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Rewards catalogue — redemption flow'),
+    array('src' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Progress tracker — retention mechanics'),
+  );
+  require __DIR__ . "/../partials/gallery.php";
+  ?>
+  <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>
 </body>
 </html>

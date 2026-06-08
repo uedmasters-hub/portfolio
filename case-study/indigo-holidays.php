@@ -66,6 +66,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/gallery.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
@@ -483,5 +484,17 @@ $nav = [
   })();
   </script>
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
+
+  <?php
+  /* ── GALLERY DATA ──────────────────────── */
+  $galleryImages = array(
+    array('src' => 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Holiday packages — bundled offers discovery'),
+    array('src' => 'https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Hotel selection — personalised recommendations'),
+    array('src' => 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Bundle builder — flight + hotel configuration'),
+    array('src' => 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Ancillary upsell — activity add-ons'),
+  );
+  require __DIR__ . "/../partials/gallery.php";
+  ?>
+  <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>
 </body>
 </html>

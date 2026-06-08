@@ -58,7 +58,9 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/gallery.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
@@ -462,5 +464,16 @@ $nav = [
 
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
+
+  <?php
+  /* ── GALLERY DATA ──────────────────────── */
+  $galleryImages = array(
+    array('src' => 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Quikr UI system — component inventory'),
+    array('src' => 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Pattern library — reusable templates'),
+    array('src' => 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Email campaign design system — CTR optimisation'),
+  );
+  require __DIR__ . "/../partials/gallery.php";
+  ?>
+  <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>
 </body>
 </html>

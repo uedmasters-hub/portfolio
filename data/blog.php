@@ -41,6 +41,12 @@ $posts = [
       "What we did: kept the new visual design but restored the PNR code to its original position. NPS recovered within 3 weeks. Small compromise, massive outcome.",
     ],
     "takeaway" => "Familiarity is a feature. Before redesigning high-frequency screens, map what users have automated — then decide which habits are worth breaking.",
+    "gallery"  => [
+      ["src" => "https://images.unsplash.com/photo-1586953208448-b95a79798f07?q=80&w=1600&auto=format&fit=crop", "caption" => "Old confirmation screen — dense but familiar"],
+      ["src" => "https://images.unsplash.com/photo-1587019158091-1a103c5dd17f?q=80&w=1600&auto=format&fit=crop", "caption" => "New design — clean but disorienting"],
+      ["src" => "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop", "caption" => "NPS trend — 12-point drop post-launch"],
+      ["src" => "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1600&auto=format&fit=crop", "caption" => "Compromise solution — visual upgrade, position preserved"],
+    ],
   ],
 
   [

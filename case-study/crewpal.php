@@ -59,6 +59,7 @@ $nav = [
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/navigation.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/gallery.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/background.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/footer.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/article.css"/>
@@ -274,5 +275,18 @@ $nav = [
 
   <script src="<?= BASE_PATH ?>/assets/js/navigation.js" defer></script>
 
+
+  <?php
+  /* ── GALLERY DATA ──────────────────────── */
+  $galleryImages = array(
+    array('src' => 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Dashboard — shift overview and status'),
+    array('src' => 'https://images.unsplash.com/photo-1562564055-71e051d33c19?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Schedule view — weekly roster grid'),
+    array('src' => 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Fatigue alert system — warning states'),
+    array('src' => 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Swap request flow — peer-to-peer handoff'),
+    array('src' => 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1600&auto=format&fit=crop', 'caption' => 'Notifications — real-time crew comms'),
+  );
+  require __DIR__ . "/../partials/gallery.php";
+  ?>
+  <script src="<?= BASE_PATH ?>/assets/js/gallery.js" defer></script>
 </body>
 </html>
