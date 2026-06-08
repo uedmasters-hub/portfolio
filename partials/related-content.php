@@ -110,8 +110,8 @@ function render_related_content(string $type, string $slug): void {
 .rc-item {
   display: flex; align-items: center; gap: 12px;
   padding: 12px; border-radius: 10px; text-decoration: none;
-  background: var(--bg, #f5f5f3);
-  border: 1px solid var(--border, rgba(0,0,0,.07));
+  /* background: var(--bg, #f5f5f3); */
+  /* border: 1px solid var(--border, rgba(0,0,0,.07)); */
   transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
 .rc-item:hover {
