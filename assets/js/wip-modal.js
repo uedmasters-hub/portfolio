@@ -32,9 +32,10 @@
   var TW_PHRASE = 'mid-build.';
   var TW_SPEED  = 60;   /* ms per character */
 
-  /* SVG ring: cx/cy=20, r=17 → circumference ≈ 106.81 */
-  var RADIUS = 17;
-  var CIRC   = (2 * Math.PI * RADIUS).toFixed(2);
+  /* SVG ring: viewBox 48×48, cx/cy=24, r=22 → circumference ≈ 138.23
+     Draws outside the 32px button with clear visual gap               */
+  var RADIUS = 22;
+  var CIRC   = (2 * Math.PI * RADIUS).toFixed(2); /* 138.23 */
 
   /* ── BUILD HTML ──────────────────────────── */
   var backdrop = document.createElement('div');
@@ -50,9 +51,9 @@
   modal.innerHTML =
     /* Close + ring */
     '<div class="wip-close-wrap">' +
-      '<svg class="wip-ring" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">' +
-        '<circle class="wip-ring__track" cx="20" cy="20" r="' + RADIUS + '"/>' +
-        '<circle class="wip-ring__bar" id="wipRingBar" cx="20" cy="20" r="' + RADIUS + '"/>' +
+      '<svg class="wip-ring" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">' +
+        '<circle class="wip-ring__track" cx="24" cy="24" r="' + RADIUS + '"/>' +
+        '<circle class="wip-ring__bar" id="wipRingBar" cx="24" cy="24" r="' + RADIUS + '"/>' +
       '</svg>' +
       '<button class="wip-close" id="wipClose" aria-label="Close">✕</button>' +
     '</div>' +
