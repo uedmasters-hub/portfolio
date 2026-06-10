@@ -146,15 +146,23 @@
 
   /* ── RING ────────────────────────────────── */
   function startRing(durationMs) {
-    var dur = durationMs || (COUNTDOWN * 1000);
-    ringBar.style.stroke           = 'var(--blue, #1a46c9)'; /* unhide */
-    ringBar.style.opacity          = '0.75';
-    ringBar.style.strokeDasharray  = CIRC;
-    /* Set initial offset based on elapsed progress */
+    var dur         = durationMs || (COUNTDOWN * 1000);
     var startOffset = parseFloat(CIRC) - (parseFloat(CIRC) * (ringElapsed / (COUNTDOWN * 1000)));
-    ringBar.style.strokeDashoffset = startOffset.toFixed(2);
+
+    /* Step 1: kill animation, apply dasharray+offset WHILE stroke is none
+       This guarantees the browser never renders a full solid circle        */
     ringBar.style.animation        = 'none';
-    ringBar.getBoundingClientRect(); /* reflow */
+    ringBar.style.stroke           = 'none';
+    ringBar.style.strokeDasharray  = CIRC;
+    ringBar.style.strokeDashoffset = startOffset.toFixed(2);
+    ringBar.getBoundingClientRect(); /* commit invisible state */
+
+    /* Step 2: now safe to show colour — arc is already clipped by dashoffset */
+    ringBar.style.stroke   = 'var(--blue, #1a46c9)';
+    ringBar.style.opacity  = '0.75';
+    ringBar.getBoundingClientRect(); /* commit colour */
+
+    /* Step 3: start sweep */
     ringBar.style.animation = 'wipRingSweep ' + dur + 'ms linear forwards';
     ringStart = Date.now();
   }
