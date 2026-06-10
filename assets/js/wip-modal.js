@@ -20,7 +20,8 @@
 
   /* Already seen this session → bail */
   try {
-    if (sessionStorage.getItem('wip_seen')) return;
+    // TEMP: show every load — restore when screens are ready
+    // if (sessionStorage.getItem('wip_seen')) return;
   } catch (e) {}
 
   /* ── CONSTANTS ───────────────────────────── */
@@ -256,7 +257,8 @@
     modal.classList.remove('is-open', 'is-paused');
     backdrop.classList.remove('is-open');
 
-    try { sessionStorage.setItem('wip_seen', '1'); } catch (e) {}
+    // TEMP: disabled — restore when screens are ready
+    // try { sessionStorage.setItem('wip_seen', '1'); } catch (e) {}
 
     setTimeout(function () {
       if (modal.parentNode)    modal.parentNode.removeChild(modal);
