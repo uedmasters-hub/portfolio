@@ -52,9 +52,9 @@
   modal.innerHTML =
     /* Close + ring */
     '<div class="wip-close-wrap">' +
-      '<svg class="wip-ring" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">' +
-        '<circle class="wip-ring__track" cx="18" cy="18" r="' + RADIUS + '"/>' +
-        '<circle class="wip-ring__bar" id="wipRingBar" cx="18" cy="18" r="' + RADIUS + '"/>' +
+      '<svg class="wip-ring" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+        '<circle class="wip-ring__track" fill="none" stroke="none" cx="18" cy="18" r="' + RADIUS + '"/>' +
+        '<circle class="wip-ring__bar" fill="none" stroke="none" cx="18" cy="18" r="' + RADIUS + '" id="wipRingBar"/>' +
       '</svg>' +
       '<button class="wip-close" id="wipClose" aria-label="Close">✕</button>' +
     '</div>' +

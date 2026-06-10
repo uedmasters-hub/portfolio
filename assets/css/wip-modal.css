@@ -112,7 +112,7 @@
 
 .wip-ring__bar {
   fill:              none;
-  stroke:            none;       /* invisible until startRing() sets it */
+  stroke:            none;       /* JS sets this to blue in startRing() */
   stroke-width:      2;
   stroke-linecap:    round;
   transform-origin:  center;
@@ -120,31 +120,84 @@
   stroke-dashoffset: 0;
 }
 
-/* ✕ close button */
+/* Kill any inherited stroke/fill from global CSS */
+.wip-ring circle {
+  fill:   none;
+  stroke: inherit; /* overridden per-element above */
+}
+.wip-ring .wip-ring__track { stroke: none !important; }
+.wip-ring .wip-ring__bar   { stroke: none !important; } /* overridden by JS inline style */
+
+/* ── CLOSE BUTTON — all states explicit ─────
+   Nuclear reset: no border, no outline,
+   no box-shadow, no SVG stroke leaking in.
+   ─────────────────────────────────────────── */
+
 .wip-close {
+  /* Layout */
   position:        relative;
   z-index:         2;
-  width:           32px;
-  height:          32px;
-  border-radius:   50%;
-  border:          none;
-  background:      rgba(0, 0, 0, 0.04);
-  color:           rgba(0, 0, 0, 0.40);
-  font-size:       13px;
-  cursor:          pointer;
   display:         flex;
   align-items:     center;
   justify-content: center;
-  transition:
-    background   0.18s ease,
-    color        0.18s ease;
-  line-height:     1;
+  width:           32px;
+  height:          32px;
   flex-shrink:     0;
+
+  /* Shape */
+  border-radius:   50%;
+
+  /* Hard reset — no browser defaults leaking */
+  border:          0 none transparent !important;
+  outline:         0 none transparent !important;
+  box-shadow:      none !important;
+  -webkit-appearance: none;
+  appearance:      none;
+
+  /* Visual */
+  background:      rgba(0, 0, 0, 0.05);
+  color:           rgba(0, 0, 0, 0.38);
+  font-size:       12px;
+  line-height:     1;
+  cursor:          pointer;
+
+  transition:
+    background 0.18s ease,
+    color      0.18s ease;
 }
 
+/* Hover */
 .wip-close:hover {
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.09);
+  color:      rgba(0, 0, 0, 0.75);
+  border:     0 none transparent !important;
+  outline:    0 none transparent !important;
+  box-shadow: none !important;
+}
+
+/* Active / click */
+.wip-close:active {
+  background: rgba(0, 0, 0, 0.14);
   color:      #0f0f0f;
+  border:     0 none transparent !important;
+  outline:    0 none transparent !important;
+  box-shadow: none !important;
+  transform:  scale(0.92);
+}
+
+/* Focus — keyboard nav only, no mouse ring */
+.wip-close:focus-visible {
+  outline:    2px solid var(--blue, #1a46c9) !important;
+  outline-offset: 3px;
+  box-shadow: none !important;
+}
+
+/* Paused state — parent sets .is-paused */
+.wip-modal.is-paused .wip-close {
+  color: rgba(0, 0, 0, 0.55);
+  background: rgba(26, 70, 201, 0.05);
+  border:     0 none transparent !important;
+  box-shadow: none !important;
 }
 
 
