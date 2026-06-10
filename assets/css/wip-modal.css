@@ -30,7 +30,7 @@
 
 .wip-modal {
   position:   fixed;
-  bottom:     40px;
+  top:        50%;
   left:       50%;
   z-index:    1101;
   width:      calc(100% - 48px);
@@ -44,8 +44,8 @@
   backdrop-filter:         blur(20px);
   -webkit-backdrop-filter: blur(20px);
 
-  /* Spring entry from bottom */
-  transform:      translateX(-50%) translateY(32px) scale(0.97);
+  /* Spring entry from centre */
+  transform:      translate(-50%, -50%) scale(0.96);
   opacity:        0;
   pointer-events: none;
   transition:
@@ -54,14 +54,22 @@
 }
 
 .wip-modal.is-open {
-  transform:      translateX(-50%) translateY(0) scale(1);
+  transform:      translate(-50%, -50%) scale(1);
   opacity:        1;
   pointer-events: auto;
 }
 
 .wip-modal.is-closing {
-  transform: translateX(-50%) translateY(24px) scale(0.97);
+  transform: translate(-50%, -50%) scale(0.97);
   opacity:   0;
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 1, 1),
+    opacity   0.3s ease;
+}
+
+/* Subtle border brightens while paused */
+.wip-modal.is-paused {
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 
@@ -165,6 +173,21 @@
 }
 
 .wip-title span { color: var(--blue, #1a46c9); }
+
+/* Typewriter cursor */
+.wip-cursor {
+  display:     inline-block;
+  color:       var(--blue, #1a46c9);
+  font-weight: 300;
+  margin-left: 1px;
+  animation:   wipCursorBlink 0.9s step-end infinite;
+  /* wipCursorBlink injected by JS */
+}
+
+/* Pause hint text */
+.wip-pause-hint {
+  transition: opacity 0.2s ease;
+}
 
 .wip-desc {
   font-size:   15px;
