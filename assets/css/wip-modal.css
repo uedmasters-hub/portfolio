@@ -117,6 +117,9 @@
   stroke-linecap:   round;
   transform-origin: center;
   opacity:          0.7;
+  /* Hidden until JS sets stroke-dasharray in startRing() */
+  stroke-dasharray:  0;
+  stroke-dashoffset: 0;
 }
 
 /* ✕ close button */
