@@ -126,10 +126,10 @@
   z-index:         2;
   width:           32px;
   height:          32px;
-  /* border-radius:   50%; */
-  /* border:          1px solid rgba(0, 0, 0, 0.12); */
-  /* background:      rgba(0, 0, 0, 0.03); */
-  /* color:           rgba(0, 0, 0, 0.45); */
+  border-radius:   50%;
+  border:          none;
+  background:      rgba(0, 0, 0, 0.04);
+  color:           rgba(0, 0, 0, 0.40);
   font-size:       13px;
   cursor:          pointer;
   display:         flex;
@@ -137,16 +137,14 @@
   justify-content: center;
   transition:
     background   0.18s ease,
-    color        0.18s ease,
-    border-color 0.18s ease;
+    color        0.18s ease;
   line-height:     1;
   flex-shrink:     0;
 }
 
 .wip-close:hover {
-  background:   rgba(0, 0, 0, 0.07);
-  color:        #0f0f0f;
-  border-color: rgba(0, 0, 0, 0.22);
+  background: rgba(0, 0, 0, 0.08);
+  color:      #0f0f0f;
 }
 
 
