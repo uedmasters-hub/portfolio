@@ -175,11 +175,16 @@
   font-weight:    300;
   letter-spacing: -0.06em;
   line-height:    0.95;
-  color:          var(--text-primary, #0f0f0f);
+  color:          var(--text-primary, #0f0f0f); /* line 1 — black */
   margin-bottom:  20px;
 }
 
+/* Typed phrase — blue accent, matching site title pattern */
+.wip-title__line2,
 .wip-title span { color: var(--blue, #1a46c9); }
+
+/* Static line stays dark — must come after the span rule */
+.wip-title__line1 { color: var(--text-primary, #0f0f0f); }
 
 /* Typewriter cursor */
 .wip-cursor {
