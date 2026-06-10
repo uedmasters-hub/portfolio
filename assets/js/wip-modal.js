@@ -33,10 +33,10 @@
   var TW_PHRASE = 'mid-build.';
   var TW_SPEED  = 60;   /* ms per character */
 
-  /* SVG ring: viewBox 48×48, cx/cy=24, r=22 → circumference ≈ 138.23
-     Draws outside the 32px button with clear visual gap               */
-  var RADIUS = 22;
-  var CIRC   = (2 * Math.PI * RADIUS).toFixed(2); /* 138.23 */
+  /* SVG ring: viewBox 36×36, cx/cy=18, r=16 → circumference ≈ 100.53
+     Arc sits 2px outside the 32px button — minimal, tight orbit        */
+  var RADIUS = 16;
+  var CIRC   = (2 * Math.PI * RADIUS).toFixed(2); /* 100.53 */
 
   /* ── BUILD HTML ──────────────────────────── */
   var backdrop = document.createElement('div');
@@ -52,9 +52,9 @@
   modal.innerHTML =
     /* Close + ring */
     '<div class="wip-close-wrap">' +
-      '<svg class="wip-ring" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">' +
-        '<circle class="wip-ring__track" cx="24" cy="24" r="' + RADIUS + '"/>' +
-        '<circle class="wip-ring__bar" id="wipRingBar" cx="24" cy="24" r="' + RADIUS + '"/>' +
+      '<svg class="wip-ring" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">' +
+        '<circle class="wip-ring__track" cx="18" cy="18" r="' + RADIUS + '"/>' +
+        '<circle class="wip-ring__bar" id="wipRingBar" cx="18" cy="18" r="' + RADIUS + '"/>' +
       '</svg>' +
       '<button class="wip-close" id="wipClose" aria-label="Close">✕</button>' +
     '</div>' +
@@ -147,6 +147,8 @@
   /* ── RING ────────────────────────────────── */
   function startRing(durationMs) {
     var dur = durationMs || (COUNTDOWN * 1000);
+    ringBar.style.stroke           = 'var(--blue, #1a46c9)'; /* unhide */
+    ringBar.style.opacity          = '0.75';
     ringBar.style.strokeDasharray  = CIRC;
     /* Set initial offset based on elapsed progress */
     var startOffset = parseFloat(CIRC) - (parseFloat(CIRC) * (ringElapsed / (COUNTDOWN * 1000)));
