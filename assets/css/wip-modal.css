@@ -1,0 +1,276 @@
+/* =============================================
+   WIP-MODAL.CSS
+   Work-in-progress modal.
+   Homepage only — shows once per session.
+   ============================================= */
+
+
+/* ── BACKDROP ─────────────────────────────── */
+
+.wip-backdrop {
+  position:   fixed;
+  inset:      0;
+  z-index:    1100;
+  background: rgba(8, 8, 8, 0.55);
+  backdrop-filter:         blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  opacity:        0;
+  pointer-events: none;
+  transition:     opacity 0.4s ease;
+}
+
+.wip-backdrop.is-open {
+  opacity:        1;
+  pointer-events: auto;
+}
+
+
+/* ── MODAL ────────────────────────────────── */
+
+.wip-modal {
+  position:   fixed;
+  bottom:     40px;
+  left:       50%;
+  z-index:    1101;
+  width:      calc(100% - 48px);
+  max-width:  620px;
+
+  background:    rgba(13, 13, 13, 0.97);
+  border:        1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding:       40px 44px 36px;
+
+  backdrop-filter:         blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* Spring entry from bottom */
+  transform:      translateX(-50%) translateY(32px) scale(0.97);
+  opacity:        0;
+  pointer-events: none;
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   0.45s ease;
+}
+
+.wip-modal.is-open {
+  transform:      translateX(-50%) translateY(0) scale(1);
+  opacity:        1;
+  pointer-events: auto;
+}
+
+.wip-modal.is-closing {
+  transform: translateX(-50%) translateY(24px) scale(0.97);
+  opacity:   0;
+}
+
+
+/* ── CLOSE BUTTON + COUNTDOWN RING ───────── */
+
+.wip-close-wrap {
+  position:     absolute;
+  top:          18px;
+  right:        18px;
+  width:        40px;
+  height:       40px;
+  display:      flex;
+  align-items:  center;
+  justify-content: center;
+}
+
+/* SVG countdown ring sits behind the button */
+.wip-ring {
+  position:   absolute;
+  inset:      0;
+  width:      100%;
+  height:     100%;
+  overflow:   visible;
+  pointer-events: none;
+  transform:  rotate(-90deg); /* start from top */
+}
+
+.wip-ring__track {
+  fill:         none;
+  stroke:       rgba(255, 255, 255, 0.10);
+  stroke-width: 2;
+}
+
+.wip-ring__bar {
+  fill:             none;
+  stroke:           rgba(255, 255, 255, 0.55);
+  stroke-width:     2;
+  stroke-linecap:   round;
+  /* stroke-dasharray and animation set by JS */
+  transform-origin: center;
+}
+
+/* The ✕ close button */
+.wip-close {
+  position:        relative;
+  z-index:         2;
+  width:           32px;
+  height:          32px;
+  border-radius:   50%;
+  border:          1px solid rgba(255, 255, 255, 0.12);
+  background:      rgba(255, 255, 255, 0.06);
+  color:           rgba(255, 255, 255, 0.6);
+  font-size:       14px;
+  cursor:          pointer;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  transition:      background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  line-height:     1;
+  flex-shrink:     0;
+}
+
+.wip-close:hover {
+  background:   rgba(255, 255, 255, 0.14);
+  color:        #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* ── CONTENT ──────────────────────────────── */
+
+.wip-kicker {
+  display:        flex;
+  align-items:    center;
+  gap:            10px;
+  font-size:      11px;
+  font-weight:    600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color:          var(--blue, #1a46c9);
+  margin-bottom:  20px;
+}
+
+.wip-kicker::before {
+  content:       "";
+  display:       block;
+  width:         20px;
+  height:        1.5px;
+  background:    var(--blue, #1a46c9);
+  border-radius: 2px;
+  flex-shrink:   0;
+}
+
+.wip-title {
+  font-size:      clamp(2.4rem, 5vw, 3.8rem);
+  font-weight:    300;
+  letter-spacing: -0.06em;
+  line-height:    0.95;
+  color:          #ffffff;
+  margin-bottom:  20px;
+}
+
+.wip-title span { color: var(--blue, #1a46c9); }
+
+.wip-desc {
+  font-size:   15px;
+  line-height: 1.7;
+  color:       rgba(255, 255, 255, 0.52);
+  max-width:   460px;
+  margin-bottom: 32px;
+}
+
+.wip-desc strong {
+  color:       rgba(255, 255, 255, 0.82);
+  font-weight: 500;
+}
+
+
+/* ── ACTIONS ──────────────────────────────── */
+
+.wip-actions {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  flex-wrap:   wrap;
+}
+
+.wip-cta {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             6px;
+  padding:         11px 22px;
+  background:      var(--blue, #1a46c9);
+  color:           #ffffff;
+  border:          1.5px solid var(--blue, #1a46c9);
+  border-radius:   999px;
+  font-family:     inherit;
+  font-size:       13px;
+  font-weight:     500;
+  letter-spacing:  0.01em;
+  text-decoration: none;
+  cursor:          pointer;
+  transition:
+    background   0.18s ease,
+    border-color 0.18s ease,
+    transform    0.18s ease;
+}
+
+.wip-cta:hover {
+  background:   #1339a8;
+  border-color: #1339a8;
+  transform:    translateY(-1px);
+}
+
+.wip-dismiss {
+  font-size:   13px;
+  font-weight: 400;
+  color:       rgba(255, 255, 255, 0.35);
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  font-family: inherit;
+  padding:     4px 0;
+  transition:  color 0.18s ease;
+}
+
+.wip-dismiss:hover { color: rgba(255, 255, 255, 0.7); }
+
+
+/* ── COUNTDOWN TEXT ───────────────────────── */
+
+.wip-countdown {
+  display:        block;
+  font-size:      10px;
+  letter-spacing: 0.08em;
+  color:          rgba(255, 255, 255, 0.2);
+  margin-top:     20px;
+  padding-top:    16px;
+  border-top:     1px solid rgba(255, 255, 255, 0.06);
+}
+
+#wipCountdownNum {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}
+
+
+/* ── RESPONSIVE ───────────────────────────── */
+
+@media (max-width: 768px) {
+  .wip-modal {
+    bottom:  20px;
+    width:   calc(100% - 32px);
+    padding: 28px 24px 24px;
+  }
+
+  .wip-title { font-size: clamp(2rem, 8vw, 2.8rem); }
+
+  .wip-actions { flex-direction: column; align-items: flex-start; }
+}
+
+/* Don't show on very small screens */
+@media (max-width: 480px) {
+  .wip-modal,
+  .wip-backdrop { display: none !important; }
+}
+
+/* Reduced motion — no animation, just fade */
+@media (prefers-reduced-motion: reduce) {
+  .wip-modal    { transition: opacity 0.3s ease !important; }
+  .wip-ring__bar { animation: none !important; }
+}

@@ -49,7 +49,6 @@ $pageDesc    = "UX Design Agency based in Gurgaon, led by Ramesh Mandal — 17+ 
   <link rel="icon" type="image/x-icon"     href="/assets/icons/favicon.ico"/>
   <link rel="icon" type="image/svg+xml"    href="/assets/icons/favicon.svg"/>
   <link rel="icon" type="image/png" sizes="32x32"  href="/assets/icons/favicon-32x32.png"/>
-  <link rel="icon" type="image/png" sizes="16x16"  href="/assets/icons/favicon-16x16.png"/>
   <link rel="apple-touch-icon" sizes="180x180"     href="/assets/icons/favicon-180x180.png"/>
   <meta name="theme-color" content="#0f0f0f"/>
 
@@ -67,6 +66,7 @@ $pageDesc    = "UX Design Agency based in Gurgaon, led by Ramesh Mandal — 17+ 
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/preloader.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/variables.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/animations.css"/>
+  <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/wip-modal.css"/>
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/reset.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/main.css" />
   <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/global.css"/>
@@ -158,6 +158,7 @@ $pageDesc    = "UX Design Agency based in Gurgaon, led by Ramesh Mandal — 17+ 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="<?= BASE_PATH ?>/assets/js/gsap-effects.js" defer></script>
+  <script src="<?= BASE_PATH ?>/assets/js/wip-modal.js" defer></script>
 
 </body>
 </html>
