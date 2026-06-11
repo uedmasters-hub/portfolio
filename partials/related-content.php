@@ -52,7 +52,7 @@ function render_related_content(string $type, string $slug): void {
     if ($type === 'case-study' && $cs['slug'] === $slug) continue;
     $csPick = $cs; break;
   }
-  $psychPick = $principles[0] ?? null;
+  $psychPick = ($type !== 'psychology') ? ($principles[0] ?? null) : null;
 
   /* ── Count columns so we know how many to render ── */
   $colCount = 0;
