@@ -136,6 +136,85 @@ $principles = [
     "impact"     => "High",
     "effort"     => "Low",
     "color"      => "amber",
+
+    /* ── Standalone article body (additive; index ignores this key) ── */
+    "article" => [
+      "published"  => true,
+      "date"       => "2026-06-11",
+      "date_label" => "June 2026",
+      "read_time"  => "7 min read",
+      "tags"       => ["Cognitive Bias", "Motivation"],
+      "kicker"     => "Psychology · Cognitive Bias",
+      "title_html" => "Losing ₹500 hurts more than winning it <span>feels good</span>",
+      "deck"       => "Loss aversion is the most-used — and most-abused — bias in product design. You're about to make two choices that prove it on yourself, then we'll trace it to a 40% retention lift.",
+
+      "demo"            => "reflection",
+      "demo_title_html" => "Two choices, <span>same math</span>",
+      "demo_lede"       => "No right answers — just pick what you'd actually do. The numbers are rigged so both choices have identical expected value. Watch what you do anyway.",
+
+      "wild_title_html" => "The bias that built <span>half of growth</span>",
+      "wild" => [
+        ["num" => "①", "title" => "Duolingo's streak", "type" => "good",
+         "verdict" => "Loss framing, honestly aligned",
+         "body" => "A 200-day streak isn't a number — it's something you now own and could lose. The fear of breaking it pulls people back daily, and the loss frame points the same way as the user's actual goal: learning."],
+        ["num" => "②", "title" => "Fake countdown timers", "type" => "bad",
+         "verdict" => "A loss the user never actually faced",
+         "body" => "“Offer ends in 4:59” that resets the moment you reload. The loss is manufactured and the urgency is theatre. It converts once and erodes trust forever — loss aversion as a dark pattern."],
+        ["num" => "③", "title" => "Airline points expiry", "type" => "good",
+         "verdict" => "Real stakes, real service",
+         "body" => "“Your 12,000 points expire in 30 days.” The miles are real and the loss is real, so the nudge genuinely helps travellers spend value they'd otherwise forfeit. The bias working for the user."],
+        ["num" => "④", "title" => "Free trials that auto-bill", "type" => "bad",
+         "verdict" => "Depends entirely on the exit door",
+         "body" => "Once you're using the product, cancelling feels like giving something up — the endowment effect doing the retention work. Ethical when cancelling is easy; predatory when it's buried."],
+      ],
+
+      "diagram"            => "value-function",
+      "diagram_title_html" => "The curve bends harder <span>below zero</span>",
+      "diagram_caption"    => "Kahneman and Tversky's value function. Equal objective amounts produce unequal felt magnitudes — the loss limb drops about twice as fast as the gain limb rises. That asymmetry is the entire bias, drawn in one line.",
+
+      "science" => [
+        "heading"    => "Where the law comes from",
+        "paragraphs" => [
+          "In 1979, Daniel Kahneman and Amos Tversky published Prospect Theory, the paper that eventually won a Nobel Prize. Their core finding overturned the assumption that people weigh gains and losses symmetrically. Instead, the displeasure of losing a sum is consistently larger than the pleasure of gaining the same sum — by a factor most studies place between <em>1.5 and 2.5</em>.",
+          "A companion effect, Richard Thaler's endowment effect, shows the same asymmetry from another angle: the moment something becomes yours, you value it more highly than you did a second earlier. In the classic experiment, people handed a mug demanded roughly twice the price to sell it that an identical group was willing to pay to buy it. Ownership manufactures a loss where none existed.",
+        ],
+        "quote"   => "The bias isn't that people are afraid of risk. It's that the reference point — what they consider “theirs” — quietly rewrites the whole calculation.",
+        "sources" => "Sources: Kahneman, D. &amp; Tversky, A. (1979), <em>“Prospect Theory: An Analysis of Decision under Risk,” Econometrica</em> · Kahneman, Knetsch &amp; Thaler (1990), <em>“Experimental Tests of the Endowment Effect,” Journal of Political Economy</em>.",
+      ],
+
+      "analysis" => [
+        "heading" => "What this did to a loyalty programme",
+        "before"  => [
+          "When we reworked IndiGo's loyalty experience, the lever wasn't bigger rewards — it was the reference point. “Earn 2,000 more points” is a gain, easy to ignore. “You're 2,000 points from keeping your tier — which lapses in 18 days” reframes the identical fact as a loss of status the member already feels they own. Same points, opposite psychology.",
+        ],
+        "metric"  => [
+          "num"     => "40%",
+          "context" => "Retention increase after reframing loyalty around status the member stood to lose, not rewards they had yet to earn — full breakdown in the case study below.",
+        ],
+        "after"   => [
+          "The line we held throughout: the loss had to be real. Members genuinely had a tier and genuinely could lose it. The moment a team manufactures a loss — a countdown that resets, a “spot” that was never reserved — loss aversion stops being persuasion and becomes a dark pattern that trades next quarter's trust for this quarter's conversion.",
+        ],
+      ],
+
+      "checklist_title_html" => "The loss-aversion <span>checklist</span>",
+      "checklist" => [
+        ["title" => "Frame retention around what's already theirs", "body" => "A status, a streak, a saved cart, accrued points. People fight harder to keep than to gain — point that energy at something they genuinely own."],
+        ["title" => "Make progress visible so it feels owned", "body" => "A near-complete profile or a long streak creates an endowment. Showing the progress is what makes the potential loss land."],
+        ["title" => "Reserve, don't pressure", "body" => "“Your cart is saved for 24 hours” respects the user. “Buy in 4:59 or lose it” insults them. Same mechanism, opposite trust outcome."],
+        ["title" => "Keep the exit door wide", "body" => "Loss-framed retention is only ethical when leaving is easy. If your cancel flow is a maze, you're not persuading — you're trapping."],
+        ["title" => "Run the honesty test", "body" => "Is the loss you're invoking real to the user? If you manufactured it, you've built a dark pattern — and those have a half-life measured in screenshots."],
+      ],
+
+      /* Hand-editable cross-links. Swap the second slug to /psychology/endowment-effect once that article ships. */
+      "action" => [
+        ["type" => "Case Study · Aviation · Retention", "title" => "IndiGo Loyalty — 40% retention increase",
+         "body" => "The full story of reframing a loyalty programme around tier status members didn't want to lose, and what it did to retention.",
+         "href" => "/case-study/indigo-loyalty", "link" => "Read the case study"],
+        ["type" => "Psychology · Sibling principle", "title" => "Scarcity — the FOMO engine",
+         "body" => "Loss aversion's closest cousin: the pull of what's about to be unavailable. See how anticipated loss drives action.",
+         "href" => "/psychology/#scarcity", "link" => "Explore the principle"],
+      ],
+    ],
   ],
 
   // ── MEMORY ────────────────────────────────────────────────────
